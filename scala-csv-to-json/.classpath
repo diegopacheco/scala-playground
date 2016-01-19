@@ -1,0 +1,18 @@
+<classpath>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\java"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\java"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.github.tototoshi\scala-csv_2.11\jars\scala-csv_2.11-1.3.0-SNAPSHOT.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.fasterxml.jackson.module\jackson-module-scala_2.11\bundles\jackson-module-scala_2.11-2.6.3.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.fasterxml.jackson.core\jackson-core\bundles\jackson-core-2.6.3.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.fasterxml.jackson.core\jackson-annotations\bundles\jackson-annotations-2.6.3.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.fasterxml.jackson.core\jackson-databind\bundles\jackson-databind-2.6.3.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.fasterxml.jackson.module\jackson-module-paranamer\bundles\jackson-module-paranamer-2.6.3.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.thoughtworks.paranamer\paranamer\jars\paranamer-2.6.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
