@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: com.romix.akka:akka-protostuff-serialization:0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/local/com.romix.akka/akka-protostuff-serialization/0.1-SNAPSHOT/jars/akka-protostuff-serialization.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/local/com.romix.akka/akka-protostuff-serialization/0.1-SNAPSHOT/srcs/akka-protostuff-serialization-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
