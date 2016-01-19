@@ -1,0 +1,41 @@
+<classpath>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\java"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\java"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\jars\akka-actor_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe\config\bundles\config-1.3.0.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-remote_2.11\jars\akka-remote_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-protobuf_2.11\jars\akka-protobuf_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\io.netty\netty\bundles\netty-3.10.3.Final.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.uncommons.maths\uncommons-maths\jars\uncommons-maths-1.2.2a.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\jars\akka-cluster_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-camel_2.11\jars\akka-camel_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-slf4j_2.11\jars\akka-slf4j_2.11-2.4.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.slf4j\slf4j-api\jars\slf4j-api-1.7.12.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-core\bundles\camel-core-2.16.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.sun.xml.bind\jaxb-core\jars\jaxb-core-2.2.11.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\com.sun.xml.bind\jaxb-impl\jars\jaxb-impl-2.2.11.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-mina2\bundles\camel-mina2-2.16.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.mina\mina-core\bundles\mina-core-2.0.9.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-jetty\bundles\camel-jetty-2.16.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-jetty9\bundles\camel-jetty9-2.16.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-http-common\bundles\camel-http-common-2.16.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-server\jars\jetty-server-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\javax.servlet\javax.servlet-api\jars\javax.servlet-api-3.1.0.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-http\jars\jetty-http-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-util\jars\jetty-util-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-io\jars\jetty-io-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-servlet\jars\jetty-servlet-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-security\jars\jetty-security-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-servlets\jars\jetty-servlets-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-continuation\jars\jetty-continuation-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-client\jars\jetty-client-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.eclipse.jetty\jetty-jmx\jars\jetty-jmx-9.2.11.v20150529.jar"/>
+  <classpathentry kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-jetty-common\bundles\camel-jetty-common-2.16.1.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
