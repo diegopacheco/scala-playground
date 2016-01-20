@@ -11,7 +11,12 @@ object ForCompreensions extends App {
     s <- List(10,20,30,40,50)
     l <- List("John","Paul", "Pablo","Don","Eladio")
   } yield Person(n,s,l) 
-  
   println(p)
   
+  def foo = for {
+      x <- Some(3)
+      y <- Some("!")
+   } yield x.toString + y
+  println(foo)
+   
 }
