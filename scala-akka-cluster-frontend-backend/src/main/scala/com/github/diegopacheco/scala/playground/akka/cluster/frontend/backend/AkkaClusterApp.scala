@@ -6,6 +6,8 @@ import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.actor.actorRef2Scala
+import akka.routing.FromConfig
+import akka.routing.{ ActorRefRoutee, RoundRobinRoutingLogic, Router }
 
 trait Operation
 case class Sum(x:Int,y:Int) extends Operation
@@ -13,12 +15,20 @@ case class Result(value:Int)
 
 class FrontendActor extends Actor {
    
-   val backend = context.actorOf(Props[BackendActor], name = "BackendActor")
+   var router = {
+     val routees = Vector.fill(2) { 
+        val backendActor = context.actorOf(Props[BackendActor])
+        context watch backendActor
+        ActorRefRoutee(backendActor)
+     }
+     Router(RoundRobinRoutingLogic(), routees)
+   }
+  
   
    def receive = {
      case s:Sum => {
-       println("FrontEndactor got it " + s)
-        sender() ! Ask.get[Result](backend, s)
+        println("FrontEndactor got it " + s)
+        router.route(s, sender())
      }
      case r:Result => {
         println("Now the Frontend got a response from the backend: " + r)
@@ -30,10 +40,10 @@ class FrontendActor extends Actor {
 class BackendActor extends Actor {
     def receive = {
        case s:Sum => {
-         println("BackendActor got it " + s + ". I'm " + self.path)
-         val r:Result = Result(s.x + s.y)
-         println("Result: " + r)
-         sender() ! r      
+           println("BackendActor got it " + s + ". I'm " + self.path)
+           val r:Result = Result(s.x + s.y)
+           println("Result: " + r)
+           sender() ! r      
        }
    }
 }
