@@ -1,13 +1,13 @@
 package com.github.diegopacheco.scala.playground.akka.cluster.frontend.backend
 
 import com.typesafe.config.ConfigFactory
-
 import akka.actor.Actor
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.actor.actorRef2Scala
 import akka.routing.FromConfig
 import akka.routing.{ ActorRefRoutee, RoundRobinRoutingLogic, Router }
+import akka.actor.ActorRef
 
 trait Operation
 case class Sum(x:Int,y:Int) extends Operation
@@ -66,5 +66,5 @@ object AkkaClusterApp extends App {
     val r = Ask.get[Result](frontend, Sum(1,i))
     println("Outside of teh cluster, i just got it: " + r)
   }
-
+    
 }
