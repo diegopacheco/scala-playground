@@ -1,20 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/scala-2.11"/>
-	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/scala"/>
-	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/java"/>
-	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/scala-2.11"/>
-	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/scala"/>
-	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/java"/>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.typesafe.akka/akka-actor_2.11/jars/akka-actor_2.11-2.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.typesafe/config/bundles/config-1.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.typesafe.akka/akka-remote_2.11/jars/akka-remote_2.11-2.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.typesafe.akka/akka-protobuf_2.11/jars/akka-protobuf_2.11-2.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/io.netty/netty/bundles/netty-3.10.3.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar"/>
-	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.typesafe.akka/akka-cluster_2.11/jars/akka-cluster_2.11-2.4.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\java"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\java"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\srcs\akka-actor_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\jars\akka-actor_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe\config\srcs\config-1.3.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe\config\bundles\config-1.3.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-remote_2.11\srcs\akka-remote_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-remote_2.11\jars\akka-remote_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-protobuf_2.11\srcs\akka-protobuf_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-protobuf_2.11\jars\akka-protobuf_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\io.netty\netty\srcs\netty-3.10.3.Final-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\io.netty\netty\bundles\netty-3.10.3.Final.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.uncommons.maths\uncommons-maths\srcs\uncommons-maths-1.2.2a-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.uncommons.maths\uncommons-maths\jars\uncommons-maths-1.2.2a.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\srcs\akka-cluster_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\jars\akka-cluster_2.11-2.4.1.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
 </classpath>
