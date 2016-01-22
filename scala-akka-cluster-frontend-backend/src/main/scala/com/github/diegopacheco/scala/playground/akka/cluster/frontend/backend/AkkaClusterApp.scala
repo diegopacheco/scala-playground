@@ -8,6 +8,11 @@ import akka.actor.actorRef2Scala
 import akka.routing.FromConfig
 import akka.routing.{ ActorRefRoutee, RoundRobinRoutingLogic, Router }
 import akka.actor.ActorRef
+import akka.cluster.Cluster
+import akka.cluster.ClusterEvent.UnreachableMember
+import akka.cluster.ClusterEvent.MemberEvent
+import akka.cluster.ClusterEvent.MemberUp
+import akka.routing.RoundRobinPool
 
 trait Operation
 case class Sum(x:Int,y:Int) extends Operation
@@ -15,6 +20,9 @@ case class Result(value:Int)
 
 class FrontendActor extends Actor {
    
+  val cluster = Cluster(context.system)
+  cluster.subscribe(self, classOf[MemberEvent], classOf[UnreachableMember])
+  
    var router = {
      val routees = Vector.fill(2) { 
         val backendActor = context.actorOf(Props[BackendActor])
@@ -33,6 +41,8 @@ class FrontendActor extends Actor {
      case r:Result => {
         println("Now the Frontend got a response from the backend: " + r)
      }
+     
+     case u:MemberUp => println("FrontendActor got notification from Cluster : " + u.member)
    }
   
 }
@@ -66,5 +76,14 @@ object AkkaClusterApp extends App {
     val r = Ask.get[Result](frontend, Sum(1,i))
     println("Outside of teh cluster, i just got it: " + r)
   }
+  
+   val router2:ActorRef = node2.actorOf(RoundRobinPool(5).props(Props[FrontendActor]), "FrontendActorRouterRoundRobin")
+   println("Router on Frontend: " + router2)
+   
+   for (i <- 1 to 3){
+    val r = Ask.get[Result](router2, Sum(1,i))
+    println("Outside of teh cluster, i just got it: " + r)
+  }
+
     
 }
