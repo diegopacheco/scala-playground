@@ -15,6 +15,9 @@
   <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\srcs\akka-cluster_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\jars\akka-cluster_2.11-2.4.1.jar"/>
   <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-typed-experimental_2.11\srcs\akka-typed-experimental_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-typed-experimental_2.11\jars\akka-typed-experimental_2.11-2.4.1.jar"/>
   <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-testkit_2.11\srcs\akka-testkit_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-testkit_2.11\jars\akka-testkit_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-contrib_2.11\srcs\akka-contrib_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-contrib_2.11\jars\akka-contrib_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster-tools_2.11\srcs\akka-cluster-tools_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster-tools_2.11\jars\akka-cluster-tools_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-persistence_2.11\srcs\akka-persistence_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-persistence_2.11\jars\akka-persistence_2.11-2.4.1.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="output" path="bin"/>
 </classpath>

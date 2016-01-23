@@ -19,6 +19,8 @@ resolvers += JavaNet1Repository
 libraryDependencies += "com.typesafe.akka" % "akka-actor_2.11" % akkaVersion
 libraryDependencies += "com.typesafe.akka" % "akka-remote_2.11" % akkaVersion
 libraryDependencies += "com.typesafe.akka" % "akka-cluster_2.11" % akkaVersion
+
 libraryDependencies += "com.typesafe.akka" % "akka-typed-experimental_2.11" % "2.4.1"
+libraryDependencies += "com.typesafe.akka" % "akka-contrib_2.11" % "2.4.1"
 
 EclipseKeys.withSource := true
