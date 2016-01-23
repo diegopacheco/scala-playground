@@ -1,17 +1,16 @@
 package com.github.diegopacheco.scala.playground.akka.cluster.frontend.backend
 
-import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory
-import akka.routing.ConsistentHashingGroup
-import akka.cluster.routing.ClusterRouterGroupSettings
-import akka.cluster.Cluster
-import akka.cluster.routing.ClusterRouterGroup
-import akka.cluster.routing.ClusterRouterPool
-import akka.routing.ConsistentHashingPool
-import akka.cluster.routing.ClusterRouterPoolSettings
-import akka.actor.Props
 import akka.actor.Actor
+import akka.actor.ActorSystem
+import akka.actor.Props
+import akka.cluster.Cluster
+import akka.cluster.routing.ClusterRouterPool
+import akka.cluster.routing.ClusterRouterPoolSettings
+import akka.routing.ConsistentHashingPool
 import akka.routing.ConsistentHashingRouter.ConsistentHashableEnvelope
+import akka.actor.ActorRef
+import akka.routing.ConsistentHashingGroup
 
 final case class Entry(key: String, value: String)
 
@@ -30,10 +29,16 @@ object AkkaClusterRouterClusterApp extends App {
     val system = ActorSystem("ClusterSystem", config)
     system
   }
-
+  
+  def deployActor(system:ActorSystem,props:Props,name:String):ActorRef = {
+     val actor = system.actorOf(props,name)
+     println("Actor Deployed " + actor.path + "@" + system + ":" + system.settings.config.getString("akka.remote.netty.tcp.port"))
+     actor
+  }
+  
   val node1 = bootup("2551")
   val node2 = bootup("2552")
-  val node3 = bootup("0")
+  val node3 = bootup("2553")
   
   Cluster(node1)
   Cluster(node2)
@@ -44,18 +49,6 @@ object AkkaClusterRouterClusterApp extends App {
   val workerRouter = node1.actorOf(
     ClusterRouterPool(ConsistentHashingPool(0), ClusterRouterPoolSettings(
       totalInstances = 9, maxInstancesPerNode = 3,
-      allowLocalRoutees = false, useRole = None)).props(Props[WorkerActor]),
-      name = "workerRouter")
-      
-  node2.actorOf(
-    ClusterRouterPool(ConsistentHashingPool(0), ClusterRouterPoolSettings(
-      totalInstances = 9, maxInstancesPerNode = 3,
-      allowLocalRoutees = true, useRole = None)).props(Props[WorkerActor]),
-      name = "workerRouter")
-      
-  node3.actorOf(
-    ClusterRouterPool(ConsistentHashingPool(0), ClusterRouterPoolSettings(
-      totalInstances = 9, maxInstancesPerNode = 3,
       allowLocalRoutees = true, useRole = None)).props(Props[WorkerActor]),
       name = "workerRouter")
   
@@ -63,8 +56,16 @@ object AkkaClusterRouterClusterApp extends App {
   workerRouter ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "1")
   workerRouter ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "0")
   
-  workerRouter ! ConsistentHashableEnvelope(message = Entry("hi1", "HELLO1"), hashKey = "0")
-  workerRouter ! ConsistentHashableEnvelope(message = Entry("hi2", "HELLO2"), hashKey = "1")
-  workerRouter ! ConsistentHashableEnvelope(message = Entry("hi3", "HELLO3"), hashKey = "0")
+  deployActor(node2, Props[WorkerActor], "w1")
+  deployActor(node2, Props[WorkerActor], "w2")
+  deployActor(node2, Props[WorkerActor], "w3")
   
+  val paths = List("/user/w1", "/user/w2", "/user/w3")
+  val routerGroup: ActorRef = node2.actorOf(ConsistentHashingGroup(paths).props(), "routerGroup")
+
+  routerGroup ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "0")
+  routerGroup ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "1")
+  routerGroup ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "0")
+  routerGroup ! ConsistentHashableEnvelope(message = Entry("hi", "HELLO"), hashKey = "2")
+    
 }
