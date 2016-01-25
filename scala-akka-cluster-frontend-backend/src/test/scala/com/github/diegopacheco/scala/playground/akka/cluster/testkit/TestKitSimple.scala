@@ -10,8 +10,6 @@ import akka.testkit.ImplicitSender
 import org.scalatest.Matchers
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.WordSpecLike
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import akka.testkit.TestActorRef
 import scala.concurrent.duration._
@@ -19,6 +17,8 @@ import scala.concurrent.Await
 import akka.pattern.ask
 import org.junit.AfterClass
 import org.junit.Test
+import scala.concurrent.duration._
+import akka.cluster.Cluster
 
 class MyActor extends Actor {
   def receive = {
@@ -26,32 +26,29 @@ class MyActor extends Actor {
   }
 }
 
-//@RunWith(classOf[JUnitRunner])
-class TestKitSimple(_system: ActorSystem) extends TestKit(_system)
+class TestKitSimple extends TestKit(ActorSystem("ClusterSystem"))
     with ImplicitSender
     with WordSpecLike
     with Matchers
     with BeforeAndAfterAll {
-
-  def this() = this(ActorSystem("MySpec"))
   
   override def afterAll {
-    TestKit.shutdownActorSystem(system)
+    shutdown()
   }
-
-  def testBasicActorCall() {
-
-    implicit val timeout: Timeout = 5 second
-    implicit val ec = ExecutionContext.Implicits.global
-
-    val actorRef = TestActorRef(new MyActor)
-    val future = actorRef ? "Say42"
-    val Success(result: Int) = future.value.get
-
-    result should be(42)
-    expectMsg(42)
+ 
+  "An MyActor actor" must {
+ 
+    "send back messages 42 as anwser" in {
+        implicit val timeout: Timeout = 5 second
+        implicit val ec = ExecutionContext.Implicits.global
     
-    TestKit.shutdownActorSystem(system)
+        val actorRef = TestActorRef(new MyActor)
+        val future = actorRef ? "Say42"
+        val Success(result: Int) = future.value.get
+        
+        //expectMsg(42)    
+        result should be(42)
+    }
   }
 
 }
