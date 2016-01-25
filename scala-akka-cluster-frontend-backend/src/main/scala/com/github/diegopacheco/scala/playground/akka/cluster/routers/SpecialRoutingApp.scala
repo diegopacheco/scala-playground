@@ -11,6 +11,8 @@ import akka.routing.RoundRobinPool
 import akka.actor.Props
 import akka.routing.Broadcast
 import akka.actor.PoisonPill
+import akka.routing.GetRoutees
+import com.github.diegopacheco.scala.playground.akka.cluster.frontend.backend.Ask
 
 class PActor extends Actor {
   def receive = {
@@ -38,6 +40,10 @@ object SpecialRoutingApp extends App {
   val system = bootup("2551", "compute")
   val router1: ActorRef = system.actorOf(FromConfig.props(Props[PActor]), "router1")
   for (i <- 1 to 20) router1 ! s"Hi there? $i "
+  
+  Thread.sleep(3000)
+  
+  println("GetRoutees: " + Ask.get(router1, GetRoutees))
   
   router1 ! Broadcast("Que Haces? Akka o Plomo?")
   router1 ! PoisonPill
