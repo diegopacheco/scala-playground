@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/scala-2.11"/>
+	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/scala"/>
+	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/scala-2.11"/>
+	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/scala"/>
+	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-dynamodb/jars/aws-java-sdk-dynamodb-1.10.49.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-dynamodb/srcs/aws-java-sdk-dynamodb-1.10.49-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-s3/jars/aws-java-sdk-s3-1.10.49.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-s3/srcs/aws-java-sdk-s3-1.10.49-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-kms/jars/aws-java-sdk-kms-1.10.49.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-kms/srcs/aws-java-sdk-kms-1.10.49-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-core/jars/aws-java-sdk-core-1.10.49.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.amazonaws/aws-java-sdk-core/srcs/aws-java-sdk-core-1.10.49-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar" sourcepath="C:/Users/diego/.ivy2/cache/commons-logging/commons-logging/srcs/commons-logging-1.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.6.jar" sourcepath="C:/Users/diego/.ivy2/cache/org.apache.httpcomponents/httpclient/srcs/httpclient-4.3.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.3.jar" sourcepath="C:/Users/diego/.ivy2/cache/org.apache.httpcomponents/httpcore/srcs/httpcore-4.3.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.6.jar" sourcepath="C:/Users/diego/.ivy2/cache/commons-codec/commons-codec/srcs/commons-codec-1.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.5.3.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-databind/srcs/jackson-databind-2.5.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.5.0.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/srcs/jackson-annotations-2.5.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.5.3.jar" sourcepath="C:/Users/diego/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/srcs/jackson-core-2.5.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.8.1.jar" sourcepath="C:/Users/diego/.ivy2/cache/joda-time/joda-time/srcs/joda-time-2.8.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/junit/junit/jars/junit-4.12.jar" sourcepath="C:/Users/diego/.ivy2/cache/junit/junit/srcs/junit-4.12-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" sourcepath="C:/Users/diego/.ivy2/cache/org.hamcrest/hamcrest-core/srcs/hamcrest-core-1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.scalatest/scalatest_2.11/bundles/scalatest_2.11-2.2.6.jar" sourcepath="C:/Users/diego/.ivy2/cache/org.scalatest/scalatest_2.11/srcs/scalatest_2.11-2.2.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/.ivy2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.2.jar" sourcepath="C:/Users/diego/.ivy2/cache/org.scala-lang.modules/scala-xml_2.11/srcs/scala-xml_2.11-1.0.2-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
