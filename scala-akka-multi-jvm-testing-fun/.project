@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>scala-akka-multi-jvm-testing-fun</name>
+  <name>scala-akka-multi-jvm-testing-funa</name>
   <buildSpec>
     <buildCommand>
       <name>org.scala-ide.sdt.core.scalabuilder</name>
