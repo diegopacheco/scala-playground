@@ -56,5 +56,23 @@ object ReactiveTweetsApp extends App {
   //
 
   Source((1 to 10).toVector).runForeach { n => println(s"$n @ ${System.currentTimeMillis}") }
+  
+  //
+  // Fusing - Executes on same actor
+  //
+     
+  val flow = Flow[Int].map(_ * 2).filter(_ > 500)
+  val fused = Fusing.aggressive(flow)
+     
+  Source.fromIterator { () => Iterator from 0 }
+      .via(fused)
+      .take(5)
+      .runForeach { n => println(n) }
+      
+ //
+ // Graph
+ //
+ 
 
+      
 }
