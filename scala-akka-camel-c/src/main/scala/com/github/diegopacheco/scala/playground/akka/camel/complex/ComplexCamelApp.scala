@@ -78,6 +78,22 @@ class ProducingWorker2(endpoint: String) extends Actor with Producer {
   override def endpointUri:String = endpoint
 }
 
+object Asker {
+  
+   import scala.concurrent.duration._
+   import akka.util.Timeout
+   import akka.pattern.ask
+   implicit val timeout = Timeout(20 seconds) 
+      
+   def get[T](actor:ActorRef,message:Any):T = {
+      val future = actor ? message
+      val result:T = Await.result(future, timeout.duration).asInstanceOf[T]
+      return result
+   }
+  
+}
+
+
 object ComplexCamelApp extends App {
 
   implicit val system = ActorSystem.create("CamelSystem")
@@ -106,13 +122,13 @@ object ComplexCamelApp extends App {
   
   val actorPublisherSource = Source.actorPublisher[SearchItem](Props(classOf[ConsumingPublisher], "direct-vm://googled"))
   
-  val ref = Flow[SearchItem]
-            .to(Sink.foreach(log.info("Sank item {}.", _)))
-            .runWith(actorPublisherSource)
+  Flow[SearchItem]
+      .to(Sink.foreach(log.info("Akka Streams Sank item {}.", _)))
+      .runWith(actorPublisherSource)
             
   val googler = system.actorOf(Props(classOf[ProducingWorker2], "direct-vm://googler"))
   
-  googler ! "Akka"
-  ref ! "Scala"
-
+   println("Googling for Akka: " + Asker.get(googler, "Akka"))
+   println("Googling for Scala: " + Asker.get(googler, "Scala"))
+  
 }
