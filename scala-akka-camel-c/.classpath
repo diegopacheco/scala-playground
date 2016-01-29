@@ -1,0 +1,43 @@
+<classpath>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\scala"/>
+  <classpathentry output="target\scala-2.11\classes" kind="src" path="src\main\java"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala-2.11"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\scala"/>
+  <classpathentry output="target\scala-2.11\test-classes" kind="src" path="src\test\java"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\srcs\akka-actor_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\jars\akka-actor_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe\config\srcs\config-1.3.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe\config\bundles\config-1.3.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-remote_2.11\srcs\akka-remote_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-remote_2.11\jars\akka-remote_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-protobuf_2.11\srcs\akka-protobuf_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-protobuf_2.11\jars\akka-protobuf_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\io.netty\netty\srcs\netty-3.10.3.Final-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\io.netty\netty\bundles\netty-3.10.3.Final.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.uncommons.maths\uncommons-maths\srcs\uncommons-maths-1.2.2a-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.uncommons.maths\uncommons-maths\jars\uncommons-maths-1.2.2a.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\srcs\akka-cluster_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-cluster_2.11\jars\akka-cluster_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-camel_2.11\srcs\akka-camel_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-camel_2.11\jars\akka-camel_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-slf4j_2.11\srcs\akka-slf4j_2.11-2.4.1-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-slf4j_2.11\jars\akka-slf4j_2.11-2.4.1.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.slf4j\slf4j-api\srcs\slf4j-api-1.7.12-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.slf4j\slf4j-api\jars\slf4j-api-1.7.12.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-core\srcs\camel-core-2.13.4-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-core\bundles\camel-core-2.13.4.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.sun.xml.bind\jaxb-impl\srcs\jaxb-impl-2.2.6-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.sun.xml.bind\jaxb-impl\jars\jaxb-impl-2.2.6.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-jackson\srcs\camel-jackson-2.9.2-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-jackson\bundles\camel-jackson-2.9.2.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.codehaus.jackson\jackson-mapper-asl\srcs\jackson-mapper-asl-1.9.2-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.codehaus.jackson\jackson-mapper-asl\jars\jackson-mapper-asl-1.9.2.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.codehaus.jackson\jackson-core-asl\srcs\jackson-core-asl-1.9.2-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.codehaus.jackson\jackson-core-asl\jars\jackson-core-asl-1.9.2.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-http4\srcs\camel-http4-2.13.4-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.camel\camel-http4\bundles\camel-http4-2.13.4.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.geronimo.specs\geronimo-servlet_3.0_spec\srcs\geronimo-servlet_3.0_spec-1.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.geronimo.specs\geronimo-servlet_3.0_spec\bundles\geronimo-servlet_3.0_spec-1.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.httpcomponents\httpclient\srcs\httpclient-4.3.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.httpcomponents\httpclient\jars\httpclient-4.3.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.apache.httpcomponents\httpcore\srcs\httpcore-4.3.2-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.apache.httpcomponents\httpcore\jars\httpcore-4.3.2.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\commons-logging\commons-logging\srcs\commons-logging-1.1.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\commons-logging\commons-logging\jars\commons-logging-1.1.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\commons-codec\commons-codec\srcs\commons-codec-1.6-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\commons-codec\commons-codec\jars\commons-codec-1.6.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\ch.qos.logback\logback-classic\srcs\logback-classic-1.1.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\ch.qos.logback\logback-classic\jars\logback-classic-1.1.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\ch.qos.logback\logback-core\srcs\logback-core-1.1.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\ch.qos.logback\logback-core\jars\logback-core-1.1.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-stream-experimental_2.11\srcs\akka-stream-experimental_2.11-2.0.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe.akka\akka-stream-experimental_2.11\jars\akka-stream-experimental_2.11-2.0.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe\ssl-config-akka_2.11\srcs\ssl-config-akka_2.11-0.1.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe\ssl-config-akka_2.11\jars\ssl-config-akka_2.11-0.1.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\com.typesafe\ssl-config-core_2.11\srcs\ssl-config-core_2.11-0.1.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\com.typesafe\ssl-config-core_2.11\jars\ssl-config-core_2.11-0.1.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.scala-lang.modules\scala-parser-combinators_2.11\srcs\scala-parser-combinators_2.11-1.0.4-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.scala-lang.modules\scala-parser-combinators_2.11\bundles\scala-parser-combinators_2.11-1.0.4.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.reactivestreams\reactive-streams\srcs\reactive-streams-1.0.0-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.reactivestreams\reactive-streams\jars\reactive-streams-1.0.0.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\junit\junit\srcs\junit-4.12-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\junit\junit\jars\junit-4.12.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.hamcrest\hamcrest-core\srcs\hamcrest-core-1.3-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.hamcrest\hamcrest-core\jars\hamcrest-core-1.3.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.scalatest\scalatest_2.11\srcs\scalatest_2.11-2.2.6-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.scalatest\scalatest_2.11\bundles\scalatest_2.11-2.2.6.jar"/>
+  <classpathentry sourcepath="C:\Users\diego\.ivy2\cache\org.scala-lang.modules\scala-xml_2.11\srcs\scala-xml_2.11-1.0.2-sources.jar" kind="lib" path="C:\Users\diego\.ivy2\cache\org.scala-lang.modules\scala-xml_2.11\bundles\scala-xml_2.11-1.0.2.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
