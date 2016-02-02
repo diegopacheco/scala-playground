@@ -17,7 +17,6 @@ class ScalaB {
 }
 
 object CamelSimpleApp extends App {
-
   val camelContext: DefaultCamelContext = new DefaultCamelContext
 
   camelContext.addRoutes(new RouteBuilder() {

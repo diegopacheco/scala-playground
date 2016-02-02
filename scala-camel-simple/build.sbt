@@ -22,6 +22,9 @@ libraryDependencies += "com.typesafe.akka" % "akka-remote_2.11" % akkaVersion
 libraryDependencies += "com.typesafe.akka" % "akka-cluster_2.11" % akkaVersion
 libraryDependencies += "com.typesafe.akka" % "akka-camel_2.11" % akkaVersion
 
+libraryDependencies += "org.apache.camel" % "camel-aws" % "2.13.4"
+libraryDependencies += "org.apache.camel" % "camel-http4" % "2.13.4"
+
 libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.6.6"
 libraryDependencies += "log4j" % "log4j" % "1.2.17"
 
