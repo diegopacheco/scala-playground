@@ -1,8 +1,8 @@
 package com.github.diegopacheco.scala.playground.camel.simple
 
-import org.apache.camel.impl.DefaultCamelContext
-import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.Processor
+import org.apache.camel.builder.RouteBuilder
+import org.apache.camel.impl.DefaultCamelContext
 import org.apache.camel.Exchange
 
 class ScalaA {
