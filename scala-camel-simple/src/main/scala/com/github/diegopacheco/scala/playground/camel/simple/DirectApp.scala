@@ -27,7 +27,7 @@ object DirectApp extends App {
   
   while (true) {
     Thread.sleep(5000)
-    camelContext.createProducerTemplate(1).sendBody("direct-vm://start","")  
+    camelContext.createProducerTemplate(1).sendBody("direct-vm://start","")
   }
 
 }
