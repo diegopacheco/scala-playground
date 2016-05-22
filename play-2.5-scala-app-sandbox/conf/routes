@@ -1,0 +1,54 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.AsyncController.message
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET /echo          controllers.HomeController.echo
+GET /hey           controllers.SimpleController.hey
+GET /oops          controllers.SimpleController.oops
+GET /not           controllers.SimpleController.not
+GET /any           controllers.SimpleController.any
+GET /redirect      controllers.SimpleController.redirect
+GET /todo          controllers.SimpleController.todo
+GET /hello/:name   controllers.SimpleController.hello(name: String)
+GET /api/all       controllers.SimpleController.all(version: Option[String])
+GET /reverse       controllers.SimpleController.reverse
+GET /xml           controllers.SimpleController.xmlResult
+GET /headers       controllers.SimpleController.headers
+GET /html          controllers.SimpleController.html
+GET /cookies       controllers.SimpleController.withcockies
+GET /no-cookies    controllers.SimpleController.withoutcockies
+
+GET /session       controllers.SessionController.index
+GET /here          controllers.SessionController.ha
+GET /logoff        controllers.SessionController.logoff
+
+GET /flash/index   controllers.FlashController.index
+GET /flash/save    controllers.FlashController.save
+
+POST /json/index     controllers.JsonBodyParserController.index
+POST /json/explicit  controllers.JsonBodyParserController.explicit
+POST /json/tolerant  controllers.JsonBodyParserController.tolerant
+POST /json/limit     controllers.JsonBodyParserController.limit
+
+GET /composition/index  controllers.CompositionController.index
+
+GET /validtions/login         controllers.ValidationController.login
+GET /validtions/save/:itemId  controllers.ValidationController.save(itemId:String)
+
+GET /negotiation/list         controllers.ContentNegotiationController.list
+
+GET /err controllers.ErrorHandlerController.index
+
+GET /async-explicit controllers.ExplicitAsyncController.index
+GET /async-timeout  controllers.ExplicitAsyncController.timeout
+
