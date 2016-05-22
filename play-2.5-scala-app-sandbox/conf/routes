@@ -52,3 +52,14 @@ GET /err controllers.ErrorHandlerController.index
 GET /async-explicit controllers.ExplicitAsyncController.index
 GET /async-timeout  controllers.ExplicitAsyncController.timeout
 
+GET /stream   controllers.StreamController.index
+GET /serving  controllers.StreamController.serving
+GET /chuncked controllers.StreamController.chuncked
+
+GET /comet-index  controllers.CometController.index
+GET /comet-index2  controllers.CometController.index2
+GET /comet-string controllers.CometController.cometString
+GET /comet-json   controllers.CometController.cometJson
+
+GET /websockets-index   controllers.WebSocketsController.index
+GET /websockets-ws      controllers.WebSocketsController.socket
