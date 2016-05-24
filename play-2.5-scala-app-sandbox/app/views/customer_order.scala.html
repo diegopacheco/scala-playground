@@ -1,0 +1,23 @@
+@(cm:CustomerOrder)
+
+<h1>Welcome @cm.customer.name!</h1>
+
+@today() = {
+  @(new java.util.Date().toString())
+}
+
+<ul>
+@for(order <- cm.order.itens) {
+  <li> @today [@order.numberOfItens]  @order.description </li>
+}
+</ul>
+
+@*********************
+* This is a comment *
+*********************@
+
+@if( 1 == 1 ){
+  <b>1==1</b>
+}else{
+  <b>What the hell?</b>
+}

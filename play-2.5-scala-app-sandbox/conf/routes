@@ -63,3 +63,13 @@ GET /comet-json   controllers.CometController.cometJson
 
 GET /websockets-index   controllers.WebSocketsController.index
 GET /websockets-ws      controllers.WebSocketsController.socket
+
+GET /tw-list    controllers.TwilController.list
+GET /tw-layout  controllers.TwilController.home
+GET /tw-tags    controllers.TwilController.tags
+
+#
+# Play FORM 
+#
+GET /form  controllers.ContactController.form
+
