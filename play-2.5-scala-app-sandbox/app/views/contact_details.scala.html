@@ -1,0 +1,16 @@
+@(id: Option[Long],contact:Form[Contact])(implicit flash:Flash)
+
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@helper.form(action = routes.ContactController.details(0) ) {
+@helper.inputText(contact("firstname"), '_label -> "First Name")
+@helper.inputText(contact("lastname"), '_label -> "Last Name")
+@helper.inputText(contact("company"), '_label -> "Description")
+
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary">
+    @if(id.isDefined) { Update Contact } else { New Contact }
+  </button>
+</div>
+}

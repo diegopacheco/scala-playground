@@ -68,8 +68,14 @@ GET /tw-list    controllers.TwilController.list
 GET /tw-layout  controllers.TwilController.home
 GET /tw-tags    controllers.TwilController.tags
 
+
 #
-# Play FORM 
+# Complete GRUD
 #
-GET /form  controllers.ContactController.form
+GET  /contact              controllers.ContactController.index
+GET  /contact/add          controllers.ContactController.blank
+POST /contact/             controllers.ContactController.insert
+POST /contact/:id          controllers.ContactController.update(id:Long)
+POST /contact/:id/delete   controllers.ContactController.delete(id:Long)
+GET  /contact/details/:id  controllers.ContactController.details(id:Long)
 
