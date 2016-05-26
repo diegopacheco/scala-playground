@@ -1,0 +1,7 @@
+success.delete = Contact ‘{0}’ deleted!
+success.insert = Contact ‘{0}’ added!
+success.update = Contact ‘{0}’ updated!
+
+error.notFound = Contact with ID {0,number,0} not found
+error.number = Not a number
+error.required = Missing value

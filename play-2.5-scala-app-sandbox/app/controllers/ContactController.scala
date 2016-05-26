@@ -22,7 +22,7 @@ class ContactController @Inject() (val messagesApi:MessagesApi) extends Controll
 
   def index = Action { implicit request =>
     Logger.info("index called. ")
-    Ok(views.html.contact_details(None, null))
+    Ok(views.html.contact_index(Seq(Contact("", "", None))))
   }
 
   def blank = Action { implicit request =>
@@ -42,7 +42,7 @@ class ContactController @Inject() (val messagesApi:MessagesApi) extends Controll
         BadRequest(views.html.contact_details(None, form))
       },
       contact => {
-        Redirect(routes.ContactController.details(0)).flashing("success" -> Messages("success.insert", "PRODUCT_HARD_CODED"))
+        Redirect(routes.ContactController.index).flashing("success" -> Messages("success.insert", "PRODUCT_HARD_CODED"))
       })
   }
 
@@ -54,12 +54,12 @@ class ContactController @Inject() (val messagesApi:MessagesApi) extends Controll
       },
       contact => {
         //contact.update(id, product)
-        Redirect(routes.ContactController.details(0)).flashing("success" -> Messages("success.update", contact.firstname))
+        Redirect(routes.ContactController.index).flashing("success" -> Messages("success.update", contact.firstname))
       })
   }
 
   def delete(id: Long)= Action {
-    Redirect(routes.ContactController.details(0)).flashing("success" -> Messages("success.delete", id))
+    Redirect(routes.ContactController.index).flashing("success" -> Messages("success.delete", id))
 //    Contacts.find(id).map { product =>
 //      Products.delete(id)
 //      Redirect(routes.Application.index).flashing("success" -> Messages("success.delete", product.name))
