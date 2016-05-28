@@ -3,7 +3,7 @@
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
 
-@main("Contact: " + contact("firstname").value.getOrElse("")) {
+@contact_main("Contact: " + contact("firstname").value.getOrElse("")) {
 
 	 @if(contact.hasErrors) {
 		   <div class="alert alert-error">
