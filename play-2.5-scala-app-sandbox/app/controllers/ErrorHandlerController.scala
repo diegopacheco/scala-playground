@@ -21,6 +21,7 @@ class ErrorHandler extends HttpErrorHandler {
       InternalServerError("CUSTON - A server error occurred: " + exception.getMessage)
     )
   }
+  
 }
 
 @Singleton

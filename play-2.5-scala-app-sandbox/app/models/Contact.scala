@@ -1,8 +1,9 @@
 package models
 
-case class Contact(firstname: String,
-                   lastname: String,
-                   company: Option[String])
+case class Contact(var firstname: String,
+                   var  lastname: String,
+                   var  company: Option[String],
+                   var  id:Option[Long] = Some(-1))
 
 object Contact {
   def save(contact: Contact): Int = 99

@@ -79,5 +79,5 @@ POST /contact/:id          controllers.ContactController.update(id:Long)
 POST /contact/:id/delete   controllers.ContactController.delete(id:Long)
 GET  /contact/details/:id  controllers.ContactController.details(id:Long)
 
-GET     /assets/*file      controllers.Assets.at(path="/public", file)
+GET  /assets/*file         controllers.Assets.at(path="/public", file)
 

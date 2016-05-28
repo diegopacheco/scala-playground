@@ -2,8 +2,6 @@
 
 @main("Contacts") {
 
-  <p><a href="@routes.ContactController.blank" class="btn btn-success"><i class="icon-plus icon-white"></i> Add Contact</a></p>
-
   @if(!contacts.isEmpty) {
     <table class="table table-striped">
       <tr>
@@ -14,11 +12,11 @@
       </tr>
     @for(contact <- contacts) {
       <tr>
-        <td><a href="@routes.ContactController.details(0)">@contact.firstname</a></td>
-        <td>@contact.firstname</td>
+        <td><a href="@routes.ContactController.details(contact.id.get)">@contact.firstname</a></td>
         <td>@contact.lastname</td>
+        <td>@contact.company</td>
         <td>
-          <form method="post" action="@routes.ContactController.delete(0)">
+          <form method="post" action="@routes.ContactController.delete(contact.id.get)">
             <button class="btn btn-link" type="submit"><i class="icon-trash"></i> Delete</button>
           </form>
         </td>
@@ -26,4 +24,7 @@
     }
     </table>
   }
+  
+  <p><a href="@routes.ContactController.blank" class="btn btn-success"><i class="icon-plus icon-white"></i>Add Contact</a></p>
+  
 }

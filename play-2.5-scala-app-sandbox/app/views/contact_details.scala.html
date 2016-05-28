@@ -15,7 +15,7 @@
 	@helper.form(action = if (id.isDefined) routes.ContactController.update(id.get) else routes.ContactController.insert()) {
 	@helper.inputText(contact("firstname"), '_label -> "First Name")
 	@helper.inputText(contact("lastname"), '_label -> "Last Name")
-	@helper.inputText(contact("company"), '_label -> "Description")
+	@helper.inputText(contact("company"), '_label -> "Company")
 	
 		<div class="form-actions">
 		  <button type="submit" class="btn btn-primary">

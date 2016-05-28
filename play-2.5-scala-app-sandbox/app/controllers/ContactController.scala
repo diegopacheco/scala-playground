@@ -10,28 +10,34 @@ import models.Contact
 import play.api.i18n.Messages
 import play.api.i18n.I18nSupport
 import play.api.i18n.MessagesApi
+import services.ContactService
+import services.IContactService
 
 @Singleton
-class ContactController @Inject() (val messagesApi:MessagesApi) extends Controller with I18nSupport{
+class ContactController @Inject() (val messagesApi:MessagesApi, val service:IContactService) extends Controller with I18nSupport{
 
   val contactForm: Form[Contact] = Form(
     mapping(
       "firstname" -> nonEmptyText,
-      "lastname" -> nonEmptyText,
-      "company" -> optional(text))(models.Contact.apply)(models.Contact.unapply))
+      "lastname"  -> nonEmptyText,
+      "company"   -> optional(text),
+      "id"        -> optional(longNumber)  
+    )(models.Contact.apply)(models.Contact.unapply))
 
   def index = Action { implicit request =>
-    Logger.info("index called. ")
-    Ok(views.html.contact_index(Seq(Contact("", "", None))))
+    val contacts = service.getAll().getOrElse(Seq(Contact("","",None)))
+    Logger.info("index called. Contacts: " + contacts)
+    Ok(views.html.contact_index(contacts))
   }
 
   def blank = Action { implicit request =>
+    Logger.info("blank called. ")
     Ok(views.html.contact_details(None, contactForm))
   }
 
   def details(id: Long) = Action { implicit request =>
     Logger.info("details called. id: " + id)
-    val contact = Contact("", "", None)
+    val contact = service.get(id).get
     Ok(views.html.contact_details(Some(id), contactForm.fill(contact)))
   }
 
@@ -42,7 +48,8 @@ class ContactController @Inject() (val messagesApi:MessagesApi) extends Controll
         BadRequest(views.html.contact_details(None, form))
       },
       contact => {
-        Redirect(routes.ContactController.index).flashing("success" -> Messages("success.insert", "PRODUCT_HARD_CODED"))
+        val id = service.insert(contact)
+        Redirect(routes.ContactController.index).flashing("success" -> Messages("success.insert", id))
       })
   }
 
@@ -53,17 +60,16 @@ class ContactController @Inject() (val messagesApi:MessagesApi) extends Controll
         Ok(views.html.contact_details(Some(id), form)).flashing("error" -> "Fix the errors!")
       },
       contact => {
-        //contact.update(id, product)
+        service.update(id,contact)
         Redirect(routes.ContactController.index).flashing("success" -> Messages("success.update", contact.firstname))
       })
   }
 
   def delete(id: Long)= Action {
-    Redirect(routes.ContactController.index).flashing("success" -> Messages("success.delete", id))
-//    Contacts.find(id).map { product =>
-//      Products.delete(id)
-//      Redirect(routes.Application.index).flashing("success" -> Messages("success.delete", product.name))
-//    }.getOrElse(NotFound)
+      service.get(id).map { contact =>
+        service.delete(id)
+        Redirect(routes.ContactController.index).flashing("success" -> Messages("success.delete", contact.firstname))
+      }.getOrElse(NotFound)
   }
 
 }
