@@ -3,6 +3,9 @@
 
 # sbt specific
 .cache
+.cache-*
+*.sbtserver*
+*.log.*
 .history
 .lib/
 dist/*
