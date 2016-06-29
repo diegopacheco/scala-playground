@@ -1,10 +1,18 @@
 object AsgSimulator extends App {
- 
+    
+   import java.text.DecimalFormat
+
    def simulate(users:Int, boxes:Int, fx:Double,up:Double,down:Double):Double = {
       val diff = users / (boxes * fx) 
       val action = shouldScale(diff,up,down)
       val capacity = boxes * fx
-      println(s"Users: $users Boxes: $boxes Result: $diff Will: $action Capacity: $capacity ")
+
+      val formatedUsers    = users.toString.padTo(6, ' ')
+      val formatedBoxes    = boxes.toString.padTo(3, ' ')
+      val formatedDiff     = new DecimalFormat("#.##").format(diff).padTo(4, ' ')
+      val formatedAction   = action.padTo(5, ' ')
+      val formatedCapacity = capacity.toInt.toString.padTo(6, ' ')
+      println(s"Live Users: $formatedUsers Boxes: $formatedBoxes Capacity: $formatedCapacity Diff: $formatedDiff  Will: $formatedAction  ")
       diff
    }
 
@@ -32,6 +40,8 @@ object AsgSimulator extends App {
    simulate(10000, 5,  fx,up,down)
    simulate(20000, 10, fx,up,down)
    simulate(200  , 10, fx,up,down)
+   simulate(8000 , 1,  fx,up,down)
+   simulate(1000 , 10, fx,up,down)
 
 }
 
