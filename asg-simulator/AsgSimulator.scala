@@ -27,8 +27,12 @@ object AsgSimulator extends App {
    val down = 0.6
    println(s"Simulation Thresholds (Up: $up Down: $down - Fx: $fx) formula f(Scale)=Users/(boxes*Fx): ")  
 
+   simulate(1000 , 1,  fx,up,down)
+   simulate(1800 , 1,  fx,up,down)
+   simulate(1900 , 1,  fx,up,down)   
    simulate(2000 , 1,  fx,up,down)
    simulate(3000 , 1,  fx,up,down)
+   simulate(4000 , 1,  fx,up,down)   
    simulate(3000 , 2,  fx,up,down)
    simulate(4000 , 2,  fx,up,down)
    simulate(5000 , 2,  fx,up,down)
