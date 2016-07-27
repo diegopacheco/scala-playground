@@ -1,0 +1,16 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/scala"/>
+  <classpathentry kind="src" path="src/main/resources"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.typesafe.slick/slick_2.11/bundles/slick_2.11-3.1.1.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.10.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.typesafe/config/bundles/config-1.2.1.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/org.reactivestreams/reactive-streams/jars/reactive-streams-1.0.0.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/org.slf4j/slf4j-nop/jars/slf4j-nop-1.6.4.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.typesafe.slick/slick-hikaricp_2.11/bundles/slick-hikaricp_2.11-3.1.1.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.zaxxer/HikariCP-java6/bundles/HikariCP-java6-2.3.7.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.19.0-GA.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-6.0.3.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
