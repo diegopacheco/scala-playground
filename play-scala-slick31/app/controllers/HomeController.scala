@@ -5,14 +5,24 @@ import javax.inject._
 import play.api._
 import play.api.mvc._
 import models.Cat
+import dao.OwnerDAO
+import dao.CatOwnerDao
 
 @Singleton
-class HomeController @Inject() (catDao: CatDAO)  extends Controller {
+class HomeController @Inject() (catDao: CatDAO, ownerDao:OwnerDAO, catOwnersDao:CatOwnerDao)  extends Controller {
   
   import play.api.libs.concurrent.Execution.Implicits.defaultContext
   
   def list =  Action.async { implicit request =>
     catDao.all().map { x => Ok(x.toString()) }
+  }
+  
+  def listOwners =  Action.async { implicit request =>
+    ownerDao.all().map { x => Ok(x.toString()) }
+  }
+  
+  def listCatsOwners =  Action.async { implicit request =>
+    catOwnersDao.catsWithOwners().map { x => Ok(x.toString()) }
   }
   
   def search(searchName:String) =  Action.async { implicit request =>

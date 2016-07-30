@@ -17,6 +17,9 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 #
 
 GET /cats           		  controllers.HomeController.list
+GET /owners           		  controllers.HomeController.listOwners
+GET /catsOwners           	  controllers.HomeController.listCatsOwners
+
 GET /addCat/:name   		  controllers.HomeController.add(name:String)
 GET /search/:name   		  controllers.HomeController.search(name:String)
 GET /del/:name      		  controllers.HomeController.delete(name:String)
