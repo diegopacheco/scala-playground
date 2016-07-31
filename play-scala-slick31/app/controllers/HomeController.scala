@@ -17,6 +17,10 @@ class HomeController @Inject() (catDao: CatDAO, ownerDao:OwnerDAO, catOwnersDao:
     catDao.all().map { x => Ok(x.toString()) }
   }
   
+  def listCatsSQL(searchName:String) =  Action.async { implicit request =>
+    catDao.fromSQL(searchName).map { x => Ok(x.toString()) }
+  }
+  
   def listOwners =  Action.async { implicit request =>
     ownerDao.all().map { x => Ok(x.toString()) }
   }

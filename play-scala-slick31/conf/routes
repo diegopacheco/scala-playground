@@ -20,6 +20,7 @@ GET /cats           		  controllers.HomeController.list
 GET /owners           		  controllers.HomeController.listOwners
 GET /catsOwners           	  controllers.HomeController.listCatsOwners
 
+GET /listCatsSQL/:name        controllers.HomeController.listCatsSQL(name:String)
 GET /addCat/:name   		  controllers.HomeController.add(name:String)
 GET /search/:name   		  controllers.HomeController.search(name:String)
 GET /del/:name      		  controllers.HomeController.delete(name:String)
