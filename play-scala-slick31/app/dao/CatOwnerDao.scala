@@ -27,21 +27,8 @@ class CatOwnerDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvid
        def * = (ownerID, catID) <> (OwnerCat.tupled, OwnerCat.unapply _)
      }
      
-     class CatsTable(tag: Tag) extends Table[Cat](tag, "Cat") {
-       def id   = column[Int]("ID", O.PrimaryKey)
-       def name = column[String]("NAME")
-       def color = column[String]("COLOR")
-       def * = (id,name, color) <> (Cat.tupled, Cat.unapply _)
-     }
-  
-    class OwnersTable(tag: Tag) extends Table[Owner](tag, "Owner") {
-      def id   = column[Int]("ID", O.PrimaryKey)
-      def name = column[String]("NAME")
-      def * = (id, name) <> (Owner.tupled, Owner.unapply _)
-    }
-    
-    val Cats = TableQuery[CatsTable]
-    val Owners = TableQuery[OwnersTable]
+    val Cats = new CatDAO(dbConfigProvider).toTable
+    val Owners = new OwnerDAO(dbConfigProvider).toTable
     val CatOwners = TableQuery[CatOwnersTable]
     
 //    val leftOuterJoin = for {

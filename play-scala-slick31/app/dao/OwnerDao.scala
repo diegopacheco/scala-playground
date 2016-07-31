@@ -36,4 +36,6 @@ class OwnerDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
   def insert(owner:Owner): Future[Unit] = db.run(Owners += owner).map { _ => () }
   
+  def toTable = TableQuery[OwnersTable]
+  
 }

@@ -43,4 +43,6 @@ class CatDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) e
     def * = (id, name, color) <> (Cat.tupled, Cat.unapply _)
   }
   
+  def toTable = TableQuery[CatsTable]
+  
 }
