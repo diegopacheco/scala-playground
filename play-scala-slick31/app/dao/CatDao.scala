@@ -12,7 +12,7 @@ import slick.jdbc.GetResult
 class CatDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends HasDatabaseConfigProvider[JdbcProfile] {
   
   import driver.api._
-
+  
   private val Cats = TableQuery[CatsTable]
 
   def all(): Future[Seq[Cat]] = db.run(Cats.result)
@@ -32,14 +32,15 @@ class CatDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) e
   def insert(cat: Cat): Future[Unit] = db.run(Cats += cat).map { _ => () }
 
   def fromSQL(name:String): Future[Seq[Cat]]= {
-    implicit val getCatResult = GetResult(r => Cat(r.<<, r.<<)) 
+    implicit val getCatResult = GetResult(r => Cat(r.<<,r.<<, r.<<)) 
     db.run(sql"""SELECT * FROM SLICK.Cat WHERE NAME = $name """.as[(Cat)])
   }
   
-  private class CatsTable(tag: Tag) extends Table[Cat](tag, "Cat") {
-    def name = column[String]("NAME", O.PrimaryKey)
+  class CatsTable(tag: Tag) extends Table[Cat](tag, "Cat") {
+    def id = column[Int]("ID", O.PrimaryKey)
+    def name = column[String]("NAME")
     def color = column[String]("COLOR")
-    def * = (name, color) <> (Cat.tupled, Cat.unapply _)
+    def * = (id, name, color) <> (Cat.tupled, Cat.unapply _)
   }
   
 }

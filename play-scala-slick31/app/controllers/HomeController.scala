@@ -12,6 +12,7 @@ import dao.CatOwnerDao
 class HomeController @Inject() (catDao: CatDAO, ownerDao:OwnerDAO, catOwnersDao:CatOwnerDao)  extends Controller {
   
   import play.api.libs.concurrent.Execution.Implicits.defaultContext
+  var id:Int = _
   
   def list =  Action.async { implicit request =>
     catDao.all().map { x => Ok(x.toString()) }
@@ -19,6 +20,10 @@ class HomeController @Inject() (catDao: CatDAO, ownerDao:OwnerDAO, catOwnersDao:
   
   def listCatsSQL(searchName:String) =  Action.async { implicit request =>
     catDao.fromSQL(searchName).map { x => Ok(x.toString()) }
+  }
+  
+  def catsWithOwnersSlick =  Action.async { implicit request =>
+    catOwnersDao.catsWithOwnersSlick.map { x => Ok(x.toString()) }
   }
   
   def listOwners =  Action.async { implicit request =>
@@ -42,7 +47,7 @@ class HomeController @Inject() (catDao: CatDAO, ownerDao:OwnerDAO, catOwnersDao:
   }
   
   def add(key:String) = Action.async {
-    val c:Cat = new Cat(key,"white")
+    val c:Cat = new Cat(id,key,"white")
     catDao.insert(c).map { x => Ok(x.toString()) }
   }
   
