@@ -41,7 +41,6 @@ class HomeController @Inject() extends Controller {
       exporter.setExporterInput(new SimpleExporterInput(jrprint));
       exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(os));      
       exporter.exportReport()
-      
       Ok.chunked( Enumerator.fromStream(new ByteArrayInputStream((os.asInstanceOf[ByteArrayOutputStream]).toByteArray())) )
        
     } catch {
