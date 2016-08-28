@@ -1,20 +1,46 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
 @(message: String)
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
 @main("Welcome to Play") {
+  
+  <!DOCTYPE html>
+  <meta charset="utf-8" />
+  <title>WebSocket Play Simple chat with Akka</title>
+  <script type="text/javascript">
+	  var output;
+	  var websocket = new WebSocket("ws://localhost:9000/ws2");
+	  
+	  function init(){
+	    output = document.getElementById("output");
+	    
+	    websocket.onmessage = function(evt) { 
+	    	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+ '</span>'); 
+		};
+		
+	    websocket.onerror = function(evt) { 
+	    	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
+	    };
+	  }
+	  
+	  function doSend(message){
+	    writeToScreen("SENT: " + message);
+	    websocket.send(message);
+	  }
+	
+	  function writeToScreen(message){
+	    var pre = document.createElement("p");
+	    pre.style.wordWrap = "break-word";
+	    pre.innerHTML = message;
+	    output.appendChild(pre);
+	  }
+	
+	  window.addEventListener("load", init, false);
+  </script>
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+  <h2>WebSocket Play Simple chat with Akka</h2>
+  <div id="output"></div>    
 
+  user:	   <input type="text" name="txtUser" id="txtUser" /> <BR>
+  message: <input type="text" name="txtMessage" id="txtMessage" /> <BR>
+  <input type="button" name="btnSendMsg" id="btnSendMsg" onclick="doSend( document.getElementById('txtUser').value + ':' + document.getElementById('txtMessage').value );" value="send!" /> 
+  	
 }
