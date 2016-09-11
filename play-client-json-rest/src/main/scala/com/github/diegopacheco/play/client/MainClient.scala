@@ -10,6 +10,8 @@ import akka.stream.scaladsl._
 import scala.concurrent.ExecutionContext
 import akka.stream.ActorMaterializer
 import java.io.File
+import scala.math.BigInt
+import scala.math.BigDecimal
 
 case class Place(name:String,location:Location)
 case class Location(lat:Double,long:Double)
@@ -83,6 +85,34 @@ object MainClient extends App {
       }
   }
   
+  //
+  // Backpressure
+  //
+  import rx.lang.scala.Observable
+  import scala.util.Random.nextDouble
+  import scala.concurrent.duration._
+  import rx.lang.scala.subjects.PublishSubject
+  import rx.lang.scala.schedulers.NewThreadScheduler
+  
+  var doubleSubject = PublishSubject.apply[Double]()
+  Future {
+       var i:BigDecimal = BigDecimal(1)
+       while(i.doubleValue() <= 99999){
+         Thread.sleep(100)
+         doubleSubject.onNext(i.toDouble)
+         i = BigDecimal(i.doubleValue() + 1) 
+       }
+  }
+  
+  Observable.create(doubleSubject.subscribe).
+            subscribeOn(NewThreadScheduler()).
+            //debounce(1 seconds).
+            //throttleWithTimeout(2 seconds).
+            //sample(1 seconds).
+            subscribe(x => println("stream: " + x) )
+  
+  Thread.sleep(8000)
+
   //
   // end
   //

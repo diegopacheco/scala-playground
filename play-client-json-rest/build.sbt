@@ -13,4 +13,4 @@ resolvers += "amateras-repo" at "http://amateras.sourceforge.jp/mvn/"
 
 libraryDependencies += "com.typesafe.play" % "play-ws_2.11" % "2.5.6"
 libraryDependencies += "com.ning" % "async-http-client" % "1.9.39"
-
+libraryDependencies += "com.netflix.rxjava" % "rxjava-scala" % "0.20.4"

@@ -63,6 +63,8 @@
   <classpathentry kind="lib" path="/home/diego/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar"/>
   <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.ning/async-http-client/jars/async-http-client-1.9.39.jar"/>
   <classpathentry kind="lib" path="/home/diego/.ivy2/cache/io.netty/netty/bundles/netty-3.10.5.Final.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.netflix.rxjava/rxjava-scala/jars/rxjava-scala-0.20.4.jar"/>
+  <classpathentry kind="lib" path="/home/diego/.ivy2/cache/com.netflix.rxjava/rxjava-core/jars/rxjava-core-0.20.4.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="output" path="bin"/>
 </classpath>
