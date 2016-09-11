@@ -24,13 +24,15 @@ object LeakyBucketMain extends App {
                     var numberToLeak:Long = deltaT / _MS_BETWEEN_DROP_LEAKS
                     if (numberToLeak > 0) { //now go and do the leak
                         if (numDropsInBucket <= numberToLeak) {
-                            numDropsInBucket = 0
-                        } else {
                             numDropsInBucket -= numberToLeak.toInt
+                        } else {
+                            numDropsInBucket = 0
                         }
                         timeOfLastDropLeak = now
                     }
-                }
+                }else{
+		   timeOfLastDropLeak = now
+		}
                 if (numDropsInBucket < rate) {
                     numDropsInBucket = numDropsInBucket + 1 
                     return true; // drop added
