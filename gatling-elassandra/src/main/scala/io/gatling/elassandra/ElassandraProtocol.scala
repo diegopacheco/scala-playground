@@ -8,6 +8,7 @@ import com.datastax.driver.core.ResultSet
 import com.datastax.driver.core.Row
 import com.datastax.driver.core.Session
 import java.util.UUID
+import java.util.Arrays
 
 class ElassandraProtocol(clusterName:String, 
     clusterContactPoint:String, 
@@ -22,6 +23,7 @@ class ElassandraProtocol(clusterName:String,
   var session:Session = null
   var readPstmt:PreparedStatement = null
   var writePstmt:PreparedStatement = null
+  var readAllPstmt:PreparedStatement = null
   
   init()
   
@@ -42,16 +44,37 @@ class ElassandraProtocol(clusterName:String,
       return "ok"
 	}
   
+    def readAll():String = {
+      val bStmt:BoundStatement = readAllPstmt.bind()
+      bStmt.setConsistencyLevel(this.readConsistencyLevel)
+      val rs:ResultSet = session.execute(bStmt)
+  
+      val result:java.util.List[Row] = rs.all()
+      if (!result.isEmpty()){
+          if (result.size() != 1) 
+              throw new Exception("Num Cols returned not ok " + result.size())
+      }
+      else {
+          return null
+      }
+      return "ok"
+	}
+  
   def write():String = {
         val key:String = UUID.randomUUID().toString()
 	      val bStmt:BoundStatement = writePstmt.bind()
         bStmt.setString("\"_id\"", key)
-        bStmt.setString("name", UUID.randomUUID().toString())
+        bStmt.setList("name", Arrays.asList(UUID.randomUUID().toString()))
         bStmt.setConsistencyLevel(this.writeConsistencyLevel)
 
         session.execute(bStmt)
         return key;  			
 	}
+  
+  def shutdown():Unit = {
+      this.session.close()
+      this.cluster.close()
+  }
   
   def init():Unit = {
         val cluster = Cluster.builder()
@@ -67,7 +90,8 @@ class ElassandraProtocol(clusterName:String,
         initTables(session)
 
         this.writePstmt = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
-        this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where _id = ?")
+        this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
+        this.readAllPstmt = session.prepare("SELECT * From " + tableName)
   }
   
   def initKeyspace(session:Session):Unit = {
@@ -90,8 +114,8 @@ class ElassandraProtocol(clusterName:String,
         		       " AND read_repair_chance = 0.0 " + 
         		       " AND speculative_retry = '99.0PERCENTILE'; ");
         
-        session.execute("CREATE CUSTOM INDEX IF NOT EXISTS elastic_external_name_idx ON customer.external (name) " +  
-                        " USING 'org.elasticsearch.cassandra.index.ExtendedElasticSecondaryIndex';");
+        session.execute("CREATE CUSTOM INDEX IF NOT EXISTS elastic_external_name_idx ON customer.external (name) "   
+                        + " USING 'org.elasticsearch.cassandra.index.ExtendedElasticSecondaryIndex';");
     }
   
 }
@@ -101,6 +125,8 @@ object ElassandraProtocolMainTest extends App {
     val ep:ElassandraProtocol = new ElassandraProtocol("Localhost","127.0.0.1", "customer", "external" )
     val r = ep.write()
     val r2 = ep.read(r)
+    ep.shutdown()
+    
     println(r2)
   
 }

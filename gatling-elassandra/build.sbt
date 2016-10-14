@@ -12,3 +12,11 @@ resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositor
 libraryDependencies += "org.scala-lang.modules" % "scala-xml_2.11" % "1.0.5"
 libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.0"
 
+// META-INF discarding
+mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+   {
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+   }
+}
+
