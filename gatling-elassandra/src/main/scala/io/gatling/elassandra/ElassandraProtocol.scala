@@ -44,20 +44,16 @@ class ElassandraProtocol(clusterName:String,
       return "ok"
 	}
   
-    def readAll():String = {
+  def readAll():String = {
       val bStmt:BoundStatement = readAllPstmt.bind()
       bStmt.setConsistencyLevel(this.readConsistencyLevel)
       val rs:ResultSet = session.execute(bStmt)
   
       val result:java.util.List[Row] = rs.all()
       if (!result.isEmpty()){
-          if (result.size() != 1) 
-              throw new Exception("Num Cols returned not ok " + result.size())
+          return result.size() + ""
       }
-      else {
-          return null
-      }
-      return "ok"
+      return null 
 	}
   
   def write():String = {
