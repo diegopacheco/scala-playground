@@ -131,11 +131,17 @@ class ElassandraProtocol(clusterName:String,
 
 object ElassandraProtocolMainTest extends App {
     
-    val ep:ElassandraProtocol = new ElassandraProtocol("Localhost","127.0.0.1", "customer", "external" )
+    val ep:ElassandraProtocol = new ElassandraProtocol("Localhost","172.28.198.16", "customer", "external" )
+    
+    ep.open()
     val r = ep.write()
     val r2 = ep.read(r)
-    ep.shutdown()
-    
     println(r2)
-  
+    ep.close()
+    
+    ep.open()
+    println("Read All " + ep.readAll())
+    ep.close()
+    
+    ep.shutdown()
 }
