@@ -98,6 +98,7 @@ class ElassandraProtocol(clusterName:String,
         val session = cluster.connect()
         this.session = session
         
+        session.execute("Use " + keyspaceName);
         this.writePstmt = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
         this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
         this.readAllPstmt = session.prepare("SELECT * From " + tableName)
