@@ -68,8 +68,11 @@ class ElassandraProtocol(clusterName:String,
 	}
   
   def shutdown():Unit = {
-      this.session.close()
       this.cluster.close()
+  }
+  
+  def close():Unit = {
+      this.session.close()
   }
   
   def init():Unit = {
@@ -85,6 +88,15 @@ class ElassandraProtocol(clusterName:String,
         initKeyspace(session)
         initTables(session)
 
+        this.writePstmt = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
+        this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
+        this.readAllPstmt = session.prepare("SELECT * From " + tableName)
+  }
+  
+   def open():Unit = {
+        val session = cluster.connect()
+        this.session = session
+        
         this.writePstmt = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
         this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
         this.readAllPstmt = session.prepare("SELECT * From " + tableName)
