@@ -10,6 +10,7 @@ import com.datastax.driver.core.Session
 import java.util.UUID
 import java.util.Arrays
 import com.datastax.driver.core.ProtocolVersion
+import java.util.function.Consumer
 
 class ElassandraProtocol(clusterName:String, 
     clusterContactPoint:String, 
@@ -45,16 +46,25 @@ class ElassandraProtocol(clusterName:String,
       return "ok"
 	}
   
-  def readAll():String = {
-      val bStmt:BoundStatement = readAllPstmt.bind()
-      bStmt.setConsistencyLevel(this.readConsistencyLevel)
-      val rs:ResultSet = session.execute(bStmt)
+  implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
+    override def accept(arg: A): Unit = function.apply(arg)
+  }
   
-      val result:java.util.List[Row] = rs.all()
-      if (!result.isEmpty()){
-          return result.size() + ""
+  def readAll():String = {
+      try{
+        val bStmt:BoundStatement = readAllPstmt.bind()
+        bStmt.setConsistencyLevel(this.readConsistencyLevel)
+        val rs:ResultSet = session.execute(bStmt)
+    
+        val result:java.util.List[Row] = rs.all()
+        if (!result.isEmpty()){
+            return result.size() + ""
+        }
+        return null        
+      }catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) ) ; ""  
       }
-      return null 
 	}
   
   def write():String = {
