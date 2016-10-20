@@ -9,6 +9,7 @@ import com.datastax.driver.core.Row
 import com.datastax.driver.core.Session
 import java.util.UUID
 import java.util.Arrays
+import com.datastax.driver.core.ProtocolVersion
 
 class ElassandraProtocol(clusterName:String, 
     clusterContactPoint:String, 
@@ -77,6 +78,7 @@ class ElassandraProtocol(clusterName:String,
   
   def init():Unit = {
         val cluster = Cluster.builder()
+                .withProtocolVersion(ProtocolVersion.V2)
                 .withClusterName(clusterName)
                 .addContactPoint(clusterContactPoint)
                 .build()
