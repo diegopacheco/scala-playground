@@ -81,11 +81,26 @@ class ElassandraProtocol(clusterName:String,
 	}
   
   def shutdown():Unit = {
+    try{
       this.cluster.close()
+    }
+    catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
+      }
   }
   
   def close():Unit = {
+    try{
       this.session.close()
+    } catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
+      }
   }
   
   def init():Unit = {
