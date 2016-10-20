@@ -141,5 +141,13 @@ object ElassandraProtocolMainTest extends App {
     println("Read All " + ep.readAll())
     ep.close()
     
+    ep.open()
+    println("Read All " + ep.readAll())
+    ep.close()
+    
+    ep.open()
+    println("Read All " + ep.readAll())
+    ep.close()
+    
     ep.shutdown()
 }
