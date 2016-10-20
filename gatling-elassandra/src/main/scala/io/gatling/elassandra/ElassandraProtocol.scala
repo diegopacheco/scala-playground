@@ -13,131 +13,51 @@ import com.datastax.driver.core.ProtocolVersion
 import java.util.function.Consumer
 import com.datastax.driver.core.SocketOptions
 
-class ElassandraProtocol(clusterName:String, 
-    clusterContactPoint:String, 
-    keyspaceName:String, 
-    tableName:String
-) {  
-  
-  val writeConsistencyLevel = ConsistencyLevel.LOCAL_ONE
-  val readConsistencyLevel =  ConsistencyLevel.LOCAL_ONE
-  
-  var cluster:Cluster = null
-  var session:Session = null
-  var readPstmt:PreparedStatement = null
-  var writePstmt:PreparedStatement = null
-  var readAllPstmt:PreparedStatement = null
-  
-  init()
-  
-  def read(key:String):String = {
-      val bStmt:BoundStatement = readPstmt.bind()
-      bStmt.setString("\"_id\"", key)
-      bStmt.setConsistencyLevel(this.readConsistencyLevel)
-      val rs:ResultSet = session.execute(bStmt)
-  
-      val result:java.util.List[Row] = rs.all()
-      if (!result.isEmpty()){
-          if (result.size() != 1) 
-              throw new Exception("Num Cols returned not ok " + result.size())
-      }
-      else {
-          return null
-      }
-      return "ok"
-	}
-  
-  implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
-    override def accept(arg: A): Unit = function.apply(arg)
-  }
-  
-  def readAll():String = {
-      try{
-        val bStmt:BoundStatement = readAllPstmt.bind()
-        bStmt.setConsistencyLevel(this.readConsistencyLevel)
-        val rs:ResultSet = session.execute(bStmt)
+object ElassandraCassClusterManager {
     
-        val result:java.util.List[Row] = rs.all()
-        if (!result.isEmpty()){
-            return result.size() + ""
-        }
-      }catch{
-        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
-            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
-            throw e
-        case e:Throwable => throw e    
-      }
-      return null        
-	}
-  
-  def write():String = {
-        val key:String = UUID.randomUUID().toString()
-	      val bStmt:BoundStatement = writePstmt.bind()
-        bStmt.setString("\"_id\"", key)
-        bStmt.setList("name", Arrays.asList(UUID.randomUUID().toString()))
-        bStmt.setConsistencyLevel(this.writeConsistencyLevel)
-
-        session.execute(bStmt)
-        return key;  			
-	}
-  
-  def shutdown():Unit = {
-    try{
-      this.cluster.close()
+    implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
+      override def accept(arg: A): Unit = function.apply(arg)
     }
-    catch{
-        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
-            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
-            throw e
-        case e:Throwable => throw e    
+  
+    var cluster:Cluster = null
+    
+    var readPstmt:PreparedStatement = null
+    var writePstmt:PreparedStatement = null
+    var readAllPstmt:PreparedStatement = null
+  
+    def init(keyspaceName:String,clusterName:String,clusterContactPoint:String,tableName:String):Unit = {
+      synchronized{
+          if (cluster==null){
+             
+             cluster = Cluster.builder()
+                    .withProtocolVersion(ProtocolVersion.V3)
+                    .withSocketOptions(new SocketOptions().setConnectTimeoutMillis(20000))                
+                    .withClusterName(clusterName)
+                    .addContactPoint(clusterContactPoint)
+                    .build()
+             this.cluster = cluster
+             
+             val session = cluster.connect()
+            
+             initKeyspace(session,keyspaceName)
+             initTables(session,tableName)
+    
+             this.writePstmt   = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
+             this.readPstmt    = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
+             this.readAllPstmt = session.prepare("SELECT * From " + tableName)
+             
+             Unit
+          }
+    
       }
-  }
-  
-  def close():Unit = {
-    try{
-      this.session.close()
-    } catch{
-        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
-            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
-            throw e
-        case e:Throwable => throw e    
-      }
-  }
-  
-  def init():Unit = {
-        val cluster = Cluster.builder()
-                .withProtocolVersion(ProtocolVersion.V3)
-                .withSocketOptions(new SocketOptions().setConnectTimeoutMillis(60000))                
-                .withClusterName(clusterName)
-                .addContactPoint(clusterContactPoint)
-                .build()
-        val session = cluster.connect()
-        
-        this.cluster = cluster
-        this.session = session
-        
-        initKeyspace(session)
-        initTables(session)
-
-        this.writePstmt = session.prepare("INSERT INTO "+ tableName +" (\"_id\", name) VALUES (?, ?)")
-        this.readPstmt = session.prepare("SELECT * From "+ tableName +" Where \"_id\" = ?")
-        this.readAllPstmt = session.prepare("SELECT * From " + tableName)
-        close()
-  }
-  
-   def open():Unit = {
-        val session = cluster.connect()
-        this.session = session
-        
-        session.execute("Use " + keyspaceName);
-  }
-  
-  def initKeyspace(session:Session):Unit = {
+    }
+    
+   def initKeyspace(session:Session,keyspaceName:String):Unit = {
      session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspaceName +" WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': '1'}  AND durable_writes = true;");
      session.execute("Use " + keyspaceName);
-  }
+   }
     
-  def initTables(session:Session):Unit = {
+  def initTables(session:Session,tableName:String):Unit = {
         session.execute("CREATE TABLE IF NOT EXISTS "+ tableName +" (\"_id\" text PRIMARY KEY, name list<text>) WITH bloom_filter_fp_chance = 0.01 " + 
         		       " AND caching = '{\"keys\":\"ALL\", \"rows_per_partition\":\"NONE\"}'" + 
         		       " AND comment = 'Auto-created by Elassandra' " + 
@@ -156,29 +76,125 @@ class ElassandraProtocol(clusterName:String,
                         + " USING 'org.elasticsearch.cassandra.index.ExtendedElasticSecondaryIndex';");
     }
   
+    def shutdown():Unit = {
+      try{
+        cluster.close()
+      }
+      catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
+      }
+    }
+  
+}
+
+class ElassandraProtocol(clusterName:String, 
+    clusterContactPoint:String, 
+    keyspaceName:String, 
+    tableName:String
+) {  
+  
+  import ElassandraCassClusterManager._
+  
+  val writeConsistencyLevel = ConsistencyLevel.LOCAL_ONE
+  val readConsistencyLevel =  ConsistencyLevel.LOCAL_ONE
+  
+  init(keyspaceName,clusterName,clusterContactPoint,tableName)
+  
+  
+  def read(session:Session,key:String):String = {
+      val bStmt:BoundStatement = readPstmt.bind()
+      bStmt.setString("\"_id\"", key)
+      bStmt.setConsistencyLevel(this.readConsistencyLevel)
+      val rs:ResultSet = session.execute(bStmt)
+  
+      val result:java.util.List[Row] = rs.all()
+      if (!result.isEmpty()){
+          if (result.size() != 1) 
+              throw new Exception("Num Cols returned not ok " + result.size())
+      }
+      else {
+          return null
+      }
+      return "ok"
+	}
+  
+  def readAll(session:Session):String = {
+      try{
+        val bStmt:BoundStatement = readAllPstmt.bind()
+        bStmt.setConsistencyLevel(this.readConsistencyLevel)
+        val rs:ResultSet = session.execute(bStmt)
+    
+        val result:java.util.List[Row] = rs.all()
+        if (!result.isEmpty()){
+            return result.size() + ""
+        }
+      }catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
+      }
+      return null        
+	}
+  
+  def write(session:Session):String = {
+        val key:String = UUID.randomUUID().toString()
+	      val bStmt:BoundStatement = writePstmt.bind()
+        bStmt.setString("\"_id\"", key)
+        bStmt.setList("name", Arrays.asList(UUID.randomUUID().toString()))
+        bStmt.setConsistencyLevel(this.writeConsistencyLevel)
+
+        session.execute(bStmt)
+        return key;  			
+	}
+  
+  def close(session:Session):Unit = {
+    try{
+      session.close()
+    } catch{
+        case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
+      }
+  }
+  
+  def open():Session = {
+     val session = cluster.connect()
+     session.execute("Use " + keyspaceName)
+     session
+  }
+  
+  def shutdownCluster():Unit = {
+     shutdown()
+  }
+ 
 }
 
 object ElassandraProtocolMainTest extends App {
     
     val ep:ElassandraProtocol = new ElassandraProtocol("Localhost","172.28.198.16", "customer", "external" )
     
-    ep.open()
-    val r = ep.write()
-    val r2 = ep.read(r)
+    var session = ep.open()
+    val r = ep.write(session)
+    val r2 = ep.read(session,r)
     println(r2)
-    ep.close()
+    ep.close(session)
     
-    ep.open()
-    println("Read All " + ep.readAll())
-    ep.close()
+    session = ep.open()
+    println("Read All " + ep.readAll(session))
+    ep.close(session)
     
-    ep.open()
-    println("Read All " + ep.readAll())
-    ep.close()
+    session = ep.open()
+    println("Read All " + ep.readAll(session))
+    ep.close(session)
     
-    ep.open()
-    println("Read All " + ep.readAll())
-    ep.close()
+    session = ep.open()
+    println("Read All " + ep.readAll(session))
+    ep.close(session)
     
-    ep.shutdown()
+    ep.shutdownCluster()
 }
