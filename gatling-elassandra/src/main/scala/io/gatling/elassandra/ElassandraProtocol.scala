@@ -60,11 +60,13 @@ class ElassandraProtocol(clusterName:String,
         if (!result.isEmpty()){
             return result.size() + ""
         }
-        return null        
       }catch{
         case e:com.datastax.driver.core.exceptions.NoHostAvailableException => 
-            e.getErrors.values().forEach( (t:Throwable) => println(t) ) ; ""  
+            e.getErrors.values().forEach( (t:Throwable) => println(t) )  
+            throw e
+        case e:Throwable => throw e    
       }
+      return null        
 	}
   
   def write():String = {
