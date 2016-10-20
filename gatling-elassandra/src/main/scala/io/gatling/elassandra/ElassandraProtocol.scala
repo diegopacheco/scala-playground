@@ -11,6 +11,7 @@ import java.util.UUID
 import java.util.Arrays
 import com.datastax.driver.core.ProtocolVersion
 import java.util.function.Consumer
+import com.datastax.driver.core.SocketOptions
 
 class ElassandraProtocol(clusterName:String, 
     clusterContactPoint:String, 
@@ -105,7 +106,8 @@ class ElassandraProtocol(clusterName:String,
   
   def init():Unit = {
         val cluster = Cluster.builder()
-                .withProtocolVersion(ProtocolVersion.V2)
+                .withProtocolVersion(ProtocolVersion.V3)
+                .withSocketOptions(new SocketOptions().setConnectTimeoutMillis(60000))                
                 .withClusterName(clusterName)
                 .addContactPoint(clusterContactPoint)
                 .build()
