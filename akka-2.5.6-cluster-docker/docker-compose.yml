@@ -28,5 +28,5 @@ services:
     image: diegopacheco/akka-2-5-6-cluster-docker:1.0
     environment:
       CLUSTER_PORT: 0
-      CLUSTER_IP: "127.0.0.1"
+      CLUSTER_IP: c3
       SEED_PORT_1600_TCP_ADDR: seed
