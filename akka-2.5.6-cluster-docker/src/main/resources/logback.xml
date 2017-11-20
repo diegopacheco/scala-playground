@@ -1,0 +1,21 @@
+<configuration>
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%date{ISO8601} %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+  </appender>
+
+  <logger name="com.github.diegopacheco" level="debug" additivity="false">
+    <appender-ref ref="console" />
+  </logger>
+
+  <logger name="akka" level="info" additivity="false">
+    <appender-ref ref="console" />
+  </logger>
+
+  <root level="warn">
+    <appender-ref ref="console"/>
+  </root>
+
+</configuration>
