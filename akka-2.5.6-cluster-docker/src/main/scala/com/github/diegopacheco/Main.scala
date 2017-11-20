@@ -1,4 +1,4 @@
-package main
+package com.github.diegopacheco
 
 import akka.actor._
 import akka.cluster._

@@ -25,8 +25,7 @@ libraryDependencies ++= Seq (
 )
 
 maintainer := "Diego Pacheco <diego.pacheco.it@gmail.com>"
-dockerExposedPorts in Docker := Seq(1600)
-dockerEntrypoint in Docker := Seq("sh", "-c", "CLUSTER_IP=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1 }'` bin/clustering $*")
 dockerRepository := Some("diegopacheco")
 dockerBaseImage := "java"
 enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)
