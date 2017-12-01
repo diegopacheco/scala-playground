@@ -25,9 +25,9 @@ object ConcurrencyMain extends App {
  
   val stream:Future[Done] =
       Source(1 to 100000)
-        .via(stage("A"))
-        .via(stage("B"))
-        .via(stage("C"))
+        .via(stage("A")).async
+        .via(stage("B")).async
+        .via(stage("C")).async
         .runWith(Sink.ignore)
      
    stream.onComplete(_ => system.terminate())
