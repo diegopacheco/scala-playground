@@ -5,6 +5,7 @@ import akka.NotUsed
 object ConcurrencyMain extends App {
    
   import akka.Done
+  import scala.concurrent.duration._
   import akka.actor.ActorSystem
   import akka.stream._
   import akka.stream.scaladsl._
@@ -25,6 +26,7 @@ object ConcurrencyMain extends App {
  
   val stream:Future[Done] =
       Source(1 to 100000)
+        //.throttle(elements = 10, per = 10.second, maximumBurst = 10, ThrottleMode.shaping)
         .via(stage("A")).async
         .via(stage("B")).async
         .via(stage("C")).async
