@@ -1,0 +1,46 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/scala"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/nativelib_native0.3_2.11/srcs/nativelib_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/nativelib_native0.3_2.11/jars/nativelib_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/nativelib_native0.3_2.11/docs/nativelib_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/javalib_native0.3_2.11/srcs/javalib_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/javalib_native0.3_2.11/jars/javalib_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/javalib_native0.3_2.11/docs/javalib_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/auxlib_native0.3_2.11/srcs/auxlib_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/auxlib_native0.3_2.11/jars/auxlib_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/auxlib_native0.3_2.11/docs/auxlib_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/scalalib_native0.3_2.11/srcs/scalalib_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/scalalib_native0.3_2.11/jars/scalalib_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/scalalib_native0.3_2.11/docs/scalalib_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/test-interface_native0.3_2.11/srcs/test-interface_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/test-interface_native0.3_2.11/jars/test-interface_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/test-interface_native0.3_2.11/docs/test-interface_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/test-interface-serialization_native0.3_2.11/srcs/test-interface-serialization_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/test-interface-serialization_native0.3_2.11/jars/test-interface-serialization_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/test-interface-serialization_native0.3_2.11/docs/test-interface-serialization_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-native/test-interface-sbt-defs_native0.3_2.11/srcs/test-interface-sbt-defs_native0.3_2.11-0.3.7-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-native/test-interface-sbt-defs_native0.3_2.11/jars/test-interface-sbt-defs_native0.3_2.11-0.3.7.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-native/test-interface-sbt-defs_native0.3_2.11/docs/test-interface-sbt-defs_native0.3_2.11-0.3.7-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/diego/.ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar" kind="lib" path="/home/diego/.ivy2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/diego/.ivy2/cache/org.scala-sbt/test-interface/docs/test-interface-1.0-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
