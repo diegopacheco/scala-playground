@@ -1,5 +1,8 @@
 package com.github.diegopacheco.scala.sandbox.fp.cats.datatypes
 
+/**
+ * https://typelevel.org/cats/datatypes/eval.html
+ */
 object EvalMain extends App {
   
   import cats.Eval
