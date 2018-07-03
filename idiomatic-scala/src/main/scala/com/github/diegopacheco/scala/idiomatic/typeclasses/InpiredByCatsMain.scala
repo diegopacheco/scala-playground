@@ -28,6 +28,9 @@ object InpiredByCats extends App {
   }
   
   import ShowInstances._
+
+  ShowInterface.printWithShow("There we Go")
+  
   "Diego".printWithShow
   42.printWithShow
   
