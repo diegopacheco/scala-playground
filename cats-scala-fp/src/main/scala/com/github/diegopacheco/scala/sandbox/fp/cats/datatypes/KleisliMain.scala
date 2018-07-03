@@ -40,5 +40,5 @@ object KleisliMain extends App {
   val reciprocal: Kleisli[Option,Int,Double] = Kleisli((i: Int) => if (i != 0) Some(1.0 / i) else None)
 
   val parseAndReciprocal: Kleisli[Option,String,Double] = reciprocal.compose(parse)
-  
+  println(parseAndReciprocal.run("2"))
 }
