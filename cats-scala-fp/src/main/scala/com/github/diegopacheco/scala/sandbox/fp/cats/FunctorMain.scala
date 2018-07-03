@@ -53,4 +53,5 @@ object FunctorMain extends App {
   val listOption = List(Some(1), None, Some(2))
   println( Functor[List].compose[Option].map(listOption)(_ + 1) )
   
+  
 }
