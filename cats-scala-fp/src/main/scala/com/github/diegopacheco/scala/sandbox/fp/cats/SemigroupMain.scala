@@ -1,5 +1,15 @@
 package com.github.diegopacheco.scala.sandbox.fp.cats
 
+/*
+ * If a type A can form a Semigroup it has an associative binary operation.
+ * Associativity means the following equality must hold for any choice of x, y, and z.
+ * combine(x, combine(y, z)) = combine(combine(x, y), z)
+ * 
+ * trait Semigroup[A] {
+ *   def combine(x: A, y: A): A
+ * }
+ * 
+ */
 object SemigroupMain extends App {
 
   import cats.Semigroup
