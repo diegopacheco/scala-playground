@@ -1,4 +1,4 @@
-package com.github.diegopacheco.scala.sandbox.fp.cats
+package com.github.diegopacheco.scala.sandbox.fp.cats.typeclasses
 
 /**
  *

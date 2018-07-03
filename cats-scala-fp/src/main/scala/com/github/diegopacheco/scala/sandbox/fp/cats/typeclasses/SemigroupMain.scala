@@ -1,4 +1,4 @@
-package com.github.diegopacheco.scala.sandbox.fp.cats
+package com.github.diegopacheco.scala.sandbox.fp.cats.typeclasses
 
 /**
  * If a type A can form a Semigroup it has an associative binary operation.
