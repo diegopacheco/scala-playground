@@ -35,7 +35,9 @@ class BootstrapActor(context: ActorContext[String]) extends AbstractBehavior[Str
     }
 }
 
-object MainApp extends App {
-  val testSystem = ActorSystem(BootstrapActor(), "testSystem")
-  testSystem ! "start"
+object MainApp  {
+  def main(args:Array[String]):Unit = {
+    val testSystem = ActorSystem(BootstrapActor(), "testSystem")
+    testSystem ! "start"
+  }
 }
