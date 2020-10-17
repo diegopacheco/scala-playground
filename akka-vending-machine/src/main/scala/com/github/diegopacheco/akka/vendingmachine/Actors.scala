@@ -9,57 +9,65 @@ object VendingMachineActor {
 }
 
 class VendingMachineActor(context: ActorContext[ProductRequest]) extends AbstractBehavior[ProductRequest](context) {
+
+  var stock = collection.mutable.Map(
+    "Coke" -> 2,
+    "Sprite" -> 1,
+    "ChocolateBar" -> 1,
+    "GummyBearCandy" -> 1
+  )
+
   override def onMessage(request: ProductRequest): Behavior[ProductRequest] = {
     println(s"[${this.context.self.path.name}] A sale is comming up... ")
     request match {
-      case ProductRequest(c,receiptTo) =>
-        println(s"[${this.context.self.path.name}] Coke is always a good chose!")
-        receiptTo ! ProductReceipt(c)
-        Behaviors.same
-      case ProductRequest(s,receiptTo) =>
-        println(s"[${this.context.self.path.name}] Sprite is for the strong ones!")
-        receiptTo ! ProductReceipt(s)
-        Behaviors.same
-      case ProductRequest(c,receiptTo) =>
-        println(s"[${this.context.self.path.name}] Yummy! Chocolate is a good call!")
-        receiptTo ! ProductReceipt(c)
-        Behaviors.same
-      case ProductRequest(g,receiptTo) =>
-        println(s"[${this.context.self.path.name}] Gummy Bear Oh oh!")
-        receiptTo ! ProductReceipt(g)
+      case ProductRequest(product, receiptTo) =>
+        val item = product.getClass.getSimpleName
+        if (stock.get(item).get - 1 >= 0) {
+          stock(item) = stock.get(item).get - 1
+          println(s"[${this.context.self.path.name}] ${product.getMessage()}")
+          receiptTo ! ProductReceipt(product)
+        } else {
+          println(s"[${this.context.self.path.name}] Out of Stock for ${product}")
+          receiptTo ! OutOfStock(product)
+        }
+        println(s"[${this.context.self.path.name}] Sock: ${stock}")
         Behaviors.same
     }
   }
 }
 
 object BuyerActor {
-  def apply(): Behavior[ProductReceipt] =
+  def apply(): Behavior[Receipt] =
     Behaviors.setup(context => new BuyerActor(context))
 }
 
-class BuyerActor(context: ActorContext[ProductReceipt]) extends AbstractBehavior[ProductReceipt](context) {
-  override def onMessage(request: ProductReceipt): Behavior[ProductReceipt] =
+class BuyerActor(context: ActorContext[Receipt]) extends AbstractBehavior[Receipt](context) {
+  override def onMessage(request: Receipt): Behavior[Receipt] =
     request match {
       case ProductReceipt(p:Product) =>
         println(s"[${this.context.self.path.name}] OK - we got a receipt for a ${p}")
+        Behaviors.same
+      case OutOfStock(p:Product) =>
+        println(s"[${this.context.self.path.name}] Oh no! My favorite ${p} is not available :( ")
         Behaviors.same
     }
 }
 
 object BootStrappingActor {
-  def apply(): Behavior[Start] =
+  def apply(): Behavior[Order] =
     Behaviors.setup(context => new BootStrappingActor(context))
 }
 
-class BootStrappingActor(context: ActorContext[Start]) extends AbstractBehavior[Start](context) {
-  override def onMessage(msg:Start): Behavior[Start] =
+class BootStrappingActor(context: ActorContext[Order]) extends AbstractBehavior[Order](context) {
+
+  val vending:ActorRef[ProductRequest] = context.spawn(VendingMachineActor(),"vending-machine-actor")
+  println(s"[${this.context.self.path.name}] Got A VendingMachine ${vending.ref}")
+
+  override def onMessage(msg:Order): Behavior[Order] =
     msg match {
       case _ =>
-        val buyer:ActorRef[ProductReceipt] = context.spawn(BuyerActor(),"buyer-actor-" + msg.buyer)
+        val buyer:ActorRef[Receipt] = context.spawn(BuyerActor(),"buyer-actor-" + msg.buyer + s"-${System.nanoTime()}")
         println(s"[${this.context.self.path.name}] Got A buyer ${buyer.ref}")
-
-        val vending:ActorRef[ProductRequest] = context.spawn(VendingMachineActor(),"vending-machine-actor-" + msg.product.getClass.getSimpleName)
-        println(s"[${this.context.self.path.name}] Got A VendingMachine ${vending.ref}")
 
         vending ! ProductRequest(msg.product,buyer)
         Behaviors.same

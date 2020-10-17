@@ -5,9 +5,11 @@ import akka.actor.typed.{ActorSystem}
 object ActorSystemMainApp {
   def main(args:Array[String]):Unit = {
     implicit val actorSystem = ActorSystem(BootStrappingActor(), "VendingSystem")
-    val start = Start("Diego",Coke())
-    actorSystem ! start
-    actorSystem ! Start("Melina",Sprite())
-    actorSystem ! Start("Gandalfy",GummyBearCandy())
+    val firstOrder = Order("Diego",Coke())
+    actorSystem ! firstOrder
+    actorSystem ! firstOrder
+    actorSystem ! firstOrder
+    actorSystem ! Order("Melina",Sprite())
+    actorSystem ! Order("Gandalfy",GummyBearCandy())
   }
 }
