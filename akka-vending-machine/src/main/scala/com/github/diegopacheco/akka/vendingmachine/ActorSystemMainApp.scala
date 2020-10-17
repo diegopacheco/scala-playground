@@ -11,5 +11,10 @@ object ActorSystemMainApp {
     actorSystem ! firstOrder
     actorSystem ! Order("Melina",Sprite())
     actorSystem ! Order("Gandalfy",GummyBearCandy())
+
+    case class Playstation() extends Product{
+      override def getMessage(): String = ???
+    }
+    actorSystem ! Order("EvilGandalfyGamer", Playstation())
   }
 }

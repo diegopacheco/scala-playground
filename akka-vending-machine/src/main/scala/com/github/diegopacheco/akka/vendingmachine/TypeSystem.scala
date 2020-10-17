@@ -21,6 +21,7 @@ case class GummyBearCandy() extends Product{
 trait Receipt
 case class ProductReceipt(product:Product) extends Receipt
 case class OutOfStock(product:Product) extends Receipt
+case class ItemOutOfCatalog(product:Product) extends Receipt
 
 trait Request
 case class ProductRequest(product:Product,buyer:ActorRef[Receipt])
