@@ -89,11 +89,6 @@ class BootStrappingActor(context: ActorContext[Order]) extends AbstractBehavior[
 
         vending ! ProductRequest(msg.product, buyer)
         Behaviors.same
-
-      case e:_ => {
-        println(s"${fmt(context)} The system don't know what you mean. Nothing to do with: $e")
-        Behaviors.same
-      }
     }
 }
 
