@@ -1,7 +1,7 @@
 package com.github.diegopacheco.akka.vendingmachine
 
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
-import akka.actor.typed.{ActorRef, Behavior, Signal}
+import akka.actor.typed.{ActorRef, Behavior}
 
 object VendingMachineActor {
   def apply(): Behavior[ProductRequest] =
@@ -12,23 +12,23 @@ class VendingMachineActor(context: ActorContext[ProductRequest]) extends Abstrac
   override def onMessage(request: ProductRequest): Behavior[ProductRequest] = {
     println(s"[${this.context.self.path.name}] A sale is comming up... ")
     request match {
-      case ProductRequest(c,reciptTo) =>
+      case ProductRequest(c,receiptTo) =>
         println(s"[${this.context.self.path.name}] Coke is always a good chose!")
-        reciptTo ! ProductReceipt(c)
+        receiptTo ! ProductReceipt(c)
         Behaviors.same
-      case ProductRequest(s,reciptTo) =>
-        println(s"[${this.context.self.path.name}] Sprit is for the strong ones!")
-        reciptTo ! ProductReceipt(s)
+      case ProductRequest(s,receiptTo) =>
+        println(s"[${this.context.self.path.name}] Sprite is for the strong ones!")
+        receiptTo ! ProductReceipt(s)
         Behaviors.same
-      case ProductRequest(c,reciptTo) =>
+      case ProductRequest(c,receiptTo) =>
         println(s"[${this.context.self.path.name}] Yummy! Chocolate is a good call!")
-        reciptTo ! ProductReceipt(c)
+        receiptTo ! ProductReceipt(c)
         Behaviors.same
-      case ProductRequest(g,reciptTo) =>
-        println(s"[${this.context.self.path.name}] Gummie Bear Oh oh!")
-        reciptTo ! ProductReceipt(g)
+      case ProductRequest(g,receiptTo) =>
+        println(s"[${this.context.self.path.name}] Gummy Bear Oh oh!")
+        receiptTo ! ProductReceipt(g)
         Behaviors.same
-  }
+    }
   }
 }
 
@@ -61,7 +61,7 @@ class BootStrappingActor(context: ActorContext[Start]) extends AbstractBehavior[
         val vending:ActorRef[ProductRequest] = context.spawn(VendingMachineActor(),"vending-machine-actor-" + msg.product.getClass.getSimpleName)
         println(s"[${this.context.self.path.name}] Got A VendingMachine ${vending.ref}")
 
-        vending ! ProductRequest(Coke(),buyer)
+        vending ! ProductRequest(msg.product,buyer)
         Behaviors.same
     }
 }
