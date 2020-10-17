@@ -2,7 +2,7 @@ package com.github.diegopacheco.akka.vendingmachine
 
 import akka.actor.typed.ActorRef
 
-trait Product {
+/*sealed*/ trait Product {
   def getMessage():String
 }
 case class Coke() extends Product{
@@ -18,12 +18,12 @@ case class GummyBearCandy() extends Product{
   override def getMessage() = "Gummy Bear Oh oh!"
 }
 
-trait Receipt
+sealed trait Receipt
 case class ProductReceipt(product:Product) extends Receipt
 case class OutOfStock(product:Product) extends Receipt
 case class ItemOutOfCatalog(product:Product) extends Receipt
 
-trait Request
+sealed trait Request
 case class ProductRequest(product:Product,buyer:ActorRef[Receipt]) extends Request
 
 case class Order(buyer:String, product:Product)
