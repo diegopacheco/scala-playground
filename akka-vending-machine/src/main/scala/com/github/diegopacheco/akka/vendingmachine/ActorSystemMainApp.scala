@@ -7,5 +7,7 @@ object ActorSystemMainApp {
     implicit val actorSystem = ActorSystem(BootStrappingActor(), "VendingSystem")
     val start = Start("Diego",Coke())
     actorSystem ! start
+    actorSystem ! Start("Melina",Sprite())
+    actorSystem ! Start("Gandalfy",GummyBearCandy())
   }
 }
