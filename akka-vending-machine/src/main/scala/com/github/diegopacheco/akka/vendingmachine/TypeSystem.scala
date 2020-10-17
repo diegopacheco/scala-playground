@@ -24,6 +24,6 @@ case class OutOfStock(product:Product) extends Receipt
 case class ItemOutOfCatalog(product:Product) extends Receipt
 
 trait Request
-case class ProductRequest(product:Product,buyer:ActorRef[Receipt])
+case class ProductRequest(product:Product,buyer:ActorRef[Receipt]) extends Request
 
 case class Order(buyer:String, product:Product)
