@@ -83,12 +83,17 @@ class BootStrappingActor(context: ActorContext[Order]) extends AbstractBehavior[
 
   override def onMessage(msg: Order): Behavior[Order] =
     msg match {
-      case _ =>
+      case Order(_,_) =>
         val buyer: ActorRef[Receipt] = context.spawn(BuyerActor(), "buyer-actor-" + msg.buyer + s"-${System.nanoTime()}")
         println(s"${fmt(context)} Got A buyer ${buyer.ref}")
 
         vending ! ProductRequest(msg.product, buyer)
         Behaviors.same
+
+      case e:_ => {
+        println(s"${fmt(context)} The system don't know what you mean. Nothing to do with: $e")
+        Behaviors.same
+      }
     }
 }
 

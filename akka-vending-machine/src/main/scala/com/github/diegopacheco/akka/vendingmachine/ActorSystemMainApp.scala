@@ -12,9 +12,13 @@ object ActorSystemMainApp {
     actorSystem ! Order("Melina",Sprite())
     actorSystem ! Order("Gandalfy",GummyBearCandy())
 
+    // Wont compile :-)
+    //actorSystem ! "WAT?"
+
     case class Playstation() extends Product{
       override def getMessage(): String = ???
     }
     actorSystem ! Order("EvilGandalfyGamer", Playstation())
+
   }
 }
