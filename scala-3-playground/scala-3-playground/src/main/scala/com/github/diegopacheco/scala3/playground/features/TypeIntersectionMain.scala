@@ -19,6 +19,8 @@ object TypeIntersectionMain extends App{
     override def reset()=println("Reseting... ")
     override def add(a:String)=println(s"adding ${a}")
   
+  val x:Resettable & Growable[String] = DoItAll()
+  
   val c:Both[String] = DoItAll()
   callMe(c)
   

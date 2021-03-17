@@ -14,5 +14,5 @@ object TraitsMain extends App {
   
   val dog = Dog()
   println(s"${dog.speak()} ${dog.wagTail()}")
-  
+
 }

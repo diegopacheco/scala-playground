@@ -6,7 +6,7 @@ object UnionTypesMain extends App{
 
   case class UserName(name:String)
   case class Password(hash:Hashing[String])
-  
+
   def help(id:UserName | Password) =
     val user = id match {
       case UserName(name) => println("username route"); 1

@@ -11,10 +11,10 @@ object GivenClausesMain extends App{
 
   val config = Config(8080, "docs.scala-lang.org")
   given Config = config
-  
+    
   // option 1
   // val result = renderWebsite("/home")(using config)
-
+  
   // option 2
   val result = renderWebsite("/home")
   

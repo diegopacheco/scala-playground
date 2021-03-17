@@ -22,5 +22,5 @@ object OpaqueTypeMain extends App{
   println((l2 + l3).toDouble) // prints 4.999...
 
   // val d: Double = l2 // ERROR: Found Logarithm required Double
-  
+
 }
