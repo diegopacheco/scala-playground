@@ -3,13 +3,13 @@ package com.github.diegopacheco.scala3.playground.features
 @main def HigherKindedTypesMain():Unit = {
 
   trait Collection[T[_]] {
-    def wrap[A](a: A): T[A]
-    def first[B](b: T[B]): B
+    def wrap[A](a: A):T[A]
+    def first[B](b:T[B]): B
   }
 
   var collection = new Collection[List] {
     override def wrap[A](a: A): List[A] = List(a)
-    override def first[B](b: List[B]): B = b.head
+    override def first[B](b:List[B]): B = b.head
   }
   
   val result = collection.wrap("Some values")
@@ -17,5 +17,10 @@ package com.github.diegopacheco.scala3.playground.features
 
   println(s"wrap  == ${result}") 
   println(s"first == ${first}")
+
+  val result2 = collection.wrap(1)
+  val first2 = collection.first(List(1))
+  println(s"wrap  == ${result2}")
+  println(s"first == ${first2}")
   
 }

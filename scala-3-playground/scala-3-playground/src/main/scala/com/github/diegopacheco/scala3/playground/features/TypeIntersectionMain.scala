@@ -6,7 +6,7 @@ object TypeIntersectionMain extends App{
     def reset(): Unit
 
   trait Growable[A]{
-    def add(a: A): Unit  
+    def add(a:A): Unit  
   }
 
   trait Both[A] extends Resettable, Growable[A]
@@ -19,6 +19,7 @@ object TypeIntersectionMain extends App{
     override def reset()=println("Reseting... ")
     override def add(a:String)=println(s"adding ${a}")
   
+   
   val x:Resettable & Growable[String] = DoItAll()
   
   val c:Both[String] = DoItAll()

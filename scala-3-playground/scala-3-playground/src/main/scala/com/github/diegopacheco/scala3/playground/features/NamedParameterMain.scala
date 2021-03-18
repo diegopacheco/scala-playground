@@ -6,5 +6,7 @@ object NamedParameterMain extends App{
     println(s"url=$url, timeout=$timeout")
 
   makeConnection(url="127.0.0.1",timeout = 2000)
+
+  makeConnection(url="127.0.0.1")
   
 }

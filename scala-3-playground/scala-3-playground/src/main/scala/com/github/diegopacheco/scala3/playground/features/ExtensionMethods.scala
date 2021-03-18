@@ -11,8 +11,8 @@ object ExtensionMethods extends App {
   CircleHelpers.circunference2(Circle(2,2,2))
 
   // With extension methods
-  extension (c: Circle)
-    def circumference: Double = c.radius * math.Pi * 2
+  extension (c:Circle)
+    def circumference:Double = c.radius * math.Pi * 2
   
   val myCircle = Circle(2,2,2)
   val radius = myCircle.circumference 

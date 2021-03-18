@@ -8,6 +8,7 @@ enum Topping:
 import Topping._
 class Pizza:
   val toppings = ArrayBuffer[Topping]()
+  override def toString = toppings.toString()
 
 val p = Pizza()
 
@@ -21,3 +22,4 @@ type Money = BigDecimal
 @main def myApp =
   p.toppings += Cheese
   println("show me the code".capitalizeAllWords)
+  println(p)
