@@ -1,4 +1,7 @@
+import org.scalatest.flatspec.AnyFlatSpec
 import com.dimafeng.testcontainers.{ForAllTestContainer, MySQLContainer}
+
+import java.sql.DriverManager
 
 class MysqlSpec extends AnyFlatSpec with ForAllTestContainer {
 
