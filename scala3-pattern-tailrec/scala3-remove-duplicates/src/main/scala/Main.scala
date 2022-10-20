@@ -9,6 +9,13 @@ def removeDuplicates[A](xsOuter: List[A]): List[A] = {
   removeDuplicatesInner(xsOuter, Nil)
 }
 
+/* Preserve order */
+def removeDuplicatesV2[A](list: List[A]): List[A] =
+  list.foldLeft(List.empty[A]) { (partialResult, element) =>
+    if (partialResult.contains(element)) partialResult
+    else partialResult :+ element
+}
+
 def msg = "Removing duplicates"
 def arg = List("a", "a", "a", "b", "a", 1, 2, 3, 4, 1, 1, 1, 5)
 
@@ -16,3 +23,4 @@ def arg = List("a", "a", "a", "b", "a", 1, 2, 3, 4, 1, 1, 1, 5)
   println(msg)
   println(arg)
   println(removeDuplicates(arg))
+  println(removeDuplicatesV2(arg))
