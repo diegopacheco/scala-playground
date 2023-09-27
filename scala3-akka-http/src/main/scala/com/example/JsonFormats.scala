@@ -12,6 +12,7 @@ object JsonFormats  {
 
   implicit val userJsonFormat: RootJsonFormat[User] = jsonFormat3(User.apply)
   implicit val usersJsonFormat: RootJsonFormat[Users] = jsonFormat1(Users.apply)
+  implicit val uuidJsonFormat: RootJsonFormat[UuidResult] = jsonFormat1(UuidResult.apply)
 
   implicit val actionPerformedJsonFormat: RootJsonFormat[ActionPerformed] = jsonFormat1(ActionPerformed.apply)
 }

@@ -32,8 +32,10 @@ object QuickstartApp {
       val userRegistryActor = context.spawn(UserRegistry(), "UserRegistryActor")
       context.watch(userRegistryActor)
 
+      import akka.http.scaladsl.server.Directives._
+
       val routes = new UserRoutes(userRegistryActor)(context.system)
-      startHttpServer(routes.userRoutes)(context.system)
+      startHttpServer(routes.userRoutes ~ routes.uuidRoute)(context.system)
 
       Behaviors.empty
     }

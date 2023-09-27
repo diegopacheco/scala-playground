@@ -9,11 +9,16 @@ import scala.collection.immutable
 //#user-case-classes
 final case class User(name: String, age: Int, countryOfResidence: String)
 final case class Users(users: immutable.Seq[User])
+
+final case class UuidResult(value: String)
+
 //#user-case-classes
 
 object UserRegistry {
   // actor protocol
   sealed trait Command
+
+  final case class GetUuid(replyTo: ActorRef[UuidResult]) extends Command
   final case class GetUsers(replyTo: ActorRef[Users]) extends Command
   final case class CreateUser(user: User, replyTo: ActorRef[ActionPerformed]) extends Command
   final case class GetUser(name: String, replyTo: ActorRef[GetUserResponse]) extends Command
@@ -26,6 +31,9 @@ object UserRegistry {
 
   private def registry(users: Set[User]): Behavior[Command] =
     Behaviors.receiveMessage {
+      case GetUuid(replyTo) =>
+        replyTo ! UuidResult(java.util.UUID.randomUUID().toString)
+        Behaviors.same
       case GetUsers(replyTo) =>
         replyTo ! Users(users.toSeq)
         Behaviors.same
