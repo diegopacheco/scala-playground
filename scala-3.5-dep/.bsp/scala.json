@@ -1,0 +1,26 @@
+{
+  "name": "scala",
+  "argv": [
+    "/home/diego/.sdkman/candidates/scala/3.5.0/bin/scala-cli",
+    "--cli-default-scala-version",
+    "3.5.0",
+    "--repository",
+    "file:///home/diego/.sdkman/candidates/scala/current/maven2",
+    "--prog-name",
+    "scala",
+    "bsp",
+    "--json-options",
+    "/mnt/e35d88d4-42b9-49ea-bf29-c4c3b018d429/diego/git/diegopacheco/scala-playground/scala-3.5-dep/.scala-build/ide-options-v2.json",
+    "--json-launcher-options",
+    "/mnt/e35d88d4-42b9-49ea-bf29-c4c3b018d429/diego/git/diegopacheco/scala-playground/scala-3.5-dep/.scala-build/ide-launcher-options.json",
+    "--envs-file",
+    "/mnt/e35d88d4-42b9-49ea-bf29-c4c3b018d429/diego/git/diegopacheco/scala-playground/scala-3.5-dep/.scala-build/ide-envs.json",
+    "/mnt/e35d88d4-42b9-49ea-bf29-c4c3b018d429/diego/git/diegopacheco/scala-playground/scala-3.5-dep/biggerThan.scala"
+  ],
+  "version": "1.4.0",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}
