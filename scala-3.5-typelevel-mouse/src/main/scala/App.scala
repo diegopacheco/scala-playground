@@ -41,4 +41,13 @@ object App extends App {
   val foption = List(Option(1), Option(2), Option(4)).mapIn(_ * 2)
   println(foption)
 
+  val feither = List(Either.cond(true, 1, "0")).mapIn(_ * 2)
+  println(feither)
+
+  val listOption = List(Option(1), Option(2)).mapNested2(_ * 2)
+  println(listOption)
+
+  val res = List(0,1,2).tailOption
+  println(res)
+
 }
