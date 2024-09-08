@@ -30,4 +30,15 @@ object App extends App {
   println(longToBase64)
 
   println(5.squared)
+
+  println(1.5 |> (_.toInt) |> (_.toString))
+
+  println(liftEither[Option[Int]]({case Some(n) => n}, a => s"Unexpected: $a")(Some(6)))
+
+  val mapped = Map(1 -> 2, 3 -> 4).mapKeys(_ * 2)
+  println(mapped)
+
+  val foption = List(Option(1), Option(2), Option(4)).mapIn(_ * 2)
+  println(foption)
+
 }
