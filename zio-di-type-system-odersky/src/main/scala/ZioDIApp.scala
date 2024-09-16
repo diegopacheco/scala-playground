@@ -12,13 +12,13 @@ class UserSubscriptionService(emailService: EmailService, userDAO: UserDAO) {
 }
 
 object UserSubscriptionService {
-  val layer: ZLayer[EmailService with UserDAO, Nothing, UserSubscriptionService] =
+  val layer: ZLayer[EmailService & UserDAO, Nothing, UserSubscriptionService] =
     ZLayer.fromFunction(new UserSubscriptionService(_, _))
 }
 
 class EmailService{
-  def email(user:User): Unit = {
-    println(s"Email sent to ${user.email}")
+  def email(user:User): ZIO[Any, Nothing, Unit] = {
+    ZIO.succeed(println(s"Email sent to ${user.email}"))
   }
 }
 object EmailService{
@@ -26,8 +26,8 @@ object EmailService{
 }
 
 class UserDAO{
-  def persist(user:User): Unit = {
-    println(s"User ${user.name} persisted")
+  def persist(user: User): ZIO[Any, Nothing, Unit] = {
+    ZIO.succeed(println(s"User ${user.name} persisted"))
   }
 }
 object UserDAO{
