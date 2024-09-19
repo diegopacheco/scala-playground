@@ -1,12 +1,13 @@
 package com.github.diegopacheco.bagofcats
 
 import cats.Monoid
-import cats.instances.string._ // for Monoid
-import cats.syntax.semigroup._ // for |+|
-import cats.instances.int._    // for Monoid
-import cats.instances.option._ // for Monoid
-import cats.instances.map._
-import cats.instances.tuple._
+import cats.instances.string.*
+import cats.syntax.semigroup.*
+import cats.instances.int.*
+import cats.instances.option.*
+import cats.instances.map.*
+import cats.instances.tuple.*
+import cats.syntax.monoid
 
 /**
  * IMHO is a bit o a trap, I would stick to traditional method names.
@@ -28,5 +29,25 @@ object SemiGroupsMonoidsSyntax extends App{
   val tuple2 = ("world", 321)
   val tupleResult = tuple1 |+| tuple2
   println(tupleResult)
+
+  def addAll[A](values: List[A])(implicit monoid: Monoid[A]): A =
+    values.foldRight(monoid.empty)(_ |+| _)
+
+  println(addAll(List(1, 2, 3)))
+  println(addAll(List(None, Some(1), Some(2))))
+  println(addAll(List(Option(1), Option(2), Option(3))))
+  println(addAll(List("A", "B", "C")))
+
+  // same as addAll but less exoteric
+  // explicit, does not use implicits
+  // you know upfront what you are doing
+  // no exoteric operators |+|
+  def addAll2[A: Monoid](values: List[A]): A =
+    values.foldRight(Monoid[A].empty)(_.combine(_))
+
+  println(addAll2(List(1, 2, 3)))
+  println(addAll2(List(None, Some(1), Some(2))))
+  println(addAll2(List(Option(1), Option(2), Option(3))))
+  println(addAll2(List("A", "B", "C")))
 
 }
