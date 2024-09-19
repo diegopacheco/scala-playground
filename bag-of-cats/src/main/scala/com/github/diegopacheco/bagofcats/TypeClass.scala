@@ -1,5 +1,11 @@
 package com.github.diegopacheco.bagofcats
 
+/**
+ * Type classes are a powerful tool for abstraction and extensibility in Scala.
+ * They allow you to extend existing libraries with new functionality, without using inheritance.
+ * Type classes goes along with linear algebra and category theory.
+ */
+
 // JSON AST
 sealed trait Json {
   def value: String
