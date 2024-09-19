@@ -1,5 +1,9 @@
 package com.github.diegopacheco.bagofcats
 
+/**
+ * Monoid is anything that can be combined(combine) and has an empty value.
+ * Monoid is a Semigroup with an empty value.
+ */
 object CatsMonoids extends App{
 
   import cats.Monoid
