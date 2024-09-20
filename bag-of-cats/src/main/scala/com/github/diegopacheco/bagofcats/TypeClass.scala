@@ -33,7 +33,7 @@ final case class JsNumber(get: Double) extends Json {
   def value: String = get.toString
 }
 
-final case object JsNull extends Json {
+case object JsNull extends Json {
   def value: String = "null"
 }
 
