@@ -1,8 +1,8 @@
 package com.github.diegopacheco.bagofcats
 
-import scala.concurrent.{Future, Await}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 /**
  * Functor is anything that can be mapped over(map).
@@ -27,6 +27,8 @@ object Functors extends App{
                 map(n => s"${n}!")
   println(result3)
 
+  implicit val ec: ExecutionContext = ExecutionContext.global
+  
   val future: Future[String] =
     Future(123).
       map(n => n + 1).
