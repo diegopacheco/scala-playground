@@ -18,8 +18,9 @@ object Monads extends App {
       parseInt(bStr).flatMap { bNum =>
         divide(aNum, bNum)
       }
-  }
-  println(stringDivideBy("6", "2"))   // Some(3)
+    }
+
+  println(stringDivideBy("6", "2")) // Some(3)
   println(stringDivideBy("6", "boo")) // None
 
 
@@ -30,10 +31,17 @@ object Monads extends App {
     for {
       aNum <- parseInt(aStr)
       bNum <- parseInt(bStr)
-      ans  <- divide(aNum, bNum)
+      ans <- divide(aNum, bNum)
     } yield ans
 
   println(stringDivideBy2("6", "2")) // Some(3)
   println(stringDivideBy2("6", "boo")) // None
+
+  val pairs = for {
+    x <- (1 to 3).toList
+    y <- (4 to 5).toList
+  } yield (x, y)
+ pairs.foreach { case (x, y) => println(s"$x $y") }
+
 
 }
