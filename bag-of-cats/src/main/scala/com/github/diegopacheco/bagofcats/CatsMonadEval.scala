@@ -3,6 +3,15 @@ package com.github.diegopacheco.bagofcats
 import cats.Eval
 
 /**
+ *
+ * Eval Monad
+ *  is a Monad that allows you to control the evaluation of values.
+ *
+ * Example Use cases are:
+ * - Lazy evaluation
+ * - Memoization
+ * - Trampolining
+ *
  * Scala                       Cats            Properties
  * val                         Now             eager, memoized
  * def                         Always          lazy, memoized
