@@ -5,11 +5,11 @@ trait Printable[A] {
 }
 
 object PrintableInstances {
-  implicit val stringPrintable = new Printable[String] {
-    def format(input: String) = input
+  implicit val stringPrintable: Printable[String] = new Printable[String] {
+    def format(input: String): String = input
   }
-  implicit val intPrintable = new Printable[Int] {
-    def format(input: Int) = input.toString
+  implicit val intPrintable: Printable[Int] = new Printable[Int] {
+    def format(input: Int): String = input.toString
   }
 }
 
@@ -21,13 +21,12 @@ object Printable {
     println(format(input))
 }
 
-object PrintableApp extends App{
-  
+object PrintableApp extends App {
+  import PrintableInstances._
+
   val a = "Hello"
   val b = 10
 
-  import PrintableInstances._
   Printable.print(a)
   Printable.print(b)
-
 }
