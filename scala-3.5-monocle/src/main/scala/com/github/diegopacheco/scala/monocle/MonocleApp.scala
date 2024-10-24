@@ -1,11 +1,11 @@
 package com.github.diegopacheco.scala.monocle
 
+case class Address(streetNumber: Int, streetName: String)
+case class User(name: String, address: Address)
+
 object MonocleApp extends App{
 
   import monocle.syntax.all._
-
-  case class Address(streetNumber: Int, streetName: String)
-  case class User(name: String, address:Address)
 
   val user = User("Anna", Address(12, "high street"))
   println(user.focus(_.name).replace("Bob"))
