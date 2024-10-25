@@ -13,7 +13,8 @@ object ScalaWay extends App{
   // Scala way
   //
   // For Comprehension
-  // Result is a Option[Unit]
+  // Result is an Option[Unit]
+  // Immutability + Safety(Option instead of null)
   //
   for {
     _ <- Some(println("Whats your last Name?"))
