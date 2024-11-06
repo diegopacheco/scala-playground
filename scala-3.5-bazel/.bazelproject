@@ -1,0 +1,22 @@
+directories:
+  .
+
+targets:
+  //...
+
+additional_languages:
+  scala
+
+java_language_level: 21
+
+build_flags:
+  --java_language_version=21
+  --java_runtime_version=java21
+
+#sync_flags:
+#  --experimental_ui_max_stdouterr_bytes=-1
+#  --experimental_ui_actions_shown=1000
+
+test_sources:
+  src/test/scala
+  src/test/java
