@@ -2,13 +2,20 @@ workspace(name = "scala-3.5-bazel")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-#rules_scala_version = "716210fe84d452e3db81e8837679a79e29b0f4e5"
-#http_archive(
-#    name = "io_bazel_rules_scala",
- #   url = "https://github.com/bazelbuild/rules_scala/archive/%s.zip" % rules_scala_version,
-  #  type = "zip",
-  #  strip_prefix = "rules_scala-%s" % rules_scala_version
-#)
+http_archive(
+    name = "rules_java",
+    sha256 = "e81e9deaae0d9d99ef3dd5f6c1b32338447fe16d5564155531ea4eb7ef38854b",
+    urls = [
+        "https://github.com/bazelbuild/rules_java/releases/download/7.0.6/rules_java-7.0.6.tar.gz",
+    ],
+)
+
+load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
+rules_java_dependencies()
+
+register_toolchains("//tools:custom_java_toolchain")
+rules_java_toolchains()
+
 http_archive(
     name = "io_bazel_rules_scala",
     sha256 = "e734eef95cf26c0171566bdc24d83bd82bdaf8ca7873bec6ce9b0d524bdaf05d",
@@ -18,26 +25,30 @@ http_archive(
 
 http_archive(
     name = "bazel_skylib",
-    url = "https://github.com/bazelbuild/bazel-skylib/archive/1.7.1.zip",
-    strip_prefix = "bazel-skylib-1.7.1",
     sha256 = "23ef380aa62e2f1b631d02d0c9d163e43be03e880953dafe133d754fb8d96f0a",
+    strip_prefix = "bazel-skylib-1.7.1",
+    url = "https://github.com/bazelbuild/bazel-skylib/archive/1.7.1.zip",
 )
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
 bazel_skylib_workspace()
 
 http_archive(
     name = "rules_proto",
-    url = "https://github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.zip",
-    strip_prefix = "rules_proto-4.0.0",
     sha256 = "2ebe73eb1cae440d7da4db5160c1a329aca7c10a5c9381ff970632563ca1a2ae",
+    strip_prefix = "rules_proto-4.0.0",
+    url = "https://github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.zip",
 )
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
 scala_config()
 
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
