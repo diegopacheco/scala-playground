@@ -2,19 +2,21 @@ workspace(name = "scala-3.5-bazel")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-#http_archive(
-#    name = "rules_java",
-#    sha256 = "e81e9deaae0d9d99ef3dd5f6c1b32338447fe16d5564155531ea4eb7ef38854b",
-#    urls = [
-#        "https://github.com/bazelbuild/rules_java/releases/download/7.0.6/rules_java-7.0.6.tar.gz",
-#    ],
-#)
+http_archive(
+    name = "rules_java",
+    sha256 = "e81e9deaae0d9d99ef3dd5f6c1b32338447fe16d5564155531ea4eb7ef38854b",
+    urls = [
+        "https://github.com/bazelbuild/rules_java/releases/download/7.0.6/rules_java-7.0.6.tar.gz",
+    ],
+)
 
-#load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
-#rules_java_dependencies()
+load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
 
-#register_toolchains("//tools:custom_java_toolchain")
-#rules_java_toolchains()
+rules_java_dependencies()
+
+register_toolchains("//tools:custom_java_toolchain")
+
+rules_java_toolchains()
 
 http_archive(
     name = "io_bazel_rules_scala",
@@ -31,6 +33,7 @@ http_archive(
 )
 
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
 bazel_skylib_workspace()
 
 http_archive(
@@ -41,10 +44,13 @@ http_archive(
 )
 
 load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
-scala_config()
 
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_repositories")
+scala_config(scala_version = "2.13.12")
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
 scala_repositories()
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
 scala_register_toolchains()
