@@ -1,6 +1,6 @@
 *.class
 *.log
-
+.ijwb/
 .idea/
 
 # sbt specific
