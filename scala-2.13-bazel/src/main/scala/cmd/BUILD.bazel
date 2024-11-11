@@ -1,0 +1,8 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
+
+scala_binary(
+    name = "runner",
+    srcs = glob(["*.scala"]),
+    main_class = "cmd.Runner",
+    deps = ["//src/main/scala/lib:greeting"],
+)

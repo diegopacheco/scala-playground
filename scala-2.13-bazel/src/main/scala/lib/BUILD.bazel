@@ -1,0 +1,24 @@
+load(
+    "@bazel_tools//tools/jdk:default_java_toolchain.bzl",
+    "BASE_JDK9_JVM_OPTS",
+    "DEFAULT_JAVACOPTS",
+    "DEFAULT_TOOLCHAIN_CONFIGURATION",
+    "default_java_toolchain",
+)
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "greeting",
+    srcs = glob(["*.scala"]),
+    visibility = ["//visibility:public"],
+)
+
+default_java_toolchain(
+    name = "repository_default_toolchain",
+    configuration = DEFAULT_TOOLCHAIN_CONFIGURATION,  # One of predefined configurations
+    # Other parameters are from java_toolchain rule:
+    java_runtime = "@bazel_tools//tools/jdk:remote_jdk11",  # JDK to use for compilation and toolchain's tools execution
+    javacopts = DEFAULT_JAVACOPTS + ["--enable_preview"],  # Additional javac options
+    jvm_opts = BASE_JDK9_JVM_OPTS + ["--enable_preview"],  # Additional JDK options
+    source_version = "11",
+)

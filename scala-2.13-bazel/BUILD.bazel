@@ -1,0 +1,8 @@
+exports_files(
+    [
+        ".bazelproject",
+        ".gitignore",
+        "MODULE.bazel",
+        ".sdkmanrc",
+    ],
+)

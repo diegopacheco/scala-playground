@@ -1,0 +1,24 @@
+# Bazel build output
+bazel-*
+
+# Bazel cache
+/.cache/bazel
+
+# Bazel symlinks
+/bazel-bin
+/bazel-out
+/bazel-testlogs
+/bazel-genfiles
+
+# User-specific files
+*.log
+*.swp
+*.swo
+*.DS_Store
+.idea/
+.vscode/
+
+# Metals for VSCode
+.metals/
+.scala-build/
+.bsp/
