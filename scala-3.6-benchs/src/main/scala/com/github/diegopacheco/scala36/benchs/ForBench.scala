@@ -10,23 +10,25 @@ import org.openjdk.jmh.infra.Blackhole
 @Measurement(iterations = 2)
 class ForBench {
 
+  val elements:Int = 100_000
+
   @Benchmark
   def testFor(blackhole: Blackhole): Unit = {
-    for (i <- 1 to 1000) {
+    for (i <- 1 to elements) {
       blackhole.consume(i)
     }
   }
 
   @Benchmark
   def lambdaForeach(blackhole: Blackhole): Unit = {
-    (1 to 1000).foreach(blackhole.consume)
+    (1 to elements).foreach(blackhole.consume)
   }
 
   @Benchmark
   def testTailRec(blackhole: Blackhole): Unit = {
     @annotation.tailrec
     def loop(i: Int): Unit = {
-      if (i <= 1000) {
+      if (i <= elements) {
         blackhole.consume(i)
         loop(i + 1)
       }
