@@ -1,3 +1,5 @@
+## Scala 3.6.1 JMH Benchmarks
+
 ### Build
 ```
 sbt compile
