@@ -1,0 +1,67 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
+
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-1.4.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-1.4.1.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "io_bazel_rules_scala",
+    sha256 = "71324bef9bc5a885097e2960d5b8effed63399b55572219919d25f43f468c716",
+    strip_prefix = "rules_scala-6.2.1",
+    url = "https://github.com/bazelbuild/rules_scala/releases/download/v6.2.1/rules_scala-v6.2.1.tar.gz",
+)
+
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+scala_config(scala_version = "2.13.12")
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "rules_scala_setup", "rules_scala_toolchain_deps_repositories")
+rules_scala_setup()
+
+rules_scala_toolchain_deps_repositories(fetch_sources = True)
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+rules_proto_toolchains()
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+scala_register_toolchains()
+load("@io_bazel_rules_scala//testing:scalatest.bzl", "scalatest_repositories", "scalatest_toolchain")
+
+scalatest_repositories()
+scalatest_toolchain()
+
+#
+#maven_jar(
+#    name = "scala_xml",
+#    artifact = "org.scala-lang.modules:scala-xml_2.13:2.3.0",
+#    sha1 = "018538c66b432de17a7b295e56e22a041ea4613e",
+#)
+
+#maven_jar(
+#    name = "scala_parser_combinators",
+#    artifact = "org.scala-lang.modules:scala-parser-combinators_2.13:2.4.0",
+#    sha1 = "4c21da00e1416078ba0bf4a2be63aa86de92753c",
+#)
+
+#maven_jar(
+#    name = "scala_reflect",
+#    artifact = "org.scala-lang:scala-reflect:2.13.5",
+#    sha1 = "355927b10366563a8f1b56c1f34ff376f2f7c8c5",
+#)
+
+#maven_jar(
+#    name = "scala_library",
+#    artifact = "org.scala-lang:scala-library:2.13.5",
+#    sha1 = "ed6f1d58968b16c5f9067d5cac032d952552de58",
+#)
+
+#maven_jar(
+#    name = "scala_compiler",
+#    artifact = "org.scala-lang:scala-compiler:2.13.5",
+#    sha1 = "348bf4d3dacc6905e9b85e451b13c816bed40938",
+#)
