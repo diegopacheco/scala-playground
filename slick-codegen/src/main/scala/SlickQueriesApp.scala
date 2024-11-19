@@ -21,7 +21,7 @@ object SlickQueriesApp extends App{
     cp <- Computers if co.id === cp.manufacturerId && cp.name.like("A%")
   } yield (co.name, cp.name)
 
-  val resultFuture =db.run(q.result).map { result =>
+  val resultFuture = db.run(q.result).map { result =>
     println(result.groupMap(_._1)(_._2).mkString("\n"))
   }
 
