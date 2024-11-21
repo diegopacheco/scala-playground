@@ -1,0 +1,8 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
+
+scala_binary(
+    name = "runner",
+    srcs = glob(["src/main/scala/**/*.scala"]),
+    main_class = "com.github.diegopacheco.scalaplayground.cmd.Runner",
+    deps = ["//lib:greeting"],
+)
