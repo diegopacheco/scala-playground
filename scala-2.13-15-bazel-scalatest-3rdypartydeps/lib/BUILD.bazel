@@ -1,0 +1,23 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_library", "scala_test")
+
+scala_library(
+    name = "greeting",
+    srcs = glob(["src/main/scala/**/*.scala"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:org_json4s_json4s_ast_2_13",
+        "@maven//:org_json4s_json4s_core_2_13",
+        "@maven//:org_json4s_json4s_native_2_13",
+        "@maven//:org_json4s_json4s_native_core_2_13",
+        "@maven//:org_json4s_json4s_scalap_2_13",
+    ],
+)
+
+scala_test(
+    name = "greeting_test",
+    srcs = glob(["src/test/scala/**/*.scala"]),
+    deps = [
+        "//lib:greeting",
+        "@maven//:org_scalatest_scalatest_2_13",
+    ],
+)
