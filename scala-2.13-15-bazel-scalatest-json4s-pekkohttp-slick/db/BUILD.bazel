@@ -1,0 +1,21 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
+
+scala_binary(
+    name = "db_codegen_runner",
+    srcs = glob(["src/main/scala/**/*.scala"]),
+    javacopts = [
+        "-source 11",
+        "-target 11",
+    ],
+    main_class = "com.github.diegopacheco.scalaplayground.db.DBCodeGenRunner",
+    resources = glob(["src/main/resources/**"]),
+    deps = [
+        "@maven//:ch_qos_logback_logback_classic",
+        "@maven//:com_typesafe_config",
+        "@maven//:com_typesafe_slick_slick_2_13",
+        "@maven//:com_typesafe_slick_slick_codegen_2_13",
+        "@maven//:com_typesafe_ssl_config_core_2_13",
+        "@maven//:org_postgresql_postgresql",
+        "@maven//:org_slf4j_slf4j_api",
+    ],
+)

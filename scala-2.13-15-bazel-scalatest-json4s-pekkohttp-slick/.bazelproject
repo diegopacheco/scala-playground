@@ -1,0 +1,12 @@
+directories:
+  .
+
+targets:
+  //lib:greeting
+  //cmd:runner
+  //db:db_codegen_runner
+
+additional_languages:
+  scala
+
+bazel_binary: /home/linuxbrew/.linuxbrew/bin/bazel

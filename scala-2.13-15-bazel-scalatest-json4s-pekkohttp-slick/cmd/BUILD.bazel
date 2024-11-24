@@ -1,0 +1,34 @@
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_binary")
+
+scala_binary(
+    name = "runner",
+    srcs = glob([
+        "src/main/scala/**/*.scala",
+    ]),
+    main_class = "com.github.diegopacheco.scalaplayground.cmd.Runner",
+    resources = glob(["src/main/resources/**"]),
+    deps = [
+        "//lib:greeting",
+        "@maven//:ch_qos_logback_logback_classic",
+        "@maven//:ch_qos_logback_logback_core",
+        "@maven//:com_thoughtworks_paranamer_paranamer",
+        "@maven//:com_typesafe_config",
+        "@maven//:com_typesafe_slick_slick_2_13",
+        "@maven//:com_typesafe_slick_slick_codegen_2_13",
+        "@maven//:com_typesafe_ssl_config_core_2_13",
+        "@maven//:org_apache_pekko_pekko_actor_2_13",
+        "@maven//:org_apache_pekko_pekko_http_2_13",
+        "@maven//:org_apache_pekko_pekko_http_core_2_13",
+        "@maven//:org_apache_pekko_pekko_protobuf_v3_2_13",
+        "@maven//:org_apache_pekko_pekko_stream_2_13",
+        "@maven//:org_json4s_json4s_ast_2_13",
+        "@maven//:org_json4s_json4s_core_2_13",
+        "@maven//:org_json4s_json4s_native_2_13",
+        "@maven//:org_json4s_json4s_native_core_2_13",
+        "@maven//:org_json4s_json4s_scalap_2_13",
+        "@maven//:org_parboiled_parboiled_2_13",
+        "@maven//:org_postgresql_postgresql",
+        "@maven//:org_reactivestreams_reactive_streams",
+        "@maven//:org_slf4j_slf4j_api",
+    ],
+)

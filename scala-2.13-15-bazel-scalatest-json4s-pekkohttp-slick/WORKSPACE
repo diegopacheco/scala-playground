@@ -1,0 +1,84 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
+load("@bazel_tools//tools/jdk:default_java_toolchain.bzl", "default_java_toolchain")
+
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-1.4.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-1.4.1.tar.gz",
+    ],
+)
+
+RULES_JVM_EXTERNAL_TAG = "6.5"
+
+RULES_JVM_EXTERNAL_SHA = "3a4d56357851cf5b0dae538b3f3e0612a4f58925dfb3cadb2e0c4e87d51e629e"
+
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+    url = "https://github.com/bazel-contrib/rules_jvm_external/releases/download/%s/rules_jvm_external-%s.tar.gz" % (RULES_JVM_EXTERNAL_TAG, RULES_JVM_EXTERNAL_TAG),
+)
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
+
+http_archive(
+    name = "io_bazel_rules_scala",
+    sha256 = "e734eef95cf26c0171566bdc24d83bd82bdaf8ca7873bec6ce9b0d524bdaf05d",
+    strip_prefix = "rules_scala-6.6.0",
+    url = "https://github.com/bazelbuild/rules_scala/releases/download/v6.6.0/rules_scala-v6.6.0.tar.gz",
+)
+
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
+scala_config(scala_version = "2.13.12")
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "rules_scala_setup", "rules_scala_toolchain_deps_repositories")
+
+rules_scala_setup()
+
+rules_scala_toolchain_deps_repositories(fetch_sources = True)
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
+scala_register_toolchains()
+
+load("@io_bazel_rules_scala//testing:scalatest.bzl", "scalatest_repositories", "scalatest_toolchain")
+
+scalatest_repositories()
+
+scalatest_toolchain()
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    artifacts = [
+        "org.scalatest:scalatest_2.13:3.2.9",
+        "org.json4s:json4s-native_2.13:4.0.7",
+        "org.apache.pekko:pekko-http_2.13:1.1.0",
+        "org.apache.pekko:pekko-actor_2.13:1.1.2",
+        "org.apache.pekko:pekko-stream_2.13:1.1.2",
+        "com.typesafe.slick:slick_2.13:3.5.2",
+        "com.typesafe.slick:slick-codegen_2.13:3.5.2",
+        "org.postgresql:postgresql:42.7.4",
+        "org.slf4j:slf4j-api:2.0.16",
+        "ch.qos.logback:logback-classic:1.4.11",
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+)
