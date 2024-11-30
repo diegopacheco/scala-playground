@@ -1,6 +1,5 @@
 package com.github.diegopacheco.scalaplayground3x.gson
 
-
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.{JsonReader, JsonToken, JsonWriter}
 import com.google.gson.{Gson, GsonBuilder, TypeAdapter}
@@ -16,25 +15,42 @@ case class Shark(name: String) extends Fish
 
 case class MyType(x: String, y: List[Option[Int]])
 
-class ListTypeAdapter extends TypeAdapter[List[Option[Int]]] {
-  override def write(out: JsonWriter, value: List[Option[Int]]): Unit = {
+class OptionTypeAdapter[T](implicit tt: TypeToken[T]) extends TypeAdapter[Option[T]] {
+  override def write(out: JsonWriter, value: Option[T]): Unit = {
+    value match {
+      case Some(v) => new Gson().toJson(v, tt.getType, out)
+      case None => out.nullValue()
+    }
+  }
+  override def read(in: JsonReader): Option[T] = {
+    if (in.peek() == JsonToken.NULL) {
+      in.nextNull()
+      None
+    } else {
+      Some(new Gson().fromJson(in, tt.getType))
+    }
+  }
+}
+
+class ListOptionTypeAdapter[T](implicit tt: TypeToken[T]) extends TypeAdapter[List[Option[T]]] {
+  override def write(out: JsonWriter, value: List[Option[T]]): Unit = {
     out.beginArray()
     value.foreach {
-      case Some(v) => out.value(v)
+      case Some(v) => new Gson().toJson(v, tt.getType, out)
       case None => out.nullValue()
     }
     out.endArray()
   }
 
-  override def read(in: JsonReader): List[Option[Int]] = {
-    val list = scala.collection.mutable.ListBuffer[Option[Int]]()
+  override def read(in: JsonReader): List[Option[T]] = {
+    val list = scala.collection.mutable.ListBuffer[Option[T]]()
     in.beginArray()
     while (in.hasNext) {
       if (in.peek() == JsonToken.NULL) {
         in.nextNull()
         list += None
       } else {
-        list += Some(in.nextInt())
+        list += Some(new Gson().fromJson(in, tt.getType))
       }
     }
     in.endArray()
@@ -44,8 +60,13 @@ class ListTypeAdapter extends TypeAdapter[List[Option[Int]]] {
 
 object GsonApp extends App {
   val gsonBuilder = new GsonBuilder()
-  val listType: Type = new TypeToken[List[Option[Int]]]() {}.getType
-  gsonBuilder.registerTypeAdapter(listType, new ListTypeAdapter())
+
+  val optionType: Type = new TypeToken[Option[Int]]() {}.getType
+  gsonBuilder.registerTypeAdapter(optionType, new OptionTypeAdapter[Int]()(TypeToken.get(classOf[Int])))
+
+  val listOptionType: Type = new TypeToken[List[Option[Int]]]() {}.getType
+  gsonBuilder.registerTypeAdapter(listOptionType, new ListOptionTypeAdapter[Int]()(TypeToken.get(classOf[Int])))
+
   val gson = gsonBuilder.create()
 
   val jhonDoe = Person("Jhon Doe", 30)
@@ -71,4 +92,10 @@ object GsonApp extends App {
 
   val back4 = gson.fromJson(gson.toJson(myObject), classOf[MyType])
   println(back4)
+
+  val op1 = Option(1)
+  println(gson.toJson(op1))
+
+  val backOpt = gson.fromJson(gson.toJson(op1), classOf[Option[Int]])
+  println(backOpt)
 }
