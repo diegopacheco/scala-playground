@@ -93,9 +93,10 @@ object GsonApp extends App {
   val back4 = gson.fromJson(gson.toJson(myObject), classOf[MyType])
   println(back4)
 
-  val op1 = Option(1)
+  class Holder(val opt:Option[Int])
+  val op1 = Holder(Some(1))
   println(gson.toJson(op1))
 
-  val backOpt = gson.fromJson(gson.toJson(op1), classOf[Option[Int]])
+  val backOpt = gson.fromJson(gson.toJson(op1), classOf[Holder])
   println(backOpt)
 }
