@@ -4,7 +4,7 @@ import zio._
 import zio.stream._
 
 object BatchProcessing extends ZIOAppDefault {
-  def processBatch(batch: Chunk[Int]): UIO[Unit] =
+  private def processBatch(batch: Chunk[Int]): UIO[Unit] =
     ZIO.succeed(println(s"Processing batch: $batch"))
 
   def run: ZIO[Any, Nothing, ExitCode] = {
