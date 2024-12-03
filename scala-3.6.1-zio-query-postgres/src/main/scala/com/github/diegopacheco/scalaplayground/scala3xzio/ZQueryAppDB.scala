@@ -74,8 +74,14 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
               val productSQL = transaction {
                 query.selectAll.map(_.toList).tap(result => ZIO.succeed(println(s"Query Result: $result")))
               }
-              productSQL.provideLayer(connectionPoolConfig >>> connectionPool).
-                tap(result => ZIO.succeed(println(s"Query Result: $result")))
+
+              for {
+                startTime <- ZIO.succeed(java.lang.System.currentTimeMillis())
+                result <- productSQL.provideLayer(connectionPoolConfig >>> connectionPool)
+                endTime <- ZIO.succeed(java.lang.System.currentTimeMillis())
+                duration = endTime - startTime
+                _ <- ZIO.succeed(println(s"Query execution time: $duration ms"))
+              } yield result
             }
 
             result.foldCause(
