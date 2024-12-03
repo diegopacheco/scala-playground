@@ -95,10 +95,9 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
   private val query: ZQuery[Any, Throwable, List[String]] =
     for {
       ids <- ZQuery.succeed(1 to 10)
-      _ = println(s"IDS: $ids")
+      _ = println(s"query IDS: $ids")
 
       names <- ZQuery.foreachPar(ids)(id => getProductNameById(id)).map(_.toList)
-      _ = println(s"NAMES: $names")
 
     } yield names
 
