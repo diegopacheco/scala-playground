@@ -8,7 +8,9 @@ import zio.schema.{Schema, TypeId}
 case class Product(id: Int, name: String, stock: Int)
 
 object Product {
+
   import Schema.Field
+
   implicit val schema: Schema[Product] =
     Schema.CaseClass3[Int, String, Int, Product](
       TypeId.parse("com.github.diegopacheco.scalaplayground.scala3xzio.Product"),
@@ -97,14 +99,14 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
 
       names <- ZQuery.foreachPar(ids)(id => getProductNameById(id)).map(_.toList)
       _ = println(s"NAMES: $names")
+
     } yield names
 
-  def run = {
+  def run: ZIO[ZIOAppArgs & Scope, Any, Any] = {
     val program = for {
       productNames <- query.run
-      _ <- Console.printLine(s"Product Names: $productNames")
     } yield ()
-
     program.provideLayer(connectionPoolConfig >>> connectionPool).exitCode
   }
+
 }
