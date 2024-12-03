@@ -26,6 +26,7 @@ trait JsonSupport {
 }
 
 object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
+
   case class GetProductName(id: Int) extends Request[Throwable, String]
 
   private val properties = Map(
@@ -62,11 +63,15 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
             println(s"got IDS: $ids")
 
             val result: Task[List[(Int, String)]] = {
-              val query = sql"SELECT id, name FROM products WHERE id IN (${ids.mkString(",")})".query[(Int, String)]
+              //val query = sql"SELECT id, name FROM products WHERE id IN (${ids.mkString(",")})".query[(Int, String)]
+              val query = {
+                val idsFragment = ids.map(id => sql"$id").reduceLeft(_ ++ sql", " ++ _)
+                sql"SELECT id, name FROM products WHERE id IN (" ++ idsFragment ++ sql")"
+              }.query[(Int, String)]
               println(s"Postgres Query: ${query.sql.toString}")
 
               val productSQL = transaction {
-                query.selectAll.map(_.toList)
+                query.selectAll.map(_.toList).tap(result => ZIO.succeed(println(s"Query Result: $result")))
               }
               productSQL.provideLayer(connectionPoolConfig >>> connectionPool).
                 tap(result => ZIO.succeed(println(s"Query Result: $result")))
