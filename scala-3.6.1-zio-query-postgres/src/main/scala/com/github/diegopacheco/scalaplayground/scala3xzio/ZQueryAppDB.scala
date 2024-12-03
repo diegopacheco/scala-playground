@@ -46,7 +46,7 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
         requests.toList match {
           case request :: Nil =>
             val result: Task[String] = {
-              println(s"Request: $request")
+              println(s"1. Request: $request")
               val query = sql"SELECT name FROM products WHERE id = ${request.id}".query[String]
               val productSQL = transaction {
                 query.selectAll
@@ -56,18 +56,27 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
             result.exit.map(CompletedRequestMap.single(request, _))
 
           case batch: Seq[GetProductName] =>
-            println(s"Request: Batch")
+            println(s"2. Request: Batch")
+
             val ids = batch.map(_.id)
+            println(s"got IDS: $ids")
+
             val result: Task[List[(Int, String)]] = {
               val query = sql"SELECT id, name FROM products WHERE id IN (${ids.mkString(",")})".query[(Int, String)]
+              println(s"Postgres Query: ${query.sql.toString}")
+
               val productSQL = transaction {
                 query.selectAll.map(_.toList)
               }
-              productSQL.provideLayer(connectionPoolConfig >>> connectionPool).tap(result => ZIO.succeed(println(s"Query Result: $result")))
+              productSQL.provideLayer(connectionPoolConfig >>> connectionPool).
+                tap(result => ZIO.succeed(println(s"Query Result: $result")))
             }
 
             result.foldCause(
-              CompletedRequestMap.failCause(requests, _),
+              cause => {
+                println(s"Failed with cause: $cause")
+                CompletedRequestMap.failCause(requests, cause)
+              },
               CompletedRequestMap.fromIterableWith(_)(kv => GetProductName(kv._1), kv => Exit.succeed(kv._2))
             )
         }
