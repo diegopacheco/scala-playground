@@ -65,7 +65,6 @@ object ZQueryAppDB extends ZIOAppDefault with JsonSupport {
             println(s"got IDS: $ids")
 
             val result: Task[List[(Int, String)]] = {
-              //val query = sql"SELECT id, name FROM products WHERE id IN (${ids.mkString(",")})".query[(Int, String)]
               val query = {
                 val idsFragment = ids.map(id => sql"$id").reduceLeft(_ ++ sql", " ++ _)
                 sql"SELECT id, name FROM products WHERE id IN (" ++ idsFragment ++ sql")"
