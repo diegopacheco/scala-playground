@@ -17,4 +17,3 @@ sbt compile
 ```
 sbt run
 ```
-
