@@ -14,7 +14,7 @@ case class Snake(body: List[Position], direction: Direction)
 case class GameState(snake: Snake, food: Position, width: Int, height: Int, score: Int)
 
 object SnakeGame:
-  @volatile private var latestInput: String = ""
+  @volatile private var latestInput: Option[String] = None
 
   def main(args: Array[String]): Unit =
     val initialState = GameState(
@@ -43,7 +43,8 @@ object SnakeGame:
       while (true) {
         blocking {
           val input = terminal.reader().read()
-          latestInput = keyMap.getBound(input.toChar.toString)
+          latestInput = Option(keyMap.getBound(input.toChar.toString))
+          println(s"Input received: $latestInput") // Debugging statement
         }
       }
     }
@@ -52,7 +53,8 @@ object SnakeGame:
   private def gameLoop(state: GameState): Unit =
     printState(state)
     val newState = updateState(state, latestInput)
-    Thread.sleep(500) // Adjust the speed of the game
+    latestInput = None // Reset latestInput after processing
+    Thread.sleep(1000) // Adjust the speed of the game
     if (!isGameOver(newState)) gameLoop(newState)
     else println(s"Game Over! Your score: ${state.score}")
 
@@ -66,13 +68,15 @@ object SnakeGame:
     println(border)
     println(s"Score: ${state.score}")
 
-  private def updateState(state: GameState, input: String): GameState =
+  private def updateState(state: GameState, input: Option[String]): GameState =
     val newDirection = input match
-      case "up"    => if (state.snake.direction != Direction.Down) Direction.Up else state.snake.direction
-      case "down"  => if (state.snake.direction != Direction.Up) Direction.Down else state.snake.direction
-      case "left"  => if (state.snake.direction != Direction.Right) Direction.Left else state.snake.direction
-      case "right" => if (state.snake.direction != Direction.Left) Direction.Right else state.snake.direction
-      case _       => state.snake.direction
+      case Some("up")    => if (state.snake.direction != Direction.Down) Direction.Up else state.snake.direction
+      case Some("down")  => if (state.snake.direction != Direction.Up) Direction.Down else state.snake.direction
+      case Some("left")  => if (state.snake.direction != Direction.Right) Direction.Left else state.snake.direction
+      case Some("right") => if (state.snake.direction != Direction.Left) Direction.Right else state.snake.direction
+      case _             => state.snake.direction
+
+    println(s"New direction: $newDirection") // Debugging statement
 
     val newHead = move(state.snake.body.head, newDirection)
     val newBody = if (newHead == state.food) newHead :: state.snake.body else newHead :: state.snake.body.init
