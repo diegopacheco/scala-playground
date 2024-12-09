@@ -1,20 +1,16 @@
 package com.github.diegopacheco.snakegame
 
-
 import scala.annotation.tailrec
 import scala.concurrent.{Future, blocking}
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.jline.terminal.{Terminal, TerminalBuilder}
-import org.jline.reader.{LineReader, LineReaderBuilder}
 import org.jline.keymap.KeyMap
 
 enum Direction:
   case Up, Down, Left, Right
 
 case class Position(x: Int, y: Int)
-
 case class Snake(body: List[Position], direction: Direction)
-
 case class GameState(snake: Snake, food: Position, width: Int, height: Int, score: Int)
 
 object SnakeGame:
@@ -34,11 +30,10 @@ object SnakeGame:
   private def startInputThread(): Unit =
     Future {
       val terminal: Terminal = TerminalBuilder.terminal()
-      val reader: LineReader = LineReaderBuilder.builder().terminal(terminal).build()
       val keyMap: KeyMap[String] = new KeyMap()
-      keyMap.bind("up", "\u001B[A") // Arrow up
-      keyMap.bind("down", "\u001B[B") // Arrow down
-      keyMap.bind("left", "\u001B[D") // Arrow left
+      keyMap.bind("up", "\u001B[A")    // Arrow up
+      keyMap.bind("down", "\u001B[B")  // Arrow down
+      keyMap.bind("left", "\u001B[D")  // Arrow left
       keyMap.bind("right", "\u001B[C") // Arrow right
       keyMap.bind("up", "w")
       keyMap.bind("down", "s")
@@ -47,14 +42,14 @@ object SnakeGame:
 
       while (true) {
         blocking {
-          val input = reader.readCharacter(keyMap)
-          latestInput = input.toString
+          val input = terminal.reader().read()
+          latestInput = keyMap.getBound(input.toChar.toString)
         }
       }
     }
 
   @tailrec
-  def gameLoop(state: GameState): Unit =
+  private def gameLoop(state: GameState): Unit =
     printState(state)
     val newState = updateState(state, latestInput)
     Thread.sleep(500) // Adjust the speed of the game
@@ -73,11 +68,11 @@ object SnakeGame:
 
   private def updateState(state: GameState, input: String): GameState =
     val newDirection = input match
-      case "up" => Direction.Up
-      case "down" => Direction.Down
-      case "left" => Direction.Left
-      case "right" => Direction.Right
-      case _ => state.snake.direction
+      case "up"    => if (state.snake.direction != Direction.Down) Direction.Up else state.snake.direction
+      case "down"  => if (state.snake.direction != Direction.Up) Direction.Down else state.snake.direction
+      case "left"  => if (state.snake.direction != Direction.Right) Direction.Left else state.snake.direction
+      case "right" => if (state.snake.direction != Direction.Left) Direction.Right else state.snake.direction
+      case _       => state.snake.direction
 
     val newHead = move(state.snake.body.head, newDirection)
     val newBody = if (newHead == state.food) newHead :: state.snake.body else newHead :: state.snake.body.init
@@ -88,16 +83,17 @@ object SnakeGame:
 
   private def move(position: Position, direction: Direction): Position =
     direction match
-      case Direction.Up => position.copy(y = position.y - 1)
-      case Direction.Down => position.copy(y = position.y + 1)
-      case Direction.Left => position.copy(x = position.x - 1)
+      case Direction.Up    => position.copy(y = position.y - 1)
+      case Direction.Down  => position.copy(y = position.y + 1)
+      case Direction.Left  => position.copy(x = position.x - 1)
       case Direction.Right => position.copy(x = position.x + 1)
 
   @tailrec
-  def generateFood(state: GameState): Position =
+  private def generateFood(state: GameState): Position =
     val newFood = Position(scala.util.Random.nextInt(state.width), scala.util.Random.nextInt(state.height))
     if (state.snake.body.contains(newFood)) generateFood(state) else newFood
 
   private def isGameOver(state: GameState): Boolean =
     val head = state.snake.body.head
-    head.x < 0 || head.x >= state.width || head.y < 0 || head.y >= state.height || state.snake.body.tail.contains(head)
+    head.x < 0 || head.x >= state.width || head.y < 0 || head.y >= state.height ||
+    state.snake.body.tail.contains(head)
