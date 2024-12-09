@@ -14,6 +14,7 @@ case class Snake(body: List[Position], direction: Direction)
 case class GameState(snake: Snake, food: Position, width: Int, height: Int, score: Int)
 
 object SnakeGame:
+  val gameSpeed = 600
   @volatile private var latestInput: Option[String] = None
 
   def main(args: Array[String]): Unit =
@@ -43,7 +44,7 @@ object SnakeGame:
           if (lastInput.isDefined){
             latestInput = lastInput
           }
-          println(s"Input received: $latestInput") // Debugging statement
+          //println(s"Input received: $latestInput")
         }
       }
     }
@@ -52,7 +53,7 @@ object SnakeGame:
   private def gameLoop(state: GameState): Unit =
     printState(state)
     val newState = updateState(state, latestInput)
-    Thread.sleep(2000) // Adjust the speed of the game
+    Thread.sleep(gameSpeed)
     if (!isGameOver(newState)) gameLoop(newState)
     else println(s"Game Over! Your score: ${state.score}")
 
