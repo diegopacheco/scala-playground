@@ -31,10 +31,6 @@ object SnakeGame:
     Future {
       val terminal: Terminal = TerminalBuilder.terminal()
       val keyMap: KeyMap[String] = new KeyMap()
-      keyMap.bind("up", "\u001B[A")    // Arrow up
-      keyMap.bind("down", "\u001B[B")  // Arrow down
-      keyMap.bind("left", "\u001B[D")  // Arrow left
-      keyMap.bind("right", "\u001B[C") // Arrow right
       keyMap.bind("up", "w")
       keyMap.bind("down", "s")
       keyMap.bind("left", "a")
@@ -43,7 +39,10 @@ object SnakeGame:
       while (true) {
         blocking {
           val input = terminal.reader().read()
-          latestInput = Option(keyMap.getBound(input.toChar.toString))
+          val lastInput: Option[String] = Option(keyMap.getBound(input.toChar.toString))
+          if (lastInput.isDefined){
+            latestInput = lastInput
+          }
           println(s"Input received: $latestInput") // Debugging statement
         }
       }
@@ -53,8 +52,7 @@ object SnakeGame:
   private def gameLoop(state: GameState): Unit =
     printState(state)
     val newState = updateState(state, latestInput)
-    latestInput = None // Reset latestInput after processing
-    Thread.sleep(1000) // Adjust the speed of the game
+    Thread.sleep(2000) // Adjust the speed of the game
     if (!isGameOver(newState)) gameLoop(newState)
     else println(s"Game Over! Your score: ${state.score}")
 
@@ -100,4 +98,4 @@ object SnakeGame:
   private def isGameOver(state: GameState): Boolean =
     val head = state.snake.body.head
     head.x < 0 || head.x >= state.width || head.y < 0 || head.y >= state.height ||
-    state.snake.body.tail.contains(head)
+      state.snake.body.tail.contains(head)
