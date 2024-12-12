@@ -4,9 +4,10 @@ import java.util.Optional
 import scala.jdk.OptionConverters._
 
 object ConversionsOps {
-  given Conversion[Option[Int], Optional[Int]] with
-    def apply(opt: Option[Int]): Optional[Int] = opt.toJava
+  given [T]: Conversion[Option[T], Optional[T]] with
+    def apply(opt: Option[T]): Optional[T] = opt.toJava
 
-  given Conversion[Optional[Int], Option[Int]] with
-    def apply(opt: Optional[Int]): Option[Int] = opt.toScala
+  given [T]: Conversion[Optional[T], Option[T]] with
+    def apply(opt: Optional[T]): Option[T] = opt.toScala
+
 }
