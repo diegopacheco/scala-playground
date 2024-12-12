@@ -29,6 +29,29 @@ object MainApp extends App{
 }
 ```
 
+we can also do with scala <-> java
+
+ReallyJava.java
+```java
+import java.util.Optional;
+
+public class ReallyJava {
+    public Optional<Integer> addTwo(Optional<Integer> opt) {
+        return opt.map(value -> value + 2);
+    }
+}
+```
+them in scala
+```scala
+object MainApp extends App{
+  import ConversionsOps.given
+
+  private val opt2:Option[Int] = Some(Integer.valueOf(41))
+  private val javaReally: Option[Int] = ReallyJava().addTwo(opt2) // 43
+  println(javaReally)
+}
+```
+
 ### Build
 ```
 sbt compile

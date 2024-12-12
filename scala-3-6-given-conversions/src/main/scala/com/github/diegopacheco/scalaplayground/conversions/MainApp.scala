@@ -7,8 +7,8 @@ object MainApp extends App{
   private val result: Option[Int] = JavaLike.addOne(opt) // 42
   println(result)
 
-  val opt2 = Some(Integer.valueOf(41))
-  private val javaReally: Option[Integer] = ReallyJava().addTwo(opt2) // 43
+  private val opt2:Option[Int] = Some(Integer.valueOf(41))
+  private val javaReally: Option[Int] = ReallyJava().addTwo(opt2) // 43
   println(javaReally)
 
 }
