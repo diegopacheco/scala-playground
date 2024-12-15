@@ -14,6 +14,7 @@ import javax.sql.DataSource
 @EnableTransactionManagement
 @EnableScheduling
 class DBConfiguration {
+
   @Bean(name = Array("dataSource"))
   def getDataSource: DataSource = {
     val config = new HikariConfig
@@ -29,7 +30,7 @@ class DBConfiguration {
 
   @Bean(name = Array("transactionManager"))
   def txManager: PlatformTransactionManager = {
-    System.out.println("New TXManager requested...")
     new DataSourceTransactionManager(getDataSource)
   }
+
 }
