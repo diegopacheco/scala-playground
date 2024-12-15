@@ -40,3 +40,8 @@ class StringToOptionGenericConverter extends GenericConverter {
     }
   }
 }
+
+@Component
+class SomeToStringConverter extends Converter[Some[?], String] {
+  override def convert(source: Some[?]): String = source.get.toString
+}

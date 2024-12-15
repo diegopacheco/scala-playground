@@ -9,6 +9,7 @@ class WebFluxConfig extends WebFluxConfigurer {
   override def addFormatters(registry: FormatterRegistry): Unit = {
     registry.addConverter(new StringToOptionConverter)
     registry.addConverter(new StringToOptionGenericConverter)
+    registry.addConverter(new SomeToStringConverter)
     registry.addConverterFactory(new StringToOptionConverterFactory)
   }
 }
