@@ -22,7 +22,7 @@ class DBLoader(
       service.save(p)
     } catch {
       case e: Exception =>
-        System.out.println(e)
+        e.printStackTrace()
     }
   }
 }
