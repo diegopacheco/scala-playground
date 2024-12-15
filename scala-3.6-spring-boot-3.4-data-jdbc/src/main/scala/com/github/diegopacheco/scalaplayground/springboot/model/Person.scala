@@ -1,7 +1,6 @@
 package com.github.diegopacheco.scalaplayground.springboot.model
 
 import org.springframework.data.annotation.Id
-import java.util.Objects
 import scala.annotation.meta.field
 
 case class Person(
