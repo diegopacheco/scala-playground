@@ -20,6 +20,7 @@ assembly / assemblyMergeStrategy := {
   case PathList("META-INF", "spring.factories") => MergeStrategy.concat
   case PathList("META-INF", "spring", "org.springframework.boot.autoconfigure.AutoConfiguration.imports") => MergeStrategy.concat
   case PathList("META-INF", "services", "org.slf4j.spi.SLF4JServiceProvider") => MergeStrategy.concat
+  case PathList("META-INF", "services", "java.sql.Driver") => MergeStrategy.concat
   case PathList("META-INF", _*) => MergeStrategy.discard
   case _ => MergeStrategy.first
 }
