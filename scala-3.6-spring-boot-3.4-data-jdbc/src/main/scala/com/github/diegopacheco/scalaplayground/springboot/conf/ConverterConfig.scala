@@ -1,11 +1,10 @@
 package com.github.diegopacheco.scalaplayground.springboot.conf
 
-import org.springframework.boot.context.properties.ConfigurationPropertiesBinding
 import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.core.convert.{ConversionService, TypeDescriptor}
 import org.springframework.core.convert.converter.{Converter, GenericConverter}
-import org.springframework.data.convert.ValueConverter
+import org.springframework.core.convert.support.DefaultConversionService
 import java.util
 import java.util.{Collections, HashSet}
 import scala.Option
@@ -14,7 +13,7 @@ class StringToOptionGenericConverter extends GenericConverter {
 
   override def getConvertibleTypes: util.Set[GenericConverter.ConvertiblePair] = {
     val pairs = new util.HashSet[GenericConverter.ConvertiblePair]()
-    pairs.add(new GenericConverter.ConvertiblePair(classOf[String], classOf[Option[?]]))
+    pairs.add(new GenericConverter.ConvertiblePair(classOf[String], classOf[Option[String]]))
     Collections.unmodifiableSet(pairs)
   }
 
@@ -46,7 +45,10 @@ class ConverterConfig {
   }
 
   @Bean
-  def StringToOptionGenericConverter:StringToOptionGenericConverter =
+  def configDefaultConverter(conversionService: DefaultConversionService): StringToOptionGenericConverter = {
+    conversionService.addConverter(new StringToOptionGenericConverter)
+    //conversionService.addConverter(new StringToOptionConverter)
     new StringToOptionGenericConverter
+  }
 
 }
