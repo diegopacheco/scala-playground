@@ -47,7 +47,7 @@ class ConverterConfig {
   @Bean
   def configDefaultConverter(conversionService: DefaultConversionService): StringToOptionGenericConverter = {
     conversionService.addConverter(new StringToOptionGenericConverter)
-    //conversionService.addConverter(new StringToOptionConverter)
+    conversionService.addConverter(new StringToOptionConverter)
     new StringToOptionGenericConverter
   }
 
