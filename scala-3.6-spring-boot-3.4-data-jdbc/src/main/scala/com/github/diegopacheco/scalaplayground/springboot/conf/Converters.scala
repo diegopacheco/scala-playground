@@ -85,6 +85,8 @@ class ConvertersConfig {
   def defaultConversionService(): DefaultConversionService = {
     val conversionService = new DefaultConversionService()
     DefaultConversionService.addDefaultConverters(conversionService)
+    conversionService.addConverter(new StringToOptionConverter())
+    conversionService.addConverter(new SomeToStringConverter())
     conversionService
   }
 
