@@ -9,6 +9,7 @@ import java.util
 import java.util.{Collections, HashSet}
 import scala.Option
 
+/*
 class StringToOptionGenericConverter extends GenericConverter {
 
   override def getConvertibleTypes: util.Set[GenericConverter.ConvertiblePair] = {
@@ -51,4 +52,20 @@ class ConverterConfig {
     new StringToOptionGenericConverter
   }
 
+}
+*/
+@Configuration
+class ConverterConfig {
+
+  @Bean
+  def conversionService(factory: ConversionServiceFactoryBean): ConversionService =
+    factory.getObject
+
+  @Bean
+  def conversionServiceFactoryBean(converters: java.util.Set[Converter[_, _]]): ConversionServiceFactoryBean = {
+    val factory = new ConversionServiceFactoryBean
+    converters.add(new StringToOptionConverterFactory().getConverter(classOf[Option[_]]))
+    factory.setConverters(converters)
+    factory
+  }
 }
