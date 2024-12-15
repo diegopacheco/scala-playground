@@ -7,7 +7,7 @@ libraryDependencies ++= Seq(
   "org.springframework.boot" % "spring-boot-starter-webflux" % springVersion,
   "org.springframework.boot" % "spring-boot-starter-data-jdbc" % springVersion,
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.18.2",
-  "com.zaxxer" % "HikariCP" % "5.0.1",
+  "com.zaxxer" % "HikariCP" % "6.2.1",
   "mysql" % "mysql-connector-java" % "8.0.33",
 )
 
