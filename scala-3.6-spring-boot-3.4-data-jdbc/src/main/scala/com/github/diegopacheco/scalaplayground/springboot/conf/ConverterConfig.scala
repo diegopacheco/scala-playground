@@ -1,8 +1,8 @@
 package com.github.diegopacheco.scalaplayground.springboot.conf
 
 import org.springframework.context.annotation.{Bean, Configuration}
-import org.springframework.core.convert.TypeDescriptor
-import org.springframework.format.support.FormattingConversionService
+import org.springframework.context.support.ConversionServiceFactoryBean
+import org.springframework.core.convert.{ConversionService, TypeDescriptor}
 import org.springframework.core.convert.converter.{Converter, GenericConverter}
 import org.springframework.stereotype.Component
 import java.util
@@ -33,12 +33,17 @@ class StringToOptionConverter extends Converter[String, Option[String]] {
 @Configuration
 class ConverterConfig {
 
-  @Bean(name = Array("conversionService"))
-  def conversionService(): FormattingConversionService = {
-    val conversionService = new FormattingConversionService()
-    conversionService.addConverter(new StringToOptionConverter())
-    conversionService.addConverter(new StringToOptionGenericConverter())
-    conversionService
+  @Bean
+  def conversionService(factory: ConversionServiceFactoryBean): ConversionService =
+    factory.getObject
+
+  @Bean
+  def conversionServiceFactoryBean(converters: java.util.Set[Converter[?, ?]]): ConversionServiceFactoryBean = {
+    val factory = new ConversionServiceFactoryBean
+    converters.add(new StringToOptionConverter())
+    //converters.add(new StringToOptionGenericConverter())
+    factory.setConverters(converters)
+    factory
   }
 
 }
