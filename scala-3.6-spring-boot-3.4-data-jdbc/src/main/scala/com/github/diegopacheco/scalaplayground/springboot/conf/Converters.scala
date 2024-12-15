@@ -1,10 +1,20 @@
 package com.github.diegopacheco.scalaplayground.springboot.conf
 
+import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.core.convert.TypeDescriptor
 import org.springframework.core.convert.converter.{Converter, ConverterFactory, GenericConverter}
+import org.springframework.core.convert.support.DefaultConversionService
+import org.springframework.data.convert.{CustomConversions, ReadingConverter, WritingConverter}
+import org.springframework.data.relational.core.conversion.MappingRelationalConverter
+import org.springframework.data.relational.core.mapping.RelationalMappingContext
+import org.springframework.format.support.FormattingConversionService
 import org.springframework.stereotype.Component
 import java.util
-import java.util.Collections
+import java.util.{Arrays, Collections}
+
+//
+// Not working with spring data core and rest part
+//
 
 @Component
 class StringToOptionConverterFactory extends ConverterFactory[String, Option[String]] {
@@ -41,7 +51,65 @@ class StringToOptionGenericConverter extends GenericConverter {
   }
 }
 
-@Component
+//@ReadingConverter
+@WritingConverter
 class SomeToStringConverter extends Converter[Some[?], String] {
   override def convert(source: Some[?]): String = source.get.toString
+}
+
+@Component
+class CustomMappingRelationalConverter(context: RelationalMappingContext)
+  extends MappingRelationalConverter(
+    context,
+    new CustomConversions(
+      CustomConversions.StoreConversions.NONE,
+      util.Arrays.asList(
+        new SomeToStringConverter()
+      )
+    )
+  )
+
+@Configuration
+class ConvertersConfig {
+
+  @Bean
+  def conversionService(): FormattingConversionService = {
+    val conversionService = new FormattingConversionService()
+    DefaultConversionService.addDefaultConverters(conversionService)
+    conversionService.addConverter(new StringToOptionConverter())
+    conversionService.addConverter(new SomeToStringConverter())
+    conversionService
+  }
+
+  @Bean
+  def defaultConversionService(): DefaultConversionService = {
+    val conversionService = new DefaultConversionService()
+    DefaultConversionService.addDefaultConverters(conversionService)
+    conversionService
+  }
+
+  @Bean
+  def customConversions(cs:DefaultConversionService): CustomConversions = {
+    val cc = new CustomConversions(
+      CustomConversions.StoreConversions.NONE,
+      java.util.Arrays.asList(
+        new SomeToStringConverter()
+      )
+    )
+    cc.registerConvertersIn(cs)
+    cc
+  }
+
+  @Bean
+  def someToStringConverter(): SomeToStringConverter =
+    new SomeToStringConverter()
+
+  @Bean
+  def stringToOptionGenericConverter(): StringToOptionGenericConverter =
+    new StringToOptionGenericConverter()
+
+  @Bean
+  def stringToOptionConverterFactory(): StringToOptionConverterFactory =
+    new StringToOptionConverterFactory()
+
 }
