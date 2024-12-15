@@ -18,7 +18,7 @@ class DBLoader(
       jdbcTemplate.execute("INSERT INTO person(first_name,last_name) VALUES('Dante', 'Alighieri')")
       jdbcTemplate.execute("INSERT INTO person(first_name,last_name) VALUES('Stefan', 'Zweig')")
       jdbcTemplate.execute("INSERT INTO person(first_name,last_name) VALUES('Oscar', 'Wilde')")
-      val p = new Person(firstName =  "Diego", lastName =  Some("Pacheco"))
+      val p = new Person(firstName =  Some("Diego"), lastName =  Some("Pacheco"))
       service.save(p)
     } catch {
       case e: Exception =>

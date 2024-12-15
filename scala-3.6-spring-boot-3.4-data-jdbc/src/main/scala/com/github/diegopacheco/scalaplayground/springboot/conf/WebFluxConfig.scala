@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry
 import org.springframework.web.reactive.config.WebFluxConfigurer
 
+/**
+ * Registration happens - but cannot find converters.
+ */
 @Configuration
 class WebFluxConfig extends WebFluxConfigurer {
   override def addFormatters(registry: FormatterRegistry): Unit = {

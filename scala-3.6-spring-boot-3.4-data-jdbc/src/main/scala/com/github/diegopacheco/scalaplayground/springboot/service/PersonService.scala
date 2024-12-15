@@ -14,11 +14,11 @@ class PersonService(
 
   def getAllPeople: util.List[Person] = {
     val result = new util.ArrayList[Person]
-    repository.findAll.forEach(result.add)
+    repository.findAll.forEach(person => result.add(Person.fromSpring(person)))
     result
   }
 
   def save(p: Person): Unit = {
-    repository.save(p)
+    repository.save(Person.toSpring(p))
   }
 }

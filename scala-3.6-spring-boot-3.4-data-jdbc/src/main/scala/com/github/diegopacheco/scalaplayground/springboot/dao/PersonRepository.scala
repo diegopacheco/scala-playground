@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 import java.util
 
 @Repository
-trait PersonRepository extends CrudRepository[Person, Long] {
+trait PersonRepository extends CrudRepository[Person.SpringPerson, Long] {
   def findByFirstName(firstName: String): util.List[Person]
 
   @Modifying
