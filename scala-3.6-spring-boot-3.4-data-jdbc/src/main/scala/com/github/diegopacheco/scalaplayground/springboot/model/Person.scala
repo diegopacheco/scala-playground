@@ -3,6 +3,7 @@ package com.github.diegopacheco.scalaplayground.springboot.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import scala.annotation.meta.field
+import scala.language.implicitConversions
 
 case class Person(
   id:Long = 0L,
@@ -21,9 +22,9 @@ object Person {
        lastName: String = null,
    )
 
-   def toDB(p:Person): PersonMapping =
-      PersonMapping(p.id, p.firstName.orNull, p.lastName.orNull)
+   implicit def toDB(p: Person): Person.PersonMapping =
+     PersonMapping(p.id, p.firstName.orNull, p.lastName.orNull)
 
-   def fromDB(p:PersonMapping): Person =
-      Person(p.id, Option(p.firstName), Option(p.lastName))
+   implicit def fromDB(p: Person.PersonMapping): Person =
+     Person(p.id, Option(p.firstName), Option(p.lastName))
 }

@@ -4,7 +4,7 @@ import com.github.diegopacheco.scalaplayground.springboot.dao.PersonRepository
 import com.github.diegopacheco.scalaplayground.springboot.model.Person
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import scala.collection.mutable.ListBuffer
+import scala.jdk.CollectionConverters._
 
 @Service
 class PersonService(
@@ -12,11 +12,10 @@ class PersonService(
 ) {
 
   def getAllPeople: List[Person] = {
-    val result = ListBuffer[Person]()
-    repository.findAll.forEach(person => result += Person.fromDB(person) )
-    result.toList
+    repository.findAll.asScala.
+      flatMap(personMapping => List(personMapping: Person)).toList
   }
 
   def save(p: Person): Unit =
-    repository.save(Person.toDB(p))
+    repository.save(p)
 }
