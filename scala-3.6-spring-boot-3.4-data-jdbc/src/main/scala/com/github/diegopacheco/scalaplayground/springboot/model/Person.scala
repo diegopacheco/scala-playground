@@ -2,7 +2,6 @@ package com.github.diegopacheco.scalaplayground.springboot.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
-
 import scala.annotation.meta.field
 
 case class Person(
@@ -16,16 +15,15 @@ case class Person(
 
 object Person {
    @Table(name = "person")
-   case class SpringPerson(
+   case class PersonMapping(
        @(Id @field) id: Long = 0L,
        firstName: String = null,
        lastName: String = null,
    )
 
-   def toSpring(p:Person): SpringPerson =
-      SpringPerson(p.id, p.firstName.orNull, p.lastName.orNull)
+   def toDB(p:Person): PersonMapping =
+      PersonMapping(p.id, p.firstName.orNull, p.lastName.orNull)
 
-   def fromSpring(p:SpringPerson): Person =
+   def fromDB(p:PersonMapping): Person =
       Person(p.id, Option(p.firstName), Option(p.lastName))
-
 }

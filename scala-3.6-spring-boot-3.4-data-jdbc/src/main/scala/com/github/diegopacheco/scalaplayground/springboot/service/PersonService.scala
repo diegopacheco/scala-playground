@@ -4,21 +4,19 @@ import com.github.diegopacheco.scalaplayground.springboot.dao.PersonRepository
 import com.github.diegopacheco.scalaplayground.springboot.model.Person
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import java.util
+import scala.collection.mutable.ListBuffer
 
 @Service
 class PersonService(
   @Autowired val repository: PersonRepository
 ) {
 
-  def getAllPeople: util.List[Person] = {
-    val result = new util.ArrayList[Person]
-    repository.findAll.forEach(person => result.add(Person.fromSpring(person)))
-    result
+  def getAllPeople: List[Person] = {
+    val result = ListBuffer[Person]()
+    repository.findAll.forEach(person => result += Person.fromDB(person) )
+    result.toList
   }
 
-  def save(p: Person): Unit = {
-    repository.save(Person.toSpring(p))
-  }
+  def save(p: Person): Unit =
+    repository.save(Person.toDB(p))
 }

@@ -7,11 +7,9 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
-import java.util
-
 @Repository
-trait PersonRepository extends CrudRepository[Person.SpringPerson, Long] {
-  def findByFirstName(firstName: String): util.List[Person]
+trait PersonRepository extends CrudRepository[Person.PersonMapping, Long] {
+  def findByFirstName(firstName: String): List[Person]
 
   @Modifying
   @Query("UPDATE person SET first_name = :name WHERE id = :id")
