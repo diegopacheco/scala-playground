@@ -17,4 +17,7 @@ class PersonController(
 
   @RequestMapping(Array("/all"))
   def getAllThePeople: List[Person] = service.getAllPeople
+
+  @RequestMapping(Array("/all2"))
+  def getAllThePeople2: List[Person] = service.getAllPeople2
 }
