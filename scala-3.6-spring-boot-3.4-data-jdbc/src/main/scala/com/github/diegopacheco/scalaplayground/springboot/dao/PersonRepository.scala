@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-trait PersonRepository extends CrudRepository[Person.PersonMapping, Long] {
+trait PersonRepository extends CrudRepository[Person, Long] {
   def findByFirstName(firstName: String): List[Person]
 
   @Modifying

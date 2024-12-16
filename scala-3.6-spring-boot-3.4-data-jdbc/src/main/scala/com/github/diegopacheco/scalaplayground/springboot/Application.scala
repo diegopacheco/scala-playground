@@ -15,7 +15,7 @@ object Application {
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan(Array("com.github.diegopacheco.scalaplayground.springboot"))
+@ComponentScan(Array("com.github.diegopacheco.scalaplayground.springboot.*"))
 class Application(
   @Autowired val loder: DBLoader
 ) {

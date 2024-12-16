@@ -10,7 +10,6 @@ import scala.language.implicitConversions
 // 2. Never do Some(value) always do Option(value) to avoid Some(null) and null pointer exceptions
 //
 
-/*
 @Table(name = "person")
 case class Person(
   @(Id @field) id: Long = 0L,
@@ -22,8 +21,8 @@ case class Person(
    override def toString: String = "Person{" + "id=" + id +
     ", " + "firstName='" + firstName + "', " + "lastName='" + lastName + "'}"
 }
-*/
 
+/*
 case class Person(
   @(Id @field) id: Long = 0L,
   var firstName: Option[String] = None,
@@ -47,3 +46,4 @@ object Person {
    implicit def fromDB(p: Person.PersonMapping): Person =
      Person(p.id, Option(p.firstName), Option(p.lastName))
 }
+*/

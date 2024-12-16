@@ -29,10 +29,12 @@ class StringToOptionConverterFactory extends ConverterFactory[String, Option[Str
   }
 }
 
+/*
 @Component
 class StringToOptionConverter extends Converter[String, Option[String]] {
   override def convert(source: String): Option[String] = Option(source)
 }
+*/
 
 @Component
 class StringToOptionGenericConverter extends GenericConverter {
@@ -55,6 +57,11 @@ class StringToOptionGenericConverter extends GenericConverter {
 @WritingConverter
 class SomeToStringConverter extends Converter[Some[?], String] {
   override def convert(source: Some[?]): String = source.get.toString
+}
+
+@ReadingConverter
+class StringToOptionConverter extends Converter[String,Option[?]] {
+  override def convert(source:String): Option[?] = Option(source.trim)
 }
 
 @Component
