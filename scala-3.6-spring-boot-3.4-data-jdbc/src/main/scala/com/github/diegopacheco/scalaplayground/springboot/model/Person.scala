@@ -10,6 +10,9 @@ import scala.language.implicitConversions
 // 2. Never do Some(value) always do Option(value) to avoid Some(null) and null pointer exceptions
 //
 
+//
+// Approach 1 (working) using JDBC Converters
+//
 @Table(name = "person")
 case class Person(
   @(Id @field) id: Long = 0L,
@@ -22,6 +25,9 @@ case class Person(
     ", " + "firstName='" + firstName + "', " + "lastName='" + lastName + "'}"
 }
 
+//
+// Approach 2 (working) using Mappers and Implicit Conversions
+//
 /*
 case class Person(
   @(Id @field) id: Long = 0L,
