@@ -1,12 +1,22 @@
-### Case class Considerations
+### Note on Converters
 
-1. Scala case class is immutable by default and does not generate java setters
-2. Never do Some(value) always do Option(value) to avoid Some(null) and null pointer exceptions
+Spring has several converters, Generic or converters for Core(SPI) and Web/Webflux. 
+Which none will work for various reasons.  But...
+The one I care here is the JDBC converter for Spring Data JDBC. Which will work.
+Converters are needed in parts one for write and other for reading, in my case:
+* SomeToStringConverter (Some[?] -> String) for writing on DB (JDBC Template)
+* StringToOptionConverter (String -> Option[?]) for reading from DB (Repository)
+Converters need to be registered by extending `AbstractJdbcConfiguration` and overriding `jdbcCustomConversions`
 
 ## Valid approaches
 
 1. Use JDBC Converters `Converters` and `Person` and `PersonRepository`
-2. Use Mapping + Implicits `Person2` and `Person2Repository`
+2. Use Mapping + Implicits `Person2` and `PersonRepository2` (No converter needed)
+
+### Case class Considerations
+
+1. Scala case class is immutable by default and does not generate java setters
+2. Never do Some(value) always do Option(value) to avoid Some(null) and null pointer exceptions
 
 ### Build
 ```
