@@ -19,8 +19,6 @@ case class Person(
   var firstName: Option[String] = None,
   var lastName: Option[String] = None,
 ) {
-   def setFirstName(firstName: String): Unit = this.firstName = Option(firstName)
-   def setLastName(lastName: String): Unit = this.lastName = Option(lastName)
    override def toString: String = "Person{" + "id=" + id +
     ", " + "firstName='" + firstName + "', " + "lastName='" + lastName + "'}"
 }
