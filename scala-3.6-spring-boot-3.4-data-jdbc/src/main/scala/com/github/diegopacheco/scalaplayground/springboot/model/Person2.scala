@@ -9,9 +9,9 @@ import scala.language.implicitConversions
 // Approach 2 (working) using Mappers and Implicit Conversions
 //
 case class Person2(
-  @(Id @field) id: Long = 0L,
-  var firstName: Option[String] = None,
-  var lastName: Option[String] = None,
+  id: Long = 0L,
+  firstName: Option[String] = None,
+  lastName: Option[String] = None,
 ) {
    override def toString: String = "Person{" + "id=" + id +
      ", " + "firstName='" + firstName + "', " + "lastName='" + lastName + "'}"
