@@ -24,7 +24,7 @@ object Person2 {
        lastName: String = null,
    )
 
-   implicit def toDB(p: Person): Person2.PersonMapping =
+   implicit def toDB(p: Person2): Person2.PersonMapping =
      PersonMapping(p.id, p.firstName.orNull, p.lastName.orNull)
 
    implicit def fromDB(p: Person2.PersonMapping): Person =

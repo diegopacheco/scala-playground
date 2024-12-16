@@ -1,10 +1,9 @@
 package com.github.diegopacheco.scalaplayground.springboot.service
 
 import com.github.diegopacheco.scalaplayground.springboot.dao.{PersonRepository, PersonRepository2}
-import com.github.diegopacheco.scalaplayground.springboot.model.Person
+import com.github.diegopacheco.scalaplayground.springboot.model.{Person, Person2}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
 import scala.jdk.CollectionConverters.*
 
 @Service
@@ -23,6 +22,6 @@ class PersonService(
       flatMap(personMapping => List(personMapping: Person)).toList
   }
 
-  def save(p: Person): Unit =
-    repository.save(p)
+  def save(p: Person): Unit = repository.save(p)
+  def save2(p: Person2): Unit = repository2.save(p)
 }

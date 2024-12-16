@@ -13,8 +13,8 @@ import scala.annotation.meta.field
 @Table(name = "person")
 case class Person(
   @(Id @field) id: Long = 0L,
-  var firstName: Option[String] = None,
-  var lastName: Option[String] = None,
+  firstName: Option[String] = None,
+  lastName: Option[String] = None,
 ) {
    override def toString: String = "Person{" + "id=" + id +
     ", " + "firstName='" + firstName + "', " + "lastName='" + lastName + "'}"
