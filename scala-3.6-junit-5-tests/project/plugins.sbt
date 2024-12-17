@@ -1,0 +1,1 @@
+//addSbtPlugin("org.junit.platform" % "junit-platform-sbt" % "1.0.0")
