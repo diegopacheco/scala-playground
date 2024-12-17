@@ -15,3 +15,7 @@ javaOptions ++= Seq(
   "--add-opens", "java.base/java.lang=ALL-UNNAMED",
   "--add-opens", "java.base/java.util=ALL-UNNAMED",
 )
+
+scalacOptions ++= Seq(
+  s"-release:$javaVersion"
+)
