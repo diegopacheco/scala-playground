@@ -10,10 +10,6 @@ libraryDependencies ++= Seq(
   "com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test
 )
 
-//ThisBuild / libraryDependencies += "com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test
-//testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
-//testFrameworks += new TestFramework("org.junit.platform.sbt.JUnitPlatformFramework")
-
 javaOptions ++= Seq(
   "--enable-preview",
   "--add-opens", "java.base/java.lang=ALL-UNNAMED",
