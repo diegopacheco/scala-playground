@@ -1,8 +1,10 @@
 package com.github.diegopacheco.scalaplayground
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.api.Assertions.*
+//import org.junit.runner.RunWith
 
+//@RunWith(classOf[JUnitPlatform])
 class SimpleCalculatorTest {
 
   @Test
