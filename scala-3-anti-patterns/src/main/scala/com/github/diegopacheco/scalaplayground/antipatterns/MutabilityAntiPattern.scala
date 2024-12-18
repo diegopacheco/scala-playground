@@ -16,4 +16,8 @@ def getLuckyNumbers:ArrayBuffer[Int] = {
 object MutabilityAntiPattern extends App{
   private var luckyNumbers: ArrayBuffer[Int] = getLuckyNumbers
   println(luckyNumbers)
+
+  var total = 0 // Anti-pattern
+  val add = (x: Int) => total += x
+  println(add(5))
 }
