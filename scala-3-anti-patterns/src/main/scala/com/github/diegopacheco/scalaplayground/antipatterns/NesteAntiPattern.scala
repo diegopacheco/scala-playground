@@ -1,5 +1,8 @@
 package com.github.diegopacheco.scalaplayground.antipatterns
 
+//
+// Anti-pattern: Nested if-else
+//
 object NesteAntiPattern extends App{
   val condition1 = true
   val condition2 = false
