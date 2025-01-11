@@ -1,5 +1,8 @@
 package com.github.diegopacheco.scala.playground
 
+//
+// OK
+//
 def proofOne(): Unit = {
   //
   // This function check the result before returning so the check in part of the function.
@@ -14,6 +17,9 @@ def proofOne(): Unit = {
   println(s"Is $testNumber divisible by 9? ${isDivisibleBy9(testNumber)}")
 }
 
+//
+// OK
+//
 def proofTwo(): Unit = {
   //
   // This function also have an embedded check - the IF
@@ -24,6 +30,9 @@ def proofTwo(): Unit = {
   (1 to 2).foreach(printOdd)
 }
 
+//
+// OK
+//
 def proofThree(): Unit = {
   //
   // This function also have an embedded check - the assert (Exception is throw if fail)
@@ -35,6 +44,9 @@ def proofThree(): Unit = {
   (2 to 2).foreach(printOdd)
 }
 
+//
+// OK
+//
 def proofFour(): Unit = {
   //
   // This is the classic proof of 9 - instead of doing number / 9 we have different math proof same result.
@@ -59,6 +71,9 @@ def proofFour(): Unit = {
   }
 }
 
+//
+// NOT OK
+//
 def proofFive(): Unit = {
 
   def getIDFromSystemOne(): Int = 22_500
@@ -78,6 +93,10 @@ def proofFive(): Unit = {
   //
   // BAD (but a bit better) - it check if all CROSS_CHECK matches but what means to have: 22_500 ???
   // There is an anti-pattern called Magical Numbers.
+  // Another REAson WHY IS bad - all ids matches - but them what? what guarantee underlying system have same data in sync?
+  // Example: when we transfer a file over network we do a checksum function to make sure the file is the same.
+  // But we check the file not just the "ID" of the file. When you have many distributed system - how to guarantee you have same state in all different DBs?
+  // EVEN if proof, would it be always correct? do you need to check how often?
   //
   if (getIDFromSystemOne() == getIDFromSystemTwo() &&  getIDFromSystemOne() == getIDFromSystemThree()) {
     println(s"BAD - I think ids are good because IDS matches - IDs: $ids")
