@@ -59,10 +59,37 @@ def proofFour(): Unit = {
   }
 }
 
+def proofFive(): Unit = {
+
+  def getIDFromSystemOne(): Int = 22_500
+  def getIDFromSystemTwo(): Int = 22_500
+  def getIDFromSystemThree(): Int = 22_500
+
+  //
+  // BAD:
+  //   1. only check IF ONE is present
+  //   2. Does not CROSS_CHECK the IDS
+  //
+  val ids = List(getIDFromSystemOne(), getIDFromSystemTwo(), getIDFromSystemThree())
+  if (null != ids && ids.nonEmpty) {
+    println(s"BAD - I think ids are good because there is some ID - IDs: $ids")
+  }
+
+  //
+  // BAD (but a bit better) - it check if all CROSS_CHECK matches but what means to have: 22_500 ???
+  // There is an anti-pattern called Magical Numbers.
+  //
+  if (getIDFromSystemOne() == getIDFromSystemTwo() &&  getIDFromSystemOne() == getIDFromSystemThree()) {
+    println(s"BAD - I think ids are good because IDS matches - IDs: $ids")
+  }
+
+}
+
 object MainApp extends App{
   proofOne()
   proofTwo()
   proofThree()
   proofFour()
+  proofFive()
 }
 
