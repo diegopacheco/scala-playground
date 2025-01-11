@@ -35,9 +35,34 @@ def proofThree(): Unit = {
   (2 to 2).foreach(printOdd)
 }
 
+def proofFour(): Unit = {
+  //
+  // This is the classic proof of 9 - instead of doing number / 9 we have different math proof same result.
+  // This is interesting concept because it checks the result in a different way.
+  //
+  def sumOfDigits(number: Int): Int = {
+    number.toString.map(_.asDigit).sum
+  }
+  def isDivisibleBy9(number: Int): Boolean = {
+    var sum = sumOfDigits(number)
+    while (sum >= 9) {
+      if (sum == 9) return true
+      sum = sumOfDigits(sum)
+    }
+    false
+  }
+
+  // Test the function with multiple numbers
+  val testNumbers = List(333333, 123456789)
+  testNumbers.foreach { n =>
+    println(s"Is $n divisible by 9? ${isDivisibleBy9(n)}")
+  }
+}
+
 object MainApp extends App{
   proofOne()
   proofTwo()
   proofThree()
+  proofFour()
 }
 
