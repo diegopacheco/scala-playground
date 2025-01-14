@@ -1,10 +1,12 @@
-package com.github.diegopacheco.scala.ids.loginservice
+package com.github.diegopacheco.scala.ids.services
 
 trait LoginContract {
   def login(loginID: Int, password: String): Boolean
 }
 
 object LoginService extends LoginContract {
+
+  // simulates reads from database, see emailID and loginid have no correlation.
   private val users = Map(
     10_001 -> hash("banana"),
     10_002 -> hash("apple"),

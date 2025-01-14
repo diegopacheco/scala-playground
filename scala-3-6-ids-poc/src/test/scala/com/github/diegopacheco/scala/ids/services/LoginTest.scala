@@ -1,4 +1,4 @@
-package com.github.diegopacheco.scala.ids.loginservice
+package com.github.diegopacheco.scala.ids.services
 
 import org.scalatest.funsuite.AnyFunSuite
 
