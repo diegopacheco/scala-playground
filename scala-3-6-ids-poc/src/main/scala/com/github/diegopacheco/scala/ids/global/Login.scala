@@ -1,21 +1,22 @@
 package com.github.diegopacheco.scala.ids.global
 
+import java.util.UUID
+
 trait LoginContract {
-  def login(loginID: Int, password: String): Boolean
+  def login(accountID: UUID, password: String): Boolean
 }
 
-object LoginService extends LoginContract {
+class LoginService(val accountService:AccountsService.type) extends LoginContract {
 
-  // simulates reads from database, see emailID and loginid have no correlation.
-  private val users = Map(
-    10_001 -> hash("banana"),
-    10_002 -> hash("apple"),
-    10_003 -> hash("orange")
+  private val logins = Map(
+    UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479") -> ("bananas",hash("bananas")),
+    UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d480") -> ("apples",hash("apples")),
+    UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d481") -> ("oranges",hash("oranges"))
   )
 
-  override def login(loginID: Int, password: String): Boolean = {
-    users.get(loginID) match {
-      case Some(p) => p == password
+  override def login(accountID: UUID, password: String): Boolean = {
+    logins.get(accountID) match {
+      case Some((_, storedHash)) => storedHash == hash(password)
       case None => false
     }
   }
