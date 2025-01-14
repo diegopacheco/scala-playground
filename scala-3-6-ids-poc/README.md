@@ -13,6 +13,14 @@ sbt run
 Using Services or Microservices forces to split what would be a single databse.
 The consequence is that you cannot join tables anymore (not at least in transactional service, you always can in big data).
 Now how do "link" and connect data across different services with different domains and different data stores(Nosql, Relational, Graph, etc)?
+</br>
+</br>
+Consider an E-commerce system with the following services:
+* Login: Where the use will authenticate and use to login on the website.
+* Email: Where the user will receive emails, send mkt notifications and campaign for selling products etc...
+* Purchase: Where the user will buy products. Keeps track of the user purchases.
+* Account: Where the user account is stored. It's a global service that holds links between services.
+
 
 ### Some options
 
