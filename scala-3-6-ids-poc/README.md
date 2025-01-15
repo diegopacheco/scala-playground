@@ -21,7 +21,7 @@ Consider an E-commerce system with the following services:
 * Purchase: Where the user will buy products. Keeps track of the user purchases. Maybe to drive more sales.
 * Account: Where the user account is stored. It's a global service that holds links between services.
 
-There are `58 tests` all passing. Check them out!
+There are `61 tests` all passing. Check them out!
 
 ### Some options
 
