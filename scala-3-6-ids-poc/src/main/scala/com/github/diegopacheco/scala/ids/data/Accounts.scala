@@ -17,15 +17,18 @@ object AccountsService extends AccountsContract {
 
   def createAccount(): UUID = {
     val accountID = UUID.randomUUID()
-    accounts = accounts + (accountID -> Map())
-    BusService.publish("accountCreated")
+    val account:(UUID, Map[String, Int]) = accountID -> Map()
+    accounts = accounts + account
+    BusService.publish("accountCreated",account)
     accountID
   }
 
   def link(accountID: UUID, service:String,serviceID: Int): Boolean = {
     accounts.get(accountID) match {
       case Some(account) =>
-        accounts = accounts + (accountID -> (account + (service -> serviceID)))
+        val link = (accountID -> (account + (service -> serviceID)))
+        accounts = accounts + link
+        BusService.publish("accountLinked",link)
         true
       case None => false
     }

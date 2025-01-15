@@ -2,19 +2,24 @@ package com.github.diegopacheco.scala.ids.data
 
 import org.json4s.native.Json
 
-type Event = String
+type EventType = String
+type Event = Any
 
+/**
+ * Ideally this a proper message bus like Kafka, RabbitMQ, SQS/SNS, nsq, etc.
+ * Since is a POC - I will do in memory like a simple java Observer pattern.
+ */
 trait Bus {
-  def publish(event:Event): Boolean
-  def subscribe(event:Event, callback: Event => Unit): Boolean
+  def publish(eventType:EventType,event:Any): Boolean
+  def subscribe(eventType:EventType, callback: Event => Unit): Boolean
 }
 
 object InMemoryBus extends Bus with JsonSupport {
-  private var subscribers = Map[Event, List[Event => Unit]]()
+  private var subscribers = Map[EventType, List[Event => Unit]]()
 
-  def publish(event:Event): Boolean = {
+  def publish(eventType:EventType,event:Any): Boolean = {
     val json = serialization.write(event)
-    subscribers.get(event) match {
+    subscribers.get(eventType) match {
       case Some(callbacks) => {
         callbacks.foreach(callback => callback(event))
         true
@@ -23,14 +28,14 @@ object InMemoryBus extends Bus with JsonSupport {
     }
   }
 
-  def subscribe(event:Event, callback: Event => Unit): Boolean = {
-    subscribers.get(event) match {
+  def subscribe(eventType:EventType, callback: Event => Unit): Boolean = {
+    subscribers.get(eventType) match {
       case Some(callbacks) => {
-        subscribers = subscribers + (event -> (callback :: callbacks))
+        subscribers = subscribers + (eventType -> (callback :: callbacks))
         true
       }
       case None => {
-        subscribers = subscribers + (event -> List(callback))
+        subscribers = subscribers + (eventType -> List(callback))
         true
       }
     }
@@ -38,6 +43,6 @@ object InMemoryBus extends Bus with JsonSupport {
 }
 
 object BusService extends Bus {
-  def publish(event:Event): Boolean = InMemoryBus.publish(event)
-  def subscribe(event:Event, callback: Event => Unit): Boolean = InMemoryBus.subscribe(event, callback)
+  def publish(eventType:EventType,event:Any): Boolean = InMemoryBus.publish(eventType,event)
+  def subscribe(eventType:EventType, callback: Event => Unit): Boolean = InMemoryBus.subscribe(eventType,callback)
 }

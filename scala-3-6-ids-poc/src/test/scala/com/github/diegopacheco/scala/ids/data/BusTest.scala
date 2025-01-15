@@ -6,7 +6,7 @@ class BusTest extends AnyFunSuite {
 
   test("publish should return false if no subscribers for the event") {
     val bus = InMemoryBus
-    assert(!bus.publish("event1"))
+    assert(!bus.publish("event1","data"))
   }
 
   test("subscribe should add a subscriber for the event") {
@@ -19,7 +19,7 @@ class BusTest extends AnyFunSuite {
     val bus = InMemoryBus
     val callback: Event => Unit = _ => ()
     bus.subscribe("event1", callback)
-    assert(bus.publish("event1"))
+    assert(bus.publish("event1","data"))
   }
 
   test("publish should call the subscriber's callback") {
@@ -27,7 +27,7 @@ class BusTest extends AnyFunSuite {
     var called = false
     val callback: Event => Unit = _ => called = true
     bus.subscribe("event1", callback)
-    bus.publish("event1")
+    bus.publish("event1","data")
     assert(called)
   }
 
@@ -45,7 +45,7 @@ class BusTest extends AnyFunSuite {
     val callback: Event => Unit = _ => callCount += 1
     bus.subscribe("event1", callback)
     bus.subscribe("event1", callback)
-    bus.publish("event1")
+    bus.publish("event1","data")
     assert(callCount == 2)
   }
 }
