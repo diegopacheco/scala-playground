@@ -1,7 +1,5 @@
 package com.github.diegopacheco.scala.ids.data
 
-import org.json4s.native.Json
-
 type EventType = String
 type Event = Any
 

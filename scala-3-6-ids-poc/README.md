@@ -111,7 +111,7 @@ For the POC I just did in memory, like the Observer Pattern in Java. The idea he
 Basically we will publish events, every time some useful happens, them we will have a listener that will update the data in the other services.
 Doing such approach allow us to share DATA and IDs if we want(I would just share data no IDS IF POSSIBLE) and with that we can do the things we need.
 
-There are couple of variations like:
+There are a couple of variations like:
 1. Share all data (no ids)
 2. Share all ids and links
 
