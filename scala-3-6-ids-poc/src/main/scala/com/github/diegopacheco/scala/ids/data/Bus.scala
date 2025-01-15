@@ -1,5 +1,7 @@
 package com.github.diegopacheco.scala.ids.data
 
+import org.json4s.native.Json
+
 type Event = String
 
 trait Bus {
@@ -7,10 +9,11 @@ trait Bus {
   def subscribe(event:Event, callback: Event => Unit): Boolean
 }
 
-object InMemoryBus extends Bus {
+object InMemoryBus extends Bus with JsonSupport {
   private var subscribers = Map[Event, List[Event => Unit]]()
 
   def publish(event:Event): Boolean = {
+    val json = serialization.write(event)
     subscribers.get(event) match {
       case Some(callbacks) => {
         callbacks.foreach(callback => callback(event))
@@ -32,4 +35,9 @@ object InMemoryBus extends Bus {
       }
     }
   }
+}
+
+object BusService extends Bus {
+  def publish(event:Event): Boolean = InMemoryBus.publish(event)
+  def subscribe(event:Event, callback: Event => Unit): Boolean = InMemoryBus.subscribe(event, callback)
 }

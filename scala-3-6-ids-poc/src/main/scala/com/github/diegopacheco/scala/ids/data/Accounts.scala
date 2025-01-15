@@ -18,6 +18,7 @@ object AccountsService extends AccountsContract {
   def createAccount(): UUID = {
     val accountID = UUID.randomUUID()
     accounts = accounts + (accountID -> Map())
+    BusService.publish("accountCreated")
     accountID
   }
 
