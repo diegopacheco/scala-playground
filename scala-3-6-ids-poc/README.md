@@ -106,7 +106,27 @@ Such ID (UUID) it could be inside the envelope itself.
 
 ### Data duplication
 
-TBD
+There are several different ways we can do this approach. Basically, we will use a shared bus, it could be Kafka(ideally), RabitMQ, SQS, SNS, nsq, etc.
+For the POC I just did in memory, like the Observer Pattern in Java. The idea here is like CQRS and NoSQL Design, we will replicate(diplicate) a lot of data.
+Basically we will publish events, every time some useful happens, them we will have a listener that will update the data in the other services.
+Doing such approach allow us to share DATA and IDs if we want(I would just share data no IDS IF POSSIBLE) and with that we can do the things we need.
+
+There are couple of variations like:
+1. Share all data (no ids)
+2. Share all ids and links
+
+This approaches allow us to replicate many tables in each service, so they can have all the information required. This pattern is Async. It works with distributed systems very well.
+
+Benefits:
+1. It's scalable
+2. It's async and very efficient (reduce latency of RPC calls - less direct calls)
+3. It's very flexible, you can share all data or just ids or just links.
+
+Downsides:
+1. It's complex, you need to have a good event bus and a good listener. Bus cannot lose data, retention could be a problem.
+2. It's async, so you need to be careful with consistency, you might need to have a way to rollback or retry or even acklodge that you spread bug data (fake news of CQRS :-) ).
+3. It's eventual consistent, meaning, what if one or more systems don't update they facts? we will have trouble.
+4. Error handling can be harder and troubleshooting as well, because now your database change is unpredictable and could happen anytime, ofcource you have code to handle that.  
 
 ### Problems
 
