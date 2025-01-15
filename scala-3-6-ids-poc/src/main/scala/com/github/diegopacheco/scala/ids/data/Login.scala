@@ -6,6 +6,7 @@ trait LoginContract {
   def login(accountID: UUID, password: String): Boolean
 }
 
+// It's not subscribing to the bus. It's this okay? :-)
 class LoginService(val accountService:AccountsService.type) extends LoginContract {
 
   private val logins = Map(

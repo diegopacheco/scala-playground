@@ -8,6 +8,7 @@ trait PurchaseContract {
   def purchase(accountID: UUID): Purchases
 }
 
+// It's not subscribing to the bus. It's this okay? :-)
 class PurchaseService(val accountsService:AccountsService.type ) extends PurchaseContract {
 
   // simulates reads from database, see emailID and loginid have no correlation with purchaseID.

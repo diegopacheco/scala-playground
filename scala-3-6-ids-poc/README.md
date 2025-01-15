@@ -21,14 +21,14 @@ Consider an E-commerce system with the following services:
 * Purchase: Where the user will buy products. Keeps track of the user purchases. Maybe to drive more sales.
 * Account: Where the user account is stored. It's a global service that holds links between services.
 
-There are `65 tests` all passing. Check them out!
+There are `74 tests` all passing. Check them out!
 
 ### Some options
 
 1. ID per product (package `services`)
 2. True, Global and unique ID (package `global`)
 3. Envelope: raw or sealed
-4. Data duplication (TBD)
+4. Data duplication
 
 ### ID per product
 
