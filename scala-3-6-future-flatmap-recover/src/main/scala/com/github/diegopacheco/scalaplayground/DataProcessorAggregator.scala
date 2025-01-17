@@ -21,14 +21,18 @@ object DataProcessorAggregator {
   }
 
   def processException(ids: List[Int]): Future[List[Int]] = {
-    processor.processException(ids).flatMap {
-      case Left(value) => Future.successful(value)
-      case Right(_) => Future.successful(List.empty[Int])
-    }.recoverWith {
-      case e: Any =>
-        println("[Recover] Got this: " + e)
-        Future.successful(List.empty[Int])
-    }
+    val futureResults = for {
+      result <- processor.processException(ids).
+        flatMap {
+          case Left(value) => Future.successful(value)
+          case Right(_) => Future.successful(List.empty[Int])
+        }.recoverWith {
+          case e: Any =>
+            println("[Recover] Got this: " + e)
+            Future.successful(List.empty[Int])
+        }
+    } yield result
+    futureResults
   }
 
 }
