@@ -5,18 +5,18 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object NumberGenerator {
 
-  def even: Future[List[Int]] = Future {
-    LazyList.from(0, 2).take(100).toList
+  def even(upTo:Int): Future[List[Int]] = Future {
+    LazyList.from(0, 2).take(upTo).toList
   }
 
-  def odd: Future[List[Int]] = Future {
-    LazyList.from(1, 2).take(100).toList
+  def odd(upTo:Int): Future[List[Int]] = Future {
+    LazyList.from(1, 2).take(upTo).toList
   }
 
-  def combined: Future[List[Int]] = {
+  def combined(upTo:Int): Future[List[Int]] = {
     for {
-      evens <- even
-      odds <- odd
+      evens <- even(upTo)
+      odds <- odd(upTo)
     } yield (evens ++ odds).sorted
   }
 }
