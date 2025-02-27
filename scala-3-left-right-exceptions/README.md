@@ -10,7 +10,7 @@ sbt compile
 sbt run
 ```
 
-### Rationale
+### Rationale #1 Exceptions breaking out pattern matcher
 
 The reason this POC exist is to proof correct and incorrect/risk way to handle error
 handling in scala 3.x considering a functional code.
@@ -73,4 +73,53 @@ Exception in thread "main" java.lang.RuntimeException: Error! Oopsy Dayzes.
 	at main.main(Main.scala:24)
 ```
 
+### Rationale #2 Invalid Values on Either and Option
+
+Let's say we consider this values invalid
+```
+null
+Exception (but not throw)
+```
+It's possible to still have Some(null) or even Right(null) which is not what we want.
+
+This string case goes Right(null)
+```scala
+  def process(): Either[Exception, String] = {
+    Right(null)
+  }
+  process() match {
+    case Right(res) => println(s"Right Success: $res")
+    case Left(ex) => println(s"Left Error: $ex")
+  }
+```
+
+This Option case goes Some(null)
+```scala
+  def process(): Option[String] = {
+    Some(null)
+  }
+  process() match {
+    case Some(res) => println(s"Some Success: $res")
+    case None => println(s"None Error")
+ }
+```
+
+This Exception case goes Right(Exception)
+```scala
+def process(): Either[Exception, Object] = {
+    new RuntimeException("Error! Oopsy Dayzes.")
+  }
+  process() match {
+    case Right(res) => println(s"Right Success: $res")
+    case Left(ex) => println(s"Left Error: $ex")
+  }
+```
+
+It would require some if or pattern matcher inside the provider method in order to avoid this issue.
+So Strings with Either and Option can be problematic, good news is Int/Integer are safe.
+Scala 3.x seems to take care of:
+* Integer
+* Int
+
+Both coursed from null to 0.
 
