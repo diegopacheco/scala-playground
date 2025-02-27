@@ -123,3 +123,22 @@ Scala 3.x seems to take care of:
 
 Both coursed from null to 0.
 
+### Rationale #3 Option is safe, Some is not, Either does not take parameter Right is not Safe
+
+BAD
+```scala
+Some(value)
+```
+
+GOOD
+```scala
+Option(value)
+```
+
+1. You should never do Some(value) because value can be null.
+2. So you would need an IF, pattern matcher or use Option(value) instead.
+3. Option(value) does not hold exception - still does not work.
+4. Either does not take parameter Right is not Safe.
+5. I create a monad with a SafeEither like Try[Result] / Option(value) but better than option because it hold exceptions.
+Look `ValidMonad` code.
+6. PS: I tried to make SafeRight(invalid value) object but, it does not work because some circular reference that got the typesystem freakout and break.
