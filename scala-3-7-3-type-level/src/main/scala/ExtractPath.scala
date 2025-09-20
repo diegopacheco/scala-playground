@@ -1,12 +1,17 @@
 import scala.compiletime.*
 
+// 
+// not as good as TS template lierals
+// T extends `${string}://${string}/${infer Path}` // This is built into the type system
+// 
+// Only way to make it better here it would be macros.
+//
 type ExtractPath[T <: String] <: Tuple = T match
   case "https://api.example.com/users/123/posts" => ("users", "123", "posts")
   case "https://domain.com/api/v1/users/456/orders/789" => ("api", "v1", "users", "456", "orders", "789")
   case "https://example.com/users" => ("users","")
   case "https://site.com/api/v1" => ("api", "v1")
   case "https://test.com/" => EmptyTuple
-  case "https://test.com" => EmptyTuple
   case _ => EmptyTuple
 
 object ExtractPath {
