@@ -9,6 +9,7 @@ libraryDependencies += "org.springframework.boot" % "spring-boot-starter-actuato
 libraryDependencies += "org.springframework.boot" % "spring-boot-starter-data-jdbc" % springBootVersion
 libraryDependencies += "org.postgresql" % "postgresql" % "42.7.4"
 libraryDependencies += "com.zaxxer" % "HikariCP" % "6.2.1"
+libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.18.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.3.0-alpha.1" % Test
 libraryDependencies += "org.junit.jupiter" % "junit-jupiter-engine" % "5.10.1" % Test

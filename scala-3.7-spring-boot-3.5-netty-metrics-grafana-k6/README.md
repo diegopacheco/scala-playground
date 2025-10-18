@@ -68,13 +68,17 @@ Run with Kubernetes (Kind cluster)
 
 #### Monitoring Endpoints - Podman Compose
 
-- http://localhost:3000 - Grafana dashboard (admin/admin)
+- http://localhost:3000 - Grafana home (admin/admin)
+- http://localhost:3000/d/spring-netty-k6/spring-boot-2b-netty-2b-k6-dashboard?orgId=1&from=now-15m&to=now&timezone=browser&refresh=5s - Spring Boot + Netty + K6 Dashboard
 - http://localhost:9090 - Prometheus metrics server
+- http://localhost:9090/targets - Prometheus targets status
 
 #### Monitoring Endpoints - Kubernetes
 
-- http://localhost:30300 - Grafana dashboard (admin/admin)
+- http://localhost:30300 - Grafana home (admin/admin)
+- http://localhost:30300/d/spring-netty-k6/spring-boot-2b-netty-2b-k6-dashboard?orgId=1&from=now-15m&to=now&timezone=browser&refresh=5s - Spring Boot + Netty + K6 Dashboard
 - http://localhost:30090 - Prometheus metrics server
+- http://localhost:30090/targets - Prometheus targets status
 
 ### Scripts
 
