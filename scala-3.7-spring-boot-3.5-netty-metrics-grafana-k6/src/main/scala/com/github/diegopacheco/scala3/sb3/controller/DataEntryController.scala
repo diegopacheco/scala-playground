@@ -3,17 +3,13 @@ package com.github.diegopacheco.scala3.sb3.controller
 import com.github.diegopacheco.scala3.sb3.model.DataEntry
 import com.github.diegopacheco.scala3.sb3.service.DataEntryService
 import io.micrometer.core.instrument.MeterRegistry
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.{HttpStatus, MediaType, ResponseEntity}
 import org.springframework.web.bind.annotation.{GetMapping, PathVariable, RestController}
 
 import scala.jdk.CollectionConverters.*
 
 @RestController
-class DataEntryController(private val service: DataEntryService) {
-
-  @Autowired(required = true)
-  private var meterRegistry: MeterRegistry = _
+class DataEntryController(private val service: DataEntryService, private val meterRegistry: MeterRegistry) {
 
   @GetMapping(path = Array("/create/{n}"))
   def createEntries(@PathVariable n: Int): ResponseEntity[java.util.List[DataEntry]] = {
