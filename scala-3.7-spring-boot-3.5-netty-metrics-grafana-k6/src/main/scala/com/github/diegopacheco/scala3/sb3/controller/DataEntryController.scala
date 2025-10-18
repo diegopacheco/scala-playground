@@ -23,7 +23,7 @@ class DataEntryController(private val service: DataEntryService) {
   }
 
   @GetMapping(path = Array("/retrieve/{id}"))
-  def getEntryById(@PathVariable id: Long): ResponseEntity[_] = {
+  def getEntryById(@PathVariable id: Long): ResponseEntity[?] = {
     service.getEntryById(id) match {
       case Some(entry) => ResponseEntity.ok(entry)
       case None => ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entry not found")
