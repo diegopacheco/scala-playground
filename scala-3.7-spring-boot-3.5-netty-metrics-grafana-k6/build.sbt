@@ -16,9 +16,8 @@ libraryDependencies += "org.junit.jupiter" % "junit-jupiter-engine" % "5.10.1" %
 libraryDependencies += "org.springframework.boot" % "spring-boot-starter-test" % springBootVersion % Test
 
 libraryDependencies ++= Seq(
-  "io.micrometer" % "micrometer-core" % "1.10.0",
-  "io.micrometer" % "micrometer-registry-prometheus" % "1.10.0",
-  "org.aspectj" % "aspectjweaver" % "1.9.19"
+  "io.micrometer" % "micrometer-registry-prometheus" % "1.14.2",
+  "org.aspectj" % "aspectjweaver" % "1.9.22.1"
 )
 
 javacOptions ++= Seq("--release", "25")
