@@ -21,4 +21,17 @@ class AsyncConfig {
     executor.initialize()
     executor
   }
+
+  @Bean(name = Array("slowRequestExecutor"))
+  def slowRequestExecutor(): Executor = {
+    val executor = new ThreadPoolTaskExecutor()
+    executor.setCorePoolSize(10)
+    executor.setMaxPoolSize(50)
+    executor.setQueueCapacity(1000)
+    executor.setThreadNamePrefix("slow-request-")
+    executor.setWaitForTasksToCompleteOnShutdown(true)
+    executor.setAwaitTerminationSeconds(120)
+    executor.initialize()
+    executor
+  }
 }
