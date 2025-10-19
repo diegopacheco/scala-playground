@@ -212,3 +212,42 @@ Solutions:
 1. Make /slow truly async - Use Reactor's Mono.delay() instead of Thread.sleep()
 2. Separate health check port - Run management endpoints on a different port with separate EventLoop
 3. Don't test with blocking slow endpoints - They kill Netty performance
+
+Netty EventLoop Architecture:
+
+1. EventLoops are assigned per TCP connection, not per endpoint/URL
+- When a client connects to port 8081, the connection gets assigned to one EventLoop thread
+- That EventLoop handles ALL requests on that connection regardless of the URL path
+- Routing to /actuator/health vs /slow happens AFTER the EventLoop accepts the request
+2. One EventLoop pool per server port
+- Port 8081 has one EventLoop group (your 48 threads)
+- All connections to that port share those 48 threads
+- You cannot partition them by endpoint
+3. HTTP Keep-Alive makes it impossible
+- Same TCP connection can send requests to /slow, then /actuator/health
+- The EventLoop is bound to the connection, not the request
+
+Options:
+
+Option 1: Separate management port (RECOMMENDED)
+```
+management.server.port=9090
+server.port=8081
+```
+- Health checks on port 9090 with separate EventLoop pool
+- App traffic on port 8081
+- Complete isolation
+
+Option 2: Make /slow non-blocking (BEST PRACTICE)
+```
+Mono.delay(Duration.ofSeconds(60)).map(_ => "done")
+```
+- Doesn't tie up EventLoop threads
+- Netty can handle 10,000+ concurrent slow requests
+
+Option 3: Offload /slow to separate thread pool
+```
+@Async("slowRequestExecutor")
+```
+- But still requires EventLoop thread to accept request
+- Not as good as Option 2
