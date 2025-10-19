@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: scala-app
-        image: scala-app:latest
+        image: localhost/scala-app:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8081

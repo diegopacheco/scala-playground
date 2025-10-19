@@ -4,9 +4,9 @@ CLUSTER_NAME="scala-app-cluster"
 echo "Building Scala application..."
 sbt clean assembly
 echo "Building Docker image..."
-podman build -t scala-app:latest .
+podman build -t localhost/scala-app:latest .
 echo "Saving image to tar file..."
-podman save -o /tmp/scala-app-image.tar scala-app:latest
+podman save -o /tmp/scala-app-image.tar localhost/scala-app:latest
 echo "Creating Kind cluster..."
 if kind get clusters | grep -q "^${CLUSTER_NAME}$"; then
   echo "Cluster ${CLUSTER_NAME} already exists, deleting it..."
@@ -35,11 +35,15 @@ echo "Applying Kubernetes specs..."
 kubectl apply -f specs/postgres-configmap.yaml
 kubectl apply -f specs/postgres-deployment.yaml
 kubectl apply -f specs/app-configmap.yaml
+kubectl apply -f specs/prometheus-rbac.yaml
 kubectl apply -f specs/prometheus-configmap.yaml
 kubectl apply -f specs/prometheus-deployment.yaml
 kubectl apply -f specs/grafana-configmap.yaml
 kubectl apply -f specs/grafana-deployment.yaml
 echo "Waiting for PostgreSQL to be ready..."
+until kubectl get pods -l app=postgres 2>/dev/null | grep -q Running; do
+  sleep 1
+done
 kubectl wait --for=condition=ready pod -l app=postgres --timeout=120s
 echo "Applying application deployment..."
 kubectl apply -f specs/app-deployment.yaml
