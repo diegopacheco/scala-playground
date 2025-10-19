@@ -149,5 +149,6 @@ This IS:
 - ✅ EventLoop threads might be blocking on synchronous operations
 - ✅ Need to increase Netty EventLoop thread count or make handlers fully non-blocking
 
-Solution: Increase Netty EventLoop threads in your NettyConfig or ensure all handlers are truly
-non-blocking/async.
+Solution: Increase Netty EventLoop threads in your NettyConfig or ensure all handlers are truly non-blocking/async.
+
+Notes: Increasing the netty worker threads to 48 helped, see much less pending tasks. But even with a dedicated pool and 100% async, the health checker still block in the combination ofr stree(1k) + 1 slow(60s) request.
