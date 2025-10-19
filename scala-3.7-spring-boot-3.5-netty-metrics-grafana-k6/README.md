@@ -108,4 +108,6 @@ This test there is a volume of 1k calls but with a slow endpoint running in para
 
 ### Grafana Dashboard
 
-<img src="results/grafana-charts.png" width="600"/>
+<img src="results/grafana-dashbord-1.png" width="600"/><br/>
+<img src="results/grafana-dashbord-2.png" width="600"/><br/>
+<img src="results/grafana-dashbord-3.png" width="600"/><br/>
