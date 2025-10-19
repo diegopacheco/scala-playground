@@ -27,6 +27,7 @@ spec:
         args:
         - '--config.file=/etc/prometheus/prometheus.yml'
         - '--storage.tsdb.path=/prometheus'
+        - '--web.enable-remote-write-receiver'
       volumes:
       - name: prometheus-config
         configMap:

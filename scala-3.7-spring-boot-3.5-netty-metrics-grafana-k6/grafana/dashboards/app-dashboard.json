@@ -203,7 +203,7 @@
       "gridPos": {"h": 8, "w": 12, "x": 0, "y": 40},
       "id": 11,
       "options": {"legend": {"calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "single", "sort": "none"}},
-      "targets": [{"expr": "k6_http_req_duration_p95", "refId": "A", "legendFormat": "P95"}, {"expr": "k6_http_req_duration_p99", "refId": "B", "legendFormat": "P99"}],
+      "targets": [{"expr": "k6_http_req_duration_p99", "refId": "A", "legendFormat": "P95"}, {"expr": "k6_http_req_duration_p99", "refId": "B", "legendFormat": "P99"}],
       "title": "K6 HTTP Request Duration",
       "type": "timeseries"
     },
