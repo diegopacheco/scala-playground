@@ -5,6 +5,8 @@ echo "Building Scala application..."
 sbt clean assembly
 echo "Building Docker image..."
 podman build -t scala-app:latest .
+echo "Saving image to tar file..."
+podman save -o /tmp/scala-app-image.tar scala-app:latest
 echo "Creating Kind cluster..."
 if kind get clusters | grep -q "^${CLUSTER_NAME}$"; then
   echo "Cluster ${CLUSTER_NAME} already exists, deleting it..."
@@ -27,7 +29,8 @@ nodes:
     protocol: TCP
 EOF
 echo "Loading Docker image into Kind cluster..."
-kind load docker-image scala-app:latest --name ${CLUSTER_NAME}
+kind load image-archive /tmp/scala-app-image.tar --name ${CLUSTER_NAME}
+rm -f /tmp/scala-app-image.tar
 echo "Applying Kubernetes specs..."
 kubectl apply -f specs/postgres-configmap.yaml
 kubectl apply -f specs/postgres-deployment.yaml

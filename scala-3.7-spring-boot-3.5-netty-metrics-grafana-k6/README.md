@@ -95,3 +95,13 @@ Run with Kubernetes (Kind cluster)
 - `./run-all-k8s.sh` - Creates Kind cluster and deploys all services
 - `./shutdown-all.sh` - Destroys the Kind cluster completely
 
+### Steps to Stress 
+
+This test there is a volume of 1k calls but with a slow endpoint running in parallel, that's where we can see the healthchecker to get slow.
+
+1. Run the app `./run-all.sh`.
+2. Run `./insert-1k.sh` to insert 1000 test entries.
+3. Run `./k6-retrieve-1k.sh` to perform a K6 stress test with 1000 virtual users.
+4. Run `./call-slow.sh` must be in parallel with #3
+5. Run `./call-health-checker.sh` couple of times. (parallel with #3 and #4)
+5. Goto [Grafana](http://localhost:30300/d/spring-netty-k6/spring-boot-2b-netty-2b-k6-dashboard?orgId=1&from=now-15m&to=now&timezone=browser&refresh=5s)
