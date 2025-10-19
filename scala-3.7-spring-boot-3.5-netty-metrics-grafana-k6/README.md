@@ -251,3 +251,5 @@ Option 3: Offload /slow to separate thread pool
 ```
 - But still requires EventLoop thread to accept request
 - Not as good as Option 2
+
+Even doing option #3 still the same issue of the "health checker" being stuck and taking a long time.
