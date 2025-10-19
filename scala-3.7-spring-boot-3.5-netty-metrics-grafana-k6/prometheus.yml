@@ -9,3 +9,9 @@ scrape_configs:
   - job_name: 'k6'
     static_configs:
       - targets: ['host.containers.internal:5656']
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']

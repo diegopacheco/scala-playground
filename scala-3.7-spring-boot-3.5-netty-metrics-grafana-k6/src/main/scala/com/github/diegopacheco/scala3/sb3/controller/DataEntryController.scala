@@ -36,7 +36,7 @@ class DataEntryController(private val service: DataEntryService, private val met
     val sb = new StringBuilder()
     meterRegistry.getMeters.asScala.foreach { meter =>
       val name = meter.getId.getName.replace(".", "_").replace("-", "_")
-      val tags = meter.getId.getTags.asScala.map(tag => s"""${tag.getKey}="${tag.getValue}"""").mkString(",")
+      val tags = meter.getId.getTags.asScala.map(tag => s"""${tag.getKey.replace(".", "_").replace("-", "_")}="${tag.getValue}"""").mkString(",")
       val tagsStr = if (tags.nonEmpty) s"{$tags}" else ""
       meter.measure().asScala.foreach { measurement =>
         val metricName = s"${name}_${measurement.getStatistic.toString.toLowerCase}"
