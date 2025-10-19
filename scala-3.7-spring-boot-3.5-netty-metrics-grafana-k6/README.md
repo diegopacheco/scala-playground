@@ -152,3 +152,63 @@ This IS:
 Solution: Increase Netty EventLoop threads in your NettyConfig or ensure all handlers are truly non-blocking/async.
 
 Notes: Increasing the netty worker threads to 48 helped, see much less pending tasks. But even with a dedicated pool and 100% async, the health checker still block in the combination ofr stree(1k) + 1 slow(60s) request.
+
+When running all this 3 in parallel:
+- ./k6-retrieve-1k.sh
+- ./call-slow.sh
+- ./call-health-checker.sh (after 3-4 calls)
+
+```bash
+❯ ./call-health-checker.sh
+HTTP/1.1 200 OK
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Content-Length: 416
+
+{"status":"UP","components":{"custom":{"status":"UP","details":{"status":"healthy","service":"running"}},"db":{"status":"UP","details":{"database":"PostgreSQL","validationQuery":"isValid()"}},"diskSpace":{"status":"UP","details":{"total":53082042368,"free":27377373184,"threshold":10485760,"path":"/app/.","exists":true}},"ping":{"status":"UP"},"ssl":{"status":"UP","details":{"validChains":[],"invalidChains":[]}}}}
+real	0m0.072s
+user	0m0.004s
+sys	0m0.004s
+
+❯ ./call-health-checker.sh
+HTTP/1.1 200 OK
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Content-Length: 416
+
+{"status":"UP","components":{"custom":{"status":"UP","details":{"status":"healthy","service":"running"}},"db":{"status":"UP","details":{"database":"PostgreSQL","validationQuery":"isValid()"}},"diskSpace":{"status":"UP","details":{"total":53082042368,"free":27376353280,"threshold":10485760,"path":"/app/.","exists":true}},"ping":{"status":"UP"},"ssl":{"status":"UP","details":{"validChains":[],"invalidChains":[]}}}}
+real	0m52.071s
+user	0m0.004s
+sys	0m0.005s
+```
+
+Why?
+
+The problem is NOT the health checker pool - it's that health check HTTP requests still need a Netty
+EventLoop thread to be accepted and processed, and all 48 threads are busy/blocked.
+
+Here's what's happening:
+
+The Real Bottleneck:
+
+1. Your /slow/60 endpoint is blocking - It likely sleeps/blocks a Netty EventLoop thread for 60 seconds
+2. 1000 concurrent K6 users are hammering the server
+3. All 48 EventLoop threads get occupied handling these requests
+4. When health check request arrives, it waits in the TCP backlog queue for an available EventLoop thread
+5. After 52 seconds, a thread finally becomes free and processes the health check
+
+Why @Async didn't help:
+
+The @Async pool only helps with the health check logic, but:
+- The HTTP request must first be accepted by a Netty EventLoop thread
+- The checkHealthAsync().get() call blocks that EventLoop thread waiting for the result
+- You're still consuming a Netty EventLoop thread for the entire health check request
+
+The actual issue is /slow/60 - if it's doing this:
+Thread.sleep(60000)  // BLOCKS EventLoop thread!
+
+This ties up EventLoop threads, starving all other requests including health checks.
+
+Solutions:
+
+1. Make /slow truly async - Use Reactor's Mono.delay() instead of Thread.sleep()
+2. Separate health check port - Run management endpoints on a different port with separate EventLoop
+3. Don't test with blocking slow endpoints - They kill Netty performance
