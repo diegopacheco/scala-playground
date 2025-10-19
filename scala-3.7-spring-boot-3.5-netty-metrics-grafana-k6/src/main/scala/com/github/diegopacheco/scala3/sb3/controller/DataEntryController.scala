@@ -35,11 +35,23 @@ class DataEntryController(private val service: DataEntryService, private val met
   def prometheus(): String = {
     val sb = new StringBuilder()
     meterRegistry.getMeters.asScala.foreach { meter =>
-      val name = meter.getId.getName.replace(".", "_").replace("-", "_")
+      val baseName = meter.getId.getName.replace(".", "_").replace("-", "_")
       val tags = meter.getId.getTags.asScala.map(tag => s"""${tag.getKey.replace(".", "_").replace("-", "_")}="${tag.getValue}"""").mkString(",")
       val tagsStr = if (tags.nonEmpty) s"{$tags}" else ""
+
       meter.measure().asScala.foreach { measurement =>
-        val metricName = s"${name}_${measurement.getStatistic.toString.toLowerCase}"
+        val statName = measurement.getStatistic.toString.toLowerCase
+        val metricName = statName match {
+          case "value" => baseName
+          case "count" if baseName.endsWith("_seconds") => baseName + "_count"
+          case "count" => baseName + "_total"
+          case "total_time" if baseName.endsWith("_seconds") => baseName + "_sum"
+          case "total_time" => baseName + "_seconds_sum"
+          case "total" => baseName + "_total"
+          case "max" if baseName.endsWith("_seconds") => baseName + "_max"
+          case "max" => baseName + "_max"
+          case _ => s"${baseName}_${statName}"
+        }
         sb.append(s"$metricName$tagsStr ${measurement.getValue}\n")
       }
     }
