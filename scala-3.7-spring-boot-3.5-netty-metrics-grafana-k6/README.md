@@ -105,3 +105,7 @@ This test there is a volume of 1k calls but with a slow endpoint running in para
 4. Run `./call-slow.sh` must be in parallel with #3
 5. Run `./call-health-checker.sh` couple of times. (parallel with #3 and #4)
 5. Goto [Grafana](http://localhost:30300/d/spring-netty-k6/spring-boot-2b-netty-2b-k6-dashboard?orgId=1&from=now-15m&to=now&timezone=browser&refresh=5s)
+
+### Grafana Dashboard
+
+<img src="results/grafana-charts.png" width="600"/>
