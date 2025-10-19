@@ -111,3 +111,43 @@ This test there is a volume of 1k calls but with a slow endpoint running in para
 <img src="results/grafana-dashbord-1.png" width="600"/><br/>
 <img src="results/grafana-dashbord-2.png" width="600"/><br/>
 <img src="results/grafana-dashbord-3.png" width="600"/><br/>
+
+Looking at the 3 Grafana dashboard images, the issue is NOT ulimit or hardware - it's a Netty EventLoop
+thread pool sizing problem.
+
+Here's why:
+
+Evidence from the dashboards:
+
+1. CPU Usage: Only 15% - You have 85% idle CPU, plenty of headroom
+2. Memory: ~48 MiB - No memory pressure
+3. Open File Descriptors: ~1.25 KiB - Well within limits, NOT a ulimit issue
+4. JVM Threads: 16 → 19 - Only 3 additional threads created during load
+5. Netty EventLoop Pending Tasks: 0 → 250+ - Work is queuing up massively
+6. K6 Load: 1000 VUs @ 250 req/s - Significant concurrent load
+
+The Real Problem:
+
+Your Netty EventLoop has only 4 worker threads (reactor-http-nio-1 through 4) but you're hitting it with
+1000 concurrent virtual users. The event loops cannot process requests fast enough, causing tasks to queue
+up.
+
+Why this happens:
+
+- Netty defaults EventLoop threads to number of CPU cores (likely 4-8 on your Mac)
+- With high concurrency (1K VUs), 4 threads cannot keep up
+- CPU is idle because threads are likely blocked on I/O or network operations
+- Tasks pile up in the EventLoop queue waiting for available threads
+
+This is NOT:
+- ❌ ulimit issue (file descriptors are fine)
+- ❌ CPU/hardware issue (85% idle)
+- ❌ macOS-specific issue
+
+This IS:
+- ✅ Netty worker thread pool is undersized for your concurrency level
+- ✅ EventLoop threads might be blocking on synchronous operations
+- ✅ Need to increase Netty EventLoop thread count or make handlers fully non-blocking
+
+Solution: Increase Netty EventLoop threads in your NettyConfig or ensure all handlers are truly
+non-blocking/async.
