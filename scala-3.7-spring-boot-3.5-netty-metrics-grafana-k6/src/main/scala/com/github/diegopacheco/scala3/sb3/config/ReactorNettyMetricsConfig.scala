@@ -20,15 +20,12 @@ class ReactorNettyMetricsConfig extends NettyServerCustomizer {
     httpServer
       .runOn(loopResources)
       .metrics(true, metricsRecorder)
-      .tcpConfiguration(tcpServer =>
-        tcpServer
-          .option(ChannelOption.SO_BACKLOG, Integer.valueOf(4096))
-          .option(ChannelOption.TCP_FASTOPEN, Integer.valueOf(1024))
-          .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-          .childOption(ChannelOption.SO_KEEPALIVE, java.lang.Boolean.valueOf(true))
-          .childOption(ChannelOption.TCP_NODELAY, java.lang.Boolean.valueOf(true))
-          .childOption(ChannelOption.SO_RCVBUF, Integer.valueOf(1 * 1024 * 1024))
-          .childOption(ChannelOption.SO_SNDBUF, Integer.valueOf(1 * 1024 * 1024))
-      )
+      .option(ChannelOption.SO_BACKLOG, Integer.valueOf(4096))
+      .option(ChannelOption.TCP_FASTOPEN, Integer.valueOf(1024))
+      .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+      .childOption(ChannelOption.SO_KEEPALIVE, java.lang.Boolean.valueOf(true))
+      .childOption(ChannelOption.TCP_NODELAY, java.lang.Boolean.valueOf(true))
+      .childOption(ChannelOption.SO_RCVBUF, Integer.valueOf(1 * 1024 * 1024))
+      .childOption(ChannelOption.SO_SNDBUF, Integer.valueOf(1 * 1024 * 1024))
   }
 }
