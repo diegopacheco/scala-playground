@@ -65,6 +65,7 @@ Run with Kubernetes (Kind cluster)
 - http://localhost:30081/actuator/health/liveness - Kubernetes liveness probe
 - http://localhost:30081/actuator/prometheus - Prometheus metrics endpoint
 - http://localhost:30081/actuator - All available actuator endpoints
+- http://localhost:8081/actuator/metrics - All available metrics
 
 #### Monitoring Endpoints - Podman Compose
 

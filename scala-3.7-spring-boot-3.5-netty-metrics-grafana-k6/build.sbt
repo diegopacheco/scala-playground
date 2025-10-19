@@ -17,6 +17,7 @@ libraryDependencies += "org.springframework.boot" % "spring-boot-starter-test" %
 
 libraryDependencies ++= Seq(
   "io.micrometer" % "micrometer-registry-prometheus" % "1.14.2",
+  "io.projectreactor.netty" % "reactor-netty-http" % "1.2.1",
   "org.aspectj" % "aspectjweaver" % "1.9.22.1"
 )
 
