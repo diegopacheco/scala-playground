@@ -288,7 +288,7 @@ Podman Compose Stack(run-all.sh):
         │  │  │  - ...                                │  │  │
         │  │  │  - reactor-http-nio-48                │  │  │
         │  │  │                                       │  │  │
-        │  │  │  ⚠️  BOTTLENECK: All threads blocked  │  │   │
+        │  │  │  ⚠️  BOTTLENECK: All threads blocked  │  │  │
         │  │  │     by /slow + 1K concurrent reqs     │  │  │
         │  │  └─────────────┬─────────────────────────┘  │  │
         │  └────────────────┼────────────────────────────┘  │
@@ -297,7 +297,7 @@ Podman Compose Stack(run-all.sh):
         │  │ Spring Boot WebFlux Router                  │  │
         │  │  - /create/{n}                              │  │
         │  │  - /retrieve                                │  │
-        │  │  - /slow/{seconds}  ⚠️ BLOCKS THREAD        │  │
+        │  │  - /slow/{seconds}  [BLOCKS THREAD]         │  │
         │  │  - /actuator/health                         │  │
         │  └────────────────┬────────────────────────────┘  │
         │                   │                               │
@@ -389,7 +389,7 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 │  │  │  │ Spring Boot Application                   │  │ │   │
 │  │  │  │   - Controllers                           │  │ │   │
 │  │  │  │   - Health Indicators                     │  │ │   │
-│  │  │  │   - /slow ⚠️ blocks threads               │  │ │   │
+│  │  │  │   - /slow [BLOCKS THREAD]                 │  │ │   │
 │  │  │  └─────────────┬─────────────────────────────┘  │ │   │
 │  │  └────────────────┼────────────────────────────────┘ │   │
 │  │                   │                                  │   │
