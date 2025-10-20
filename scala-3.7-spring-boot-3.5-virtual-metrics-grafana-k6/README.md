@@ -225,7 +225,7 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 │ Kind Cluster (Docker/Podman container)                      │
 │                                                             │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ NodePort Service (scala-app-service)                 │   │
+│  │ NodePort Service (scala-app)                         │   │
 │  │   - type: NodePort                                   │   │
 │  │   - port: 8081                                       │   │
 │  │   - nodePort: 30081                                  │   │
@@ -240,29 +240,33 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 │  │  ┌─────────────────────────────────────────────────┐ │   │
 │  │  │ Container: scala-app                            │ │   │
 │  │  │  ┌───────────────────────────────────────────┐  │ │   │
-│  │  │  │ Netty HTTP Server (container port 8081)   │  │ │   │
+│  │  │  │ Tomcat HTTP Server                        │  │ │   │
 │  │  │  │  ┌─────────────────────────────────────┐  │  │ │   │
-│  │  │  │  │ Boss EventLoopGroup (1 thread)      │  │  │ │   │
+│  │  │  │  │ Port 8081: App (via NodePort)       │  │ │   │
+│  │  │  │  │  - Virtual Threads (max: 200)       │  │ │   │
+│  │  │  │  │  - Each request = 1 VT              │  │ │   │
+│  │  │  │  │  ✓ No bottleneck with VT            │  │ │   │
 │  │  │  │  └──────────┬──────────────────────────┘  │  │ │   │
 │  │  │  │             │                             │  │ │   │
 │  │  │  │  ┌──────────▼──────────────────────────┐  │  │ │   │
-│  │  │  │  │ Worker EventLoopGroup (48 threads)  │  │  │ │   │
-│  │  │  │  │   reactor-http-nio-1 to 48          │  │  │ │   │
-│  │  │  │  │                                     │  │  │ │   │
-│  │  │  │  │   ⚠️  BOTTLENECK HERE               │  │  │ │   │
+│  │  │  │  │ Port 8182: Management (ClusterIP)   │  │ │   │
+│  │  │  │  │  - Health checks isolated           │  │ │   │
+│  │  │  │  │  - Prometheus metrics               │  │ │   │
 │  │  │  │  └──────────┬──────────────────────────┘  │  │ │   │
 │  │  │  └─────────────┼─────────────────────────────┘  │ │   │
 │  │  │                │                                │ │   │
 │  │  │  ┌─────────────▼─────────────────────────────┐  │ │   │
-│  │  │  │ Spring Boot Application                   │  │ │   │
+│  │  │  │ Spring MVC Application                    │  │ │   │
 │  │  │  │   - Controllers                           │  │ │   │
 │  │  │  │   - Health Indicators                     │  │ │   │
-│  │  │  │   - /slow [BLOCKS THREAD]                 │  │ │   │
+│  │  │  │   - /slow [Safe with VT]                  │  │ │   │
+│  │  │  │   - @Async (VT executors)                 │  │ │   │
 │  │  │  └─────────────┬─────────────────────────────┘  │ │   │
 │  │  └────────────────┼────────────────────────────────┘ │   │
 │  │                   │                                  │   │
 │  │  ┌────────────────▼────────────────────────────────┐ │   │
 │  │  │ DB Connection to postgres-service:5432          │ │   │
+│  │  │   - HikariCP pool: 200 connections              │ │   │
 │  │  └────────────────┬────────────────────────────────┘ │   │
 │  └───────────────────┼──────────────────────────────────┘   │
 │                      │                                      │
@@ -277,12 +281,17 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 │  └──────────────────────────────────────────────────────┘   │
 │                                                             │
 │  ┌──────────────────────────────────────────────────────┐   │
+│  │ Service: scala-app-management (ClusterIP)            │   │
+│  │   - port: 8182 (internal only)                       │   │
+│  └────────────────┬─────────────────────────────────────┘   │
+│                   │                                         │
+│  ┌────────────────▼─────────────────────────────────────┐   │
 │  │ Service: prometheus-service (NodePort 30090)         │   │
 │  └────────────────┬─────────────────────────────────────┘   │
 │                   │                                         │
 │  ┌────────────────▼─────────────────────────────────────┐   │
 │  │ Pod: prometheus-xxxxxx                               │   │
-│  │   - Scrapes scala-app-service:8081/actuator/...      │   │
+│  │   - Scrapes scala-app-management:8182/actuator/...   │   │
 │  │   - RBAC: ServiceAccount, ClusterRole, Binding       │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                   │                                         │
