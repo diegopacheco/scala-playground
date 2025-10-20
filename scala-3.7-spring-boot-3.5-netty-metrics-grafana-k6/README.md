@@ -513,6 +513,27 @@ What Spring does NOT do:
 
 The execution still happens on the EventLoop thread. The wrapping is just for the return value.
 
+What blocks EventLoop threads:
+  - Thread.sleep()
+  - JDBC calls (all standard JDBC drivers are blocking)
+  - Blocking HTTP clients (RestTemplate, Apache HttpClient without async)
+  - File I/O without async APIs
+  - Mono.block(), CompletableFuture.get(), Future.get()
+  - Synchronized blocks or lock contention
+  - CPU-intensive work (occupies thread, not I/O blocking but same effect)
+
+## Comparison: Netty vs NodeJS
+
+-----------------------------------------------------------------------------------------
+| Aspect              | Node.js                     | Netty                             |
+|---------------------|-----------------------------|-----------------------------------|
+| Event loops         | 1 (single-threaded JS)      | N (configurable, e.g., 48)        |
+| Blocking impact     | Freezes entire server       | Freezes 1/N of capacity           |
+| Ecosystem           | Async by default            | Mixed (must choose reactive libs) |
+| Learning curve      | Easier (callbacks/promises) | Harder (Reactor, WebFlux)         |
+| Performance ceiling | Lower (single loop)         | Higher (multi-loop)               |
+-----------------------------------------------------------------------------------------
+
 ### Related POCs
 
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
