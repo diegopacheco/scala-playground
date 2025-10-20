@@ -454,6 +454,17 @@ Netty (Event Loop Model):
 - Health checks wait 52+ seconds for a free EventLoop
 - Complete starvation
 
+## Some Important Notes
+
+### Ibcrease Hikari Pool Size to match Netty IO Workers threads
+
+By default, HikariCP uses a maximum pool size of 10 connections. 
+With a high number of Netty(48 in the file: NettyConfig.scala) event loop threads, this can lead to contention and blocking if many requests.
+```
+spring.datasource.hikari.maximum-pool-size=48
+spring.datasource.hikari.minimum-idle=24
+```
+
 ### Exploring other options
 
 ## Virtual Threads
@@ -462,6 +473,9 @@ Virtual threads solve the blocking problem, but they work with the thread-per-re
 Tomcat), not the event-loop model (WebFlux + Netty). Switch away from WebFlux/Netty entirely.
 Virtual threads are a game-changer for blocking I/O workloads. They give you the simplicity of blocking code
 with near-reactive performance.
+```
+spring.threads.virtual.enabled=true
+```
 
 How it would work:
 - Spring Boot 3.2+ with spring.threads.virtual.enabled=true
