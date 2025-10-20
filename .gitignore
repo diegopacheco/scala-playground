@@ -7,6 +7,9 @@ bazel-out
 bazel-testlogs
 bazel-**-bazel
 
+# MACOS
+.DS_STORE
+
 # sbt specific
 .cache
 .cache-*
