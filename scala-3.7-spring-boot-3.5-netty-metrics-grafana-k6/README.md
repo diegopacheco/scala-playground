@@ -460,6 +460,8 @@ Netty (Event Loop Model):
 
 Virtual threads solve the blocking problem, but they work with the thread-per-request model (Spring MVC +
 Tomcat), not the event-loop model (WebFlux + Netty). Switch away from WebFlux/Netty entirely.
+Virtual threads are a game-changer for blocking I/O workloads. They give you the simplicity of blocking code
+with near-reactive performance.
 
 How it would work:
 - Spring Boot 3.2+ with spring.threads.virtual.enabled=true
