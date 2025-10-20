@@ -125,14 +125,14 @@
           "custom": {"axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": {"tooltip": false, "viz": false, "legend": false}, "lineInterpolation": "linear", "lineWidth": 1, "pointSize": 5, "scaleDistribution": {"type": "linear"}, "showPoints": "never", "spanNulls": false, "stacking": {"group": "A", "mode": "none"}, "thresholdsStyle": {"mode": "off"}},
           "mappings": [],
           "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
-          "unit": "bytes"
+          "unit": "short"
         }
       },
       "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
       "id": 7,
       "options": {"legend": {"calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "single", "sort": "none"}},
-      "targets": [{"expr": "reactor_netty_bytebuf_allocator_used_heap_memory", "refId": "A", "legendFormat": "Heap"}, {"expr": "reactor_netty_bytebuf_allocator_used_direct_memory", "refId": "B", "legendFormat": "Direct"}],
-      "title": "Netty ByteBuf Allocator",
+      "targets": [{"expr": "tomcat_threads_busy_threads", "refId": "A", "legendFormat": "Busy Threads"}, {"expr": "tomcat_threads_current_threads", "refId": "B", "legendFormat": "Current Threads"}],
+      "title": "Tomcat Thread Pool",
       "type": "timeseries"
     },
     {
@@ -149,8 +149,8 @@
       "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
       "id": 8,
       "options": {"legend": {"calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "single", "sort": "none"}},
-      "targets": [{"expr": "reactor_netty_eventloop_pending_tasks", "refId": "A", "legendFormat": "{{name}}"}],
-      "title": "Netty EventLoop Pending Tasks",
+      "targets": [{"expr": "tomcat_sessions_active_current_sessions", "refId": "A", "legendFormat": "Active Sessions"}, {"expr": "tomcat_sessions_created_total", "refId": "B", "legendFormat": "Total Sessions Created"}],
+      "title": "Tomcat Sessions",
       "type": "timeseries"
     },
     {
@@ -287,7 +287,7 @@
   "refresh": "5s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["spring-boot", "netty", "k6"],
+  "tags": ["spring-boot", "tomcat", "virtual-threads", "k6"],
   "templating": {
     "list": []
   },
@@ -297,8 +297,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Spring Boot + Netty + K6 Dashboard",
-  "uid": "spring-netty-k6",
+  "title": "Spring Boot + Tomcat + Virtual Threads + K6 Dashboard",
+  "uid": "spring-tomcat-vt-k6",
   "version": 0,
   "weekStart": ""
 }
