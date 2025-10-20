@@ -17,7 +17,8 @@ libraryDependencies += "org.springframework.boot" % "spring-boot-starter-test" %
 
 libraryDependencies ++= Seq(
   "io.micrometer" % "micrometer-registry-prometheus" % "1.15.5",
-  "org.aspectj" % "aspectjweaver" % "1.9.22.1"
+  "org.aspectj" % "aspectjweaver" % "1.9.22.1",
+  "org.apache.tomcat.embed" % "tomcat-embed-core" % "10.1.34"
 )
 
 javacOptions ++= Seq("--release", "25")

@@ -4,9 +4,9 @@ import io.micrometer.core.instrument.{Gauge, MeterRegistry}
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.boot.web.embedded.tomcat.TomcatWebServer
-import org.springframework.boot.web.server.WebServer
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext
 import org.springframework.stereotype.Component
+import org.apache.tomcat.util.threads.ThreadPoolExecutor
 
 @Component
 class TomcatMetrics(
@@ -15,58 +15,47 @@ class TomcatMetrics(
 ) extends ApplicationListener[ApplicationReadyEvent] {
 
   override def onApplicationEvent(event: ApplicationReadyEvent): Unit = {
-    val webServer: WebServer = applicationContext.getWebServer
+    try {
+      val webServer = applicationContext.getWebServer
 
-    webServer match {
-      case tomcatServer: TomcatWebServer =>
-        val tomcat = tomcatServer.getTomcat
-        val connectors = tomcat.getService.findConnectors()
+      webServer match {
+        case tomcatServer: TomcatWebServer =>
+          val tomcat = tomcatServer.getTomcat
+          val connectors = tomcat.getService.findConnectors()
 
-        connectors.foreach { connector =>
-          val protocolHandler = connector.getProtocolHandler
-          val executor = protocolHandler.getExecutor
+          connectors.foreach { connector =>
+            val protocolHandler = connector.getProtocolHandler
+            val executor = protocolHandler.getExecutor
 
-          if (executor != null) {
-            val connectorName = connector.getPort.toString
+            if (executor != null && executor.isInstanceOf[ThreadPoolExecutor]) {
+              val threadPool = executor.asInstanceOf[ThreadPoolExecutor]
+              val connectorName = s"http-nio-${connector.getPort}"
 
-            Gauge.builder("tomcat.threads.current", executor, e => {
-              try {
-                val poolSizeMethod = e.getClass.getMethod("getPoolSize")
-                poolSizeMethod.invoke(e).asInstanceOf[Int].toDouble
-              } catch {
-                case _: Exception => 0.0
-              }
-            })
-            .tag("name", s"http-nio-$connectorName")
-            .description("Current thread count in Tomcat thread pool")
-            .register(registry)
+              Gauge.builder("tomcat.threads.current", threadPool, tp => tp.getPoolSize.toDouble)
+                .tag("name", connectorName)
+                .description("Current thread count in Tomcat thread pool")
+                .register(registry)
 
-            Gauge.builder("tomcat.threads.busy", executor, e => {
-              try {
-                val activeCountMethod = e.getClass.getMethod("getActiveCount")
-                activeCountMethod.invoke(e).asInstanceOf[Int].toDouble
-              } catch {
-                case _: Exception => 0.0
-              }
-            })
-            .tag("name", s"http-nio-$connectorName")
-            .description("Busy thread count in Tomcat thread pool")
-            .register(registry)
+              Gauge.builder("tomcat.threads.busy", threadPool, tp => tp.getActiveCount.toDouble)
+                .tag("name", connectorName)
+                .description("Busy thread count in Tomcat thread pool")
+                .register(registry)
 
-            Gauge.builder("tomcat.threads.config.max", executor, e => {
-              try {
-                val maxThreadsMethod = e.getClass.getMethod("getMaxThreads")
-                maxThreadsMethod.invoke(e).asInstanceOf[Int].toDouble
-              } catch {
-                case _: Exception => 0.0
-              }
-            })
-            .tag("name", s"http-nio-$connectorName")
-            .description("Maximum thread count configured for Tomcat thread pool")
-            .register(registry)
+              Gauge.builder("tomcat.threads.config.max", threadPool, tp => tp.getMaximumPoolSize.toDouble)
+                .tag("name", connectorName)
+                .description("Maximum thread count configured for Tomcat thread pool")
+                .register(registry)
+
+              println(s"✓ Registered Tomcat metrics for connector: $connectorName")
+            }
           }
-        }
-      case _ =>
+        case _ =>
+          println("✗ Not a Tomcat server")
+      }
+    } catch {
+      case e: Exception =>
+        println(s"✗ Error registering Tomcat metrics: ${e.getMessage}")
+        e.printStackTrace()
     }
   }
 }
