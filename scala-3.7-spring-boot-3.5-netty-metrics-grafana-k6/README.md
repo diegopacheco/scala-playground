@@ -552,6 +552,7 @@ What blocks EventLoop threads:
 
 ### Related POCs
 
+* https://github.com/diegopacheco/scala-playground/tree/master/scala-3.7-spring-boot-3.5-virtual-metrics-grafana-k6
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-virtual-threads
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-tomcat
