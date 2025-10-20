@@ -489,6 +489,30 @@ Reverse proxy with request routing:
   - Route /slow/* to a separate instance with different thread pool configuration
   - Route health checks to a separate endpoint that skips database checks under load
 
+## Does WebFlux auto-wrap code in Mono/Flux?
+
+Yes, but it's mostly useless if your code is blocking.
+
+Here's what actually happens:
+```
+  @GetMapping("/data")
+  def getData(): String = {
+    val result = jdbcTemplate.query(...) // BLOCKS EventLoop thread here!
+    result // Spring wraps this in Mono.just(result) for you
+  }
+```
+
+What Spring does:
+- Wraps your return value in Mono.just(yourValue) automatically
+- The HTTP response is written reactively
+
+What Spring does NOT do:
+- Make your blocking code non-blocking
+- Execute your method on a different thread pool
+- Magically convert JDBC to R2DBC
+
+The execution still happens on the EventLoop thread. The wrapping is just for the return value.
+
 ### Related POCs
 
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
