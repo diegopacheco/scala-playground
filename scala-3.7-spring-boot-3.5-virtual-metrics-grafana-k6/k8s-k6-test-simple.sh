@@ -49,7 +49,7 @@ EOF
 K6_PROMETHEUS_RW_SERVER_URL=http://localhost:${PROM_LOCAL_PORT}/api/v1/write k6 run --out experimental-prometheus-rw /tmp/k6-test.js
 echo ""
 echo "Test complete! K6 metrics should now be visible in Grafana"
-echo "Open: http://localhost:30300/d/spring-netty-k6"
+echo "Open: http://localhost:30300/d/spring-tomcat-vt-k6"
 echo ""
 echo "Cleaning up..."
 rm -f /tmp/k6-test.js

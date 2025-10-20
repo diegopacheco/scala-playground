@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e
-PORT=8081
-LOCAL_PORT=8082
-echo "Starting port-forward for scala-app..."
-kubectl port-forward svc/scala-app ${LOCAL_PORT}:${PORT} > /dev/null 2>&1 &
+MGMT_PORT=8182
+LOCAL_PORT=8183
+POD_NAME=$(kubectl get pods -l app=scala-app -o jsonpath='{.items[0].metadata.name}')
+echo "Starting port-forward for scala-app management port (pod: ${POD_NAME})..."
+kubectl port-forward pod/${POD_NAME} ${LOCAL_PORT}:${MGMT_PORT} > /dev/null 2>&1 &
 PF_PID=$!
 echo "Port-forward PID: ${PF_PID}"
 echo "Waiting for port-forward to be ready..."

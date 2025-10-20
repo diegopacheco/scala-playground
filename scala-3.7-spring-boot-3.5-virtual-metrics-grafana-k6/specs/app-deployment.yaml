@@ -53,7 +53,22 @@ spec:
   selector:
     app: scala-app
   ports:
-  - port: 8081
+  - name: http
+    port: 8081
     targetPort: 8081
     nodePort: 30081
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scala-app-management
+  namespace: default
+spec:
+  selector:
+    app: scala-app
+  ports:
+  - name: management
+    port: 8182
+    targetPort: 8182
+  type: ClusterIP

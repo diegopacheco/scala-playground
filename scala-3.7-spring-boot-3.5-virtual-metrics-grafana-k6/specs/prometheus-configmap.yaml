@@ -11,19 +11,8 @@ data:
     scrape_configs:
       - job_name: 'spring-boot-app'
         metrics_path: '/actuator/prometheus'
-        kubernetes_sd_configs:
-        - role: pod
-          namespaces:
-            names:
-            - default
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_pod_label_app]
-          action: keep
-          regex: scala-app
-        - source_labels: [__meta_kubernetes_pod_ip]
-          action: replace
-          target_label: __address__
-          replacement: $1:8182
+        static_configs:
+          - targets: ['scala-app-management:8182']
       - job_name: 'k6'
         static_configs:
           - targets: ['host.docker.internal:5656']
