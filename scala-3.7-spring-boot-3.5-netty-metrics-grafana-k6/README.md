@@ -432,7 +432,7 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 
 ### Netty vs Tomcat
 
-Tomcat could do significantly better in this specific scenario. Here's why:
+Tomcat could do better in this specific scenario. Here's why:
 
 Tomcat (Thread-per-Request Model):
 - Default thread pool: ~200 threads
