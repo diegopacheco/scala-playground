@@ -430,6 +430,30 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 └─────────────────────────────────────────────────────────────┘
 ```
 
+### Netty vs Tomcat
+
+Tomcat could do significantly better in this specific scenario. Here's why:
+
+Tomcat (Thread-per-Request Model):
+- Default thread pool: ~200 threads
+- Each request gets its own dedicated thread
+- Thread.sleep(60000) blocks ONE thread, not the entire server
+- With 1000 VUs + 1 slow request:
+- First 200 requests get threads immediately
+- Remaining 800 queue up and wait
+- Health checks can still get a thread (unless all 200 are blocked)
+- Graceful degradation under load
+
+Netty (Event Loop Model):
+- 48 EventLoop threads (in your config)
+- EventLoops handle ALL I/O operations
+- Thread.sleep(60000) blocks an EventLoop thread - catastrophic
+- With 1000 VUs + 1 slow request:
+- All 48 EventLoop threads get blocked quickly
+- Everything stops - no new requests can be accepted
+- Health checks wait 52+ seconds for a free EventLoop
+- Complete starvation
+
 ### Related POCs
 
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
