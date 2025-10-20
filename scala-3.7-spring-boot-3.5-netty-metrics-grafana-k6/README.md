@@ -259,3 +259,4 @@ Even doing option #3 still the same issue of the "health checker" being stuck an
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-virtual-threads
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-tomcat
+* https://github.com/diegopacheco/java-pocs/tree/master/pocs/spring-boot-3x-actuator-health-checker-experiments
