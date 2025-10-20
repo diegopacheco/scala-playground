@@ -110,11 +110,27 @@ This test there is a volume of 1k calls but with a slow endpoint running in para
 5. Run `./call-health-checker.sh` couple of times. (parallel with #3 and #4)
 5. Goto [Grafana](http://localhost:30300/d/spring-tomcat-vt-k6/spring-boot-2b-tomcat-2b-virtual-threads-2b-k6-dashboard?orgId=1&from=now-15m&to=now&timezone=browser&refresh=5s)
 
+Now Health-checker never choke and the slow endpoint is handled with no problem.
+```
+❯ ./call-health-checker.sh
+HTTP/1.1 200
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Transfer-Encoding: chunked
+Date: Mon, 20 Oct 2025 05:13:37 GMT
+
+{"status":"UP","components":{"custom":{"status":"UP","details":{"status":"healthy","service":"running"}},"db":{"status":"UP","details":{"database":"PostgreSQL","validationQuery":"isValid()"}},"diskSpace":{"status":"UP","details":{"total":53082042368,"free":27160219648,"threshold":10485760,"path":"/app/.","exists":true}},"ping":{"status":"UP"},"ssl":{"status":"UP","details":{"validChains":[],"invalidChains":[]}}}}
+real	0m0.716s
+user	0m0.004s
+sys	0m0.004s
+```
+
 ### Grafana Dashboard
 
-<img src="results/grafana-dashbord-1.png" width="600"/><br/>
-<img src="results/grafana-dashbord-2.png" width="600"/><br/>
-<img src="results/grafana-dashbord-3.png" width="600"/><br/>
+<img src="results/grafana-dash-1.png" width="600"/><br/>
+<img src="results/grafana-dash-2.png" width="600"/><br/>
+<img src="results/grafana-dash-3.png" width="600"/><br/>
+
+CPU, Memory and Threads go up and down now, as Tomcat as "Request per Thread" model and with Virtual Threads blocking calls are cheap. Health checker has it's own pool and management port so it never get stuck.
 
 ### Stack Diagrams
 
@@ -145,7 +161,7 @@ Podman Compose Stack(run-all.sh):
         │  │ Tomcat HTTP Server                          │  │
         │  │  ┌───────────────────────────────────────┐  │  │
         │  │  │ Port 8081: Application Endpoints      │  │  │
-        │  │  │  - Tomcat Thread Pool (max: 200)     │  │  │
+        │  │  │  - Tomcat Thread Pool (max: 200)      │  │  │
         │  │  │  - Virtual Threads Enabled            │  │  │
         │  │  │  - Each request = 1 virtual thread    │  │  │
         │  │  │                                       │  │  │
@@ -242,16 +258,16 @@ Kubernetes (Kind) Stack(run-all-k8s.sh):
 │  │  │  ┌───────────────────────────────────────────┐  │ │   │
 │  │  │  │ Tomcat HTTP Server                        │  │ │   │
 │  │  │  │  ┌─────────────────────────────────────┐  │  │ │   │
-│  │  │  │  │ Port 8081: App (via NodePort)       │  │ │   │
-│  │  │  │  │  - Virtual Threads (max: 200)       │  │ │   │
-│  │  │  │  │  - Each request = 1 VT              │  │ │   │
-│  │  │  │  │  ✓ No bottleneck with VT            │  │ │   │
+│  │  │  │  │ Port 8081: App (via NodePort)       │  │  │ │   │
+│  │  │  │  │  - Virtual Threads (max: 200)       │  │  │ │   │
+│  │  │  │  │  - Each request = 1 VT              │  │  │ │   │
+│  │  │  │  │  ✓ No bottleneck with VT            │  │  │ │   │
 │  │  │  │  └──────────┬──────────────────────────┘  │  │ │   │
 │  │  │  │             │                             │  │ │   │
 │  │  │  │  ┌──────────▼──────────────────────────┐  │  │ │   │
-│  │  │  │  │ Port 8182: Management (ClusterIP)   │  │ │   │
-│  │  │  │  │  - Health checks isolated           │  │ │   │
-│  │  │  │  │  - Prometheus metrics               │  │ │   │
+│  │  │  │  │ Port 8182: Management (ClusterIP)   │  │  │ │   │
+│  │  │  │  │  - Health checks isolated           │  │  │ │   │
+│  │  │  │  │  - Prometheus metrics               │  │  │ │   │
 │  │  │  │  └──────────┬──────────────────────────┘  │  │ │   │
 │  │  │  └─────────────┼─────────────────────────────┘  │ │   │
 │  │  │                │                                │ │   │
