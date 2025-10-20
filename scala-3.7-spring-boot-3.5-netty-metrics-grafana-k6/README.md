@@ -454,10 +454,45 @@ Netty (Event Loop Model):
 - Health checks wait 52+ seconds for a free EventLoop
 - Complete starvation
 
+### Exploring other options
+
+## Virtual Threads
+
+Virtual threads solve the blocking problem, but they work with the thread-per-request model (Spring MVC +
+Tomcat), not the event-loop model (WebFlux + Netty). Switch away from WebFlux/Netty entirely.
+
+How it would work:
+- Spring Boot 3.2+ with spring.threads.virtual.enabled=true
+- Use Spring MVC (not WebFlux) with Tomcat
+- Each request gets a virtual thread that can block cheaply
+- Thread.sleep(60) or blocking JDBC calls occupy a virtual thread (cheap)
+- Millions of virtual threads possible, so 1000 concurrent requests + slow endpoints = no problem
+- Health checks get their own virtual thread, no starvation
+
+## Circuit breaker pattern
+Protect the system from overload:
+  - Fail fast when overloaded instead of queueing requests
+  - Return 503 Service Unavailable immediately when EventLoops are saturated
+  - Resilience4j or Spring Cloud Circuit Breaker
+
+## Explicit Timeouts
+
+Request timeout + backpressure:
+- Set aggressive timeouts on incoming requests
+- Reject requests with 429 Too Many Requests when queue depth exceeds threshold
+- Don't let slow requests accumulate
+
+## Reverse Proxy
+
+Reverse proxy with request routing:
+  - NGINX or Envoy in front
+  - Route /slow/* to a separate instance with different thread pool configuration
+  - Route health checks to a separate endpoint that skips database checks under load
+
 ### Related POCs
 
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-virtual-threads
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/java-21-spring-boot-3-async-tomcat
 * https://github.com/diegopacheco/java-pocs/tree/master/pocs/spring-boot-3x-actuator-health-checker-experiments
-* https://github.com/diegopacheco/java-pocs/tree/master/pocs/spring-boot-3x-actuator-get-internal-metrics
+* https://github.com/diegopacheco/java-pocs/tree/master/pocs/spring-boot-3x-actuator-get-internal-metric
