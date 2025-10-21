@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'fast-endpoints'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['fast-endpoints:8081']
+  - job_name: 'slow-endpoints'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['slow-endpoints:8082']
+  - job_name: 'health-checker'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['health-checker:8083']
+  - job_name: 'k6'
+    static_configs:
+      - targets: ['host.containers.internal:5656']
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']

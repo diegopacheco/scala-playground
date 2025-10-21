@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slow-endpoints
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slow-endpoints
+  template:
+    metadata:
+      labels:
+        app: slow-endpoints
+    spec:
+      containers:
+      - name: slow-endpoints
+        image: localhost/slow-endpoints:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://postgres:5432/appdb
+        - name: SPRING_DATASOURCE_USERNAME
+          value: postgres
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: postgres
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8082
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: slow-endpoints
+  namespace: default
+spec:
+  selector:
+    app: slow-endpoints
+  ports:
+  - port: 8082
+    targetPort: 8082
+    nodePort: 30082
+  type: NodePort

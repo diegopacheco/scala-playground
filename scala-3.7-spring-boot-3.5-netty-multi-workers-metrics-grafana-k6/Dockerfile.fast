@@ -1,0 +1,5 @@
+FROM eclipse-temurin:25-jre-jammy
+WORKDIR /app
+COPY fast-endpoints/target/scala-3.7.3/fast-endpoints.jar app.jar
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "app.jar"]
