@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: slow-endpoints-config
+  namespace: default
+data:
+  application.properties: |
+    application.name=slow-endpoints
+    application.description=Slow endpoints service with 4 Netty workers
+    server.port=8082
+    spring.datasource.url=jdbc:postgresql://postgres:5432/appdb
+    spring.datasource.username=postgres
+    spring.datasource.password=postgres
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    spring.datasource.hikari.connection-timeout=20000
+    spring.datasource.hikari.maximum-pool-size=4
+    spring.datasource.hikari.minimum-idle=2
+    spring.datasource.hikari.idle-timeout=300000
+    spring.datasource.hikari.max-lifetime=1200000
+    spring.datasource.hikari.pool-name=HikariPool-Slow
+    spring.datasource.hikari.leak-detection-threshold=60000
+    spring.sql.init.mode=never
+    management.endpoints.enabled-by-default=true
+    management.endpoints.web.exposure.include=*
+    management.endpoint.metrics.enabled=true
+    management.endpoint.prometheus.enabled=true
+    management.metrics.export.prometheus.enabled=true
+    management.metrics.enable.all=true
+    management.endpoint.health.enabled=true
+    management.endpoint.health.show-details=always
+    management.metrics.tags.application=${application.name}
+    management.metrics.enable.reactor.netty=true
+    management.metrics.enable.jvm=true
+    management.metrics.enable.process=true
+    management.metrics.enable.system=true
+    reactor.netty.http.server.accessLogEnabled=true
+    logging.level.io.netty=INFO
+    logging.level.reactor.netty=INFO
+    logging.file.name=logs/slow-endpoints.log
