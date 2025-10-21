@@ -6,6 +6,8 @@ Multi-Module SBT Structure
 - slow-endpoints - Port 8082, 4 Netty workers, SlowController
 - health-checker - Port 8083, 2 Netty workers, health endpoints only
 
+PS: Probably dont need the 3 component(health-checker). Better to have management port for fast and slow endpoints.
+
 ### Build
 
 ```
