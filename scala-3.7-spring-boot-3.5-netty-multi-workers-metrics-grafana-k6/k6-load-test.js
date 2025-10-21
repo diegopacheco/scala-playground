@@ -14,17 +14,17 @@ export const options = {
 };
 
 export default function () {
-  const fastEndpoint = http.get('http://host.containers.internal:8081/');
+  const fastEndpoint = http.get('http://localhost:8081/');
   check(fastEndpoint, {
     'fast endpoint status is 200': (r) => r.status === 200,
   });
 
-  const createEntries = http.get('http://host.containers.internal:8081/create/3');
+  const createEntries = http.get('http://localhost:8081/create/3');
   check(createEntries, {
     'create entries status is 200': (r) => r.status === 200,
   });
 
-  const retrieve = http.get('http://host.containers.internal:8081/retrieve');
+  const retrieve = http.get('http://localhost:8081/retrieve');
   check(retrieve, {
     'retrieve status is 200': (r) => r.status === 200,
   });
