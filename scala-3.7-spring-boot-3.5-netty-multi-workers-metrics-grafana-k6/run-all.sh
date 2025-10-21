@@ -6,6 +6,8 @@ sbt clean
 sbt "project fastEndpoints" assembly
 sbt "project slowEndpoints" assembly
 sbt "project healthChecker" assembly
+echo "Building Docker images..."
+podman-compose build --no-cache fast-endpoints slow-endpoints health-checker
 echo "Starting all containers with podman-compose..."
 podman-compose up -d
 echo "Waiting for services to be healthy..."
