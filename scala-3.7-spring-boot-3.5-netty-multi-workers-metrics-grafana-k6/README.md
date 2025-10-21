@@ -174,6 +174,21 @@ Reverse proxy with request routing:
   - Route /slow/* to a separate instance with different thread pool configuration
   - Route health checks to a separate endpoint that skips database checks under load
 
+## Slow endpoint could be reactive and use Mono/Flux
+
+making it reactive:
+```
+@GetMapping("/slow/{seconds}")
+def slowEndpoint(@PathVariable seconds: Int): Mono[String] = {
+  Mono.delay(Duration.ofSeconds(seconds))
+      .map(_ => s"Slept for $seconds seconds")
+}
+``` 
+
+## Use the infra
+
+Use API Gateway or even AWS ALB to route traffic and do health checks and fast / slow operations.
+
 ## Does WebFlux auto-wrap code in Mono/Flux?
 
 Yes, but it's mostly useless if your code is blocking.
