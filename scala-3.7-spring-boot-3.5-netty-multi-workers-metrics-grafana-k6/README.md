@@ -119,6 +119,7 @@ This test there is a volume of 1k calls but with a slow endpoint running in para
 <img src="results/grafana-dash-multi-1.png" width="600"/><br/>
 <img src="results/grafana-dash-multi-2.png" width="600"/><br/>
 <img src="results/grafana-dash-multi-3.png" width="600"/><br/>
+<img src="results/grafana-dash-k6.png" width="600"/><br/>
 
 No Performance issue.
 Fast has : Netty Worker Threads = 48
@@ -127,7 +128,7 @@ Health Checker has : Netty Worker Threads = 2
 
 ## Some Important Notes
 
-### Ibcrease Hikari Pool Size to match Netty IO Workers threads
+### Increase Hikari Pool Size to match Netty IO Workers threads (APPLIED)
 
 By default, HikariCP uses a maximum pool size of 10 connections. 
 With a high number of Netty(48 in the file: NettyConfig.scala) event loop threads, this can lead to contention and blocking if many requests.
