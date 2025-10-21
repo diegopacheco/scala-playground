@@ -60,8 +60,8 @@ lazy val core = (project in file("core"))
 
 lazy val fastEndpoints = (project in file("fast-endpoints"))
   .dependsOn(core)
+  .enablePlugins(AssemblyPlugin)
   .settings(commonSettings)
-  .settings(assemblySettings)
   .settings(
     name := "fast-endpoints",
     libraryDependencies ++= commonDependencies,
@@ -72,8 +72,8 @@ lazy val fastEndpoints = (project in file("fast-endpoints"))
 
 lazy val slowEndpoints = (project in file("slow-endpoints"))
   .dependsOn(core)
+  .enablePlugins(AssemblyPlugin)
   .settings(commonSettings)
-  .settings(assemblySettings)
   .settings(
     name := "slow-endpoints",
     libraryDependencies ++= commonDependencies,
@@ -84,8 +84,8 @@ lazy val slowEndpoints = (project in file("slow-endpoints"))
 
 lazy val healthChecker = (project in file("health-checker"))
   .dependsOn(core)
+  .enablePlugins(AssemblyPlugin)
   .settings(commonSettings)
-  .settings(assemblySettings)
   .settings(
     name := "health-checker",
     libraryDependencies ++= commonDependencies,
