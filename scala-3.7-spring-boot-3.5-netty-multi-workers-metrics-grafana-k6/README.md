@@ -237,6 +237,77 @@ What blocks EventLoop threads:
 | Performance ceiling | Lower (single loop)         | Higher (multi-loop)               |
 -----------------------------------------------------------------------------------------
 
+## Final Blow 10-20k Users on K6
+
+Health Checker still responds well.
+```
+❯ ./call-health-checker.sh
+HTTP/1.1 200 OK
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Content-Length: 329
+
+{"status":"UP","components":{"custom":{"status":"UP","details":{"status":"healthy","service":"running"}},"diskSpace":{"status":"UP","details":{"total":53082042368,"free":26246270976,"threshold":10485760,"path":"/app/.","exists":true}},"ping":{"status":"UP"},"ssl":{"status":"UP","details":{"validChains":[],"invalidChains":[]}}}}
+real	0m0.015s
+user	0m0.003s
+sys	0m0.003s
+```
+
+<img src="results/final-blow-10-20k-1.png" width="600"/><br/>
+<img src="results/final-blow-10-20k-2.png" width="600"/><br/>
+<img src="results/final-blow-10-20k-3.png" width="600"/><br/>
+
+K6 start to get EOF error:
+```
+WARN[0037] Request Failed                                error="Get \"http://localhost:8081/retrieve\":
+EOF"
+```
+
+### Analysis of EOF Errors
+
+Endpoint Behavior
+(src/main/scala/com/github/diegopacheco/scala3/sb3/controller/DataEntryController.scala:20-24)
+- The /retrieve endpoint calls getAllEntries() which fetches ALL 1000 records from the database on
+every request
+- Each response is ~165KB in size
+
+Load Pattern
+- k6 test ramping up to 10,000 VUs
+- Each VU makes a blocking database query
+- At 55 seconds: 1,450 active VUs with 41,895 completed iterations
+
+Why EOF Errors Occur
+
+1. Database Connection Pool Exhaustion: While HikariCP is configured with 64 max connections, 10,000
+concurrent requests far exceed this capacity
+2. Blocking I/O Under High Concurrency: The findAll() call is synchronous and blocks threads while
+fetching data. With 10,000 VUs, requests queue up faster than they can be processed
+3. Connection Timeouts: When the server can't handle requests quickly enough, clients timeout and
+close connections prematurely, resulting in EOF errors
+4. Resource Contention: Fetching 1000 records per request creates significant:
+  - Database load
+  - Memory pressure (serialization/deserialization)
+  - Network bandwidth consumption
+
+Current Configuration
+
+Netty Workers: 64 event loop threads (fast-endpoints/src/main/scala/com/github/diegopacheco/scala3/sb3
+/fast/config/ReactorNettyMetricsConfig.scala:16)
+- SO_BACKLOG: 4096
+- Buffer sizes: 1MB send/receive
+
+Database Pool: HikariCP with 64 max connections, 32 minimum idle
+
+Recommendations
+
+1. Add Pagination to the /retrieve endpoint instead of returning all records
+2. Reduce k6 VUs to a realistic load (100-500 VUs would be more appropriate)
+3. Add Response Caching for read-heavy operations
+4. Consider Async Repository using R2DBC instead of blocking JDBC
+5. Add Connection Timeout Handling and circuit breakers
+
+The system is actually well-configured for moderate load, but 10,000 concurrent full-table scans
+exceed any reasonable capacity.
+
 ### Related POCs
 
 * https://github.com/diegopacheco/scala-playground/tree/master/scala-3.7-spring-boot-3.5-virtual-metrics-grafana-k6
