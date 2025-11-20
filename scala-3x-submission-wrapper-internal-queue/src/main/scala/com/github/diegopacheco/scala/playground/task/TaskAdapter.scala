@@ -12,7 +12,7 @@ class TaskAdapter(
 
     val futureTask = executor.submit(new Runnable {
       override def run(): Unit = {
-        println(">> Waiting 1s for task(${id}) before running")
+        println(s">> Waiting 1s for task(${id}) before running")
         Thread.sleep(1000)
         workTask.execute()
       }
