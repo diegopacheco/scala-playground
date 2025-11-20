@@ -10,3 +10,5 @@ import com.github.diegopacheco.scala.playground.task.TaskService
     Thread.sleep(3000)
     println("2. Done?")
   } )
+
+  ts.submitTask( () => println("3. Hello from WorkTask again!") )
