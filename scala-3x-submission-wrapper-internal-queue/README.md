@@ -5,6 +5,8 @@ The beauty of the `TaskAdapter` is that abstract common things for all business 
 1. Delayed Execution - wait before running the task - we could add jitter here.
 2. Timeout Management - when timeout happens the whole "thread is canceled".
 
+<img src="TaskDesign.png" width="600"/>
+
 The class `TaskService` just create important context objects and pass it to the Task Adapter.
 One non-obvious thing is why - I do have 2 ExecutorServices? Well because I want to cancel the Future, 
 `Await.result` does not cancel the Future when timeout happens, so I need a separate 
