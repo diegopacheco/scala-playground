@@ -1,17 +1,18 @@
 package com.github.diegopacheco.scala.playground.task
 
-import java.util.concurrent.{Executors, TimeUnit, TimeoutException}
+import java.util.concurrent.{ExecutorService, TimeUnit, TimeoutException}
 
-class TaskAdapter(val workTask:WorkTask) extends Runnable {
-
-  private val executor = Executors.newSingleThreadExecutor()
+class TaskAdapter(
+  val workTask:WorkTask,
+  val executor:ExecutorService,
+  val id:Int) extends Runnable {
 
   override def run(): Unit = {
-    println(">> Running on TaskAdapter in 2s will timeout...")
+    println(s">> Running on TaskAdapter for task(${id}) in 2s will timeout...")
 
     val futureTask = executor.submit(new Runnable {
       override def run(): Unit = {
-        println(">> Waiting 1s before running the task...")
+        println(">> Waiting 1s for task(${id}) before running")
         Thread.sleep(1000)
         workTask.execute()
       }
@@ -21,9 +22,8 @@ class TaskAdapter(val workTask:WorkTask) extends Runnable {
       futureTask.get(2, TimeUnit.SECONDS)
     } catch {
       case e: TimeoutException =>
-        println(s"Task timed out")
+        println(s"Task timed out - for task(${id})")
         futureTask.cancel(true)
-        executor.shutdownNow()
     }
   }
 
