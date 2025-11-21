@@ -24,6 +24,18 @@ class Application:
   @Bean
   def routes(): RouterFunction[ServerResponse] =
     RouterFunctions.route(GET("/health"), _ => ok().bodyValue("OK"))
+      .andRoute(GET("/user/{id}"), request => {
+        val userId = request.pathVariable("id")
+        ok().bodyValue(s"User: $userId")
+      })
+      .andRoute(GET("/product/{id}"), request => {
+        val productId = request.pathVariable("id")
+        ok().bodyValue(s"Product: $productId")
+      })
+      .andRoute(GET("/order/{id}"), request => {
+        val orderId = request.pathVariable("id")
+        ok().bodyValue(s"Order: $orderId")
+      })
 
   @Bean
   def nettyCustomizer(registry: MeterRegistry): WebServerFactoryCustomizer[NettyReactiveWebServerFactory] =
