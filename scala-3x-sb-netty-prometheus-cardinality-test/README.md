@@ -309,3 +309,11 @@ Now several metrics blow up to the roof like (15/82 metrics/tests fail):
 * reactor_netty_http_server_data_sent_bytes_sum (601)
 
 IF you dont generate some load you wont see the issue - so chaos matters !!!
+
+## Automated Chaos Engineering 
+
+There is a chaos test called `DynamicChaosTest` Where:
+1. Inserts 1k unique values per endpoint
+2. Calls the prometheus endpoint to see the metrics
+3. Validates the cardinality of each metric is below threshold(99)
+4. Profit - Now you can know if you will break prometheus before deploying anything.
