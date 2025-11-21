@@ -14,7 +14,6 @@ import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.binder.jvm.*
 import io.micrometer.core.instrument.binder.system.*
 import scala.compiletime.uninitialized
-import java.time.Duration
 
 @SpringBootApplication
 class Application:
@@ -29,6 +28,7 @@ class Application:
   @Bean
   def nettyCustomizer(registry: MeterRegistry): WebServerFactoryCustomizer[NettyReactiveWebServerFactory] =
     factory => {
+      System.setProperty("reactor.netty.ioWorkerCount", THRESHOLD_X.toString)
       println(s"Configuring Netty with THRESHOLD_X = $THRESHOLD_X worker threads")
       val loopResources = LoopResources.create("http-epoll", THRESHOLD_X, true)
       val connectionProvider = ConnectionProvider.builder("custom")
