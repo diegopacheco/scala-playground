@@ -51,7 +51,14 @@ class Application:
       factory.addServerCustomizers(server => {
         server
           .runOn(loopResources)
-          .metrics(true, java.util.function.Function.identity[String]())
+          .metrics(true, new java.util.function.Function[String, String] {
+            def apply(uri: String): String = {
+              if (uri.matches("/user/\\d+")) "/user/{id}"
+              else if (uri.matches("/product/\\d+")) "/product/{id}"
+              else if (uri.matches("/order/\\d+")) "/order/{id}"
+              else uri
+            }
+          })
           .doOnConnection(conn => {
             println(s"Connection established on thread: ${Thread.currentThread().getName}")
           })

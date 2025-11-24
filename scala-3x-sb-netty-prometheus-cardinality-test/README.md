@@ -317,3 +317,24 @@ There is a chaos test called `DynamicChaosTest` Where:
 2. Calls the prometheus endpoint to see the metrics
 3. Validates the cardinality of each metric is below threshold(99)
 4. Profit - Now you can know if you will break prometheus before deploying anything.
+
+## Why Netty is generating such high cardinality metrics?
+
+Because of the `Identity` function, each different path will be a 
+different metric in prometheus. To fix that we need a `URI Normalizer` like:
+
+```scala
+.metrics(true, new java.util.function.Function[String, String] {
+    def apply(uri: String): String = {
+      if (uri.matches("/user/\\d+")) "/user/{id}"
+      else if (uri.matches("/product/\\d+")) "/product/{id}"
+      else if (uri.matches("/order/\\d+")) "/order/{id}"
+      else uri
+    }
+})
+```
+Where it normalize all endpoints with different paths to the same metric.
+
+After that all 82 tests are passing.
+
+<img src="mistery-solved.png" width="600" />
