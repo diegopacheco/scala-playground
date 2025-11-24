@@ -320,8 +320,12 @@ There is a chaos test called `DynamicChaosTest` Where:
 
 ## Why Netty is generating such high cardinality metrics?
 
-Because of the `Identity` function, each different path will be a 
-different metric in prometheus. To fix that we need a `URI Normalizer` like:
+Because of the `Identity` function. 
+```scala
+.metrics(true, java.util.function.Function.identity[String]())
+```
+Each different path will be a  different metric 
+in prometheus. To fix that we need a `URI Normalizer` like:
 
 ```scala
 .metrics(true, new java.util.function.Function[String, String] {
