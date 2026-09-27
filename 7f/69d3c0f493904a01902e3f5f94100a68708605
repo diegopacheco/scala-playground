@@ -1,0 +1,19 @@
+README.md
+  s_8fc618b5968342::t_3ae97ba1213c61 1,3-393
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7f69d3c0f493904a01902e3f5f94100a68708605",
+  "prompts": {},
+  "sessions": {
+    "s_8fc618b5968342": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f68c66c8-8b31-4f1a-827b-22bbf412fe6c",
+        "model": "unknown"
+      },
+      "human_author": "diegopacheco <diego.pacheco.it@gmail.com>"
+    }
+  }
+}
