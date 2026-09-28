@@ -1,0 +1,83 @@
+ParserCombinatorsFun/.classpath
+  s_9df6e7758c993c::t_bc4facb8470260 14,28-57
+ParserCombinatorsFun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_f911af91105dbf 1-2
+ParserCombinatorsFun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_c1c516f4901c04 4,6-8
+apollo-fun/.classpath
+  s_9df6e7758c993c::t_0c2378fd9b34cb 3-28,33-59
+apollo-fun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_33df8a8a474c3d 1-2
+apollo-fun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_ca6624fdf9d275 10,13-15
+camel/camel-sandbox/.classpath
+  s_9df6e7758c993c::t_a2cbcaa07163ab 4-9,12-58
+camel/camel-sandbox/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_47b3a1577c9e64 1-2
+camel/camel-sandbox/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_a3b072a0a9211e 2-4,6-9
+hawt-dispatch-fun/.classpath
+  s_9df6e7758c993c::t_51ccae9bc9b3f7 3-28,33-59
+hawt-dispatch-fun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_224bd143ec7610 1-2
+hawt-dispatch-fun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_972e8f60358efc 10,13-15
+libchain-fun/.classpath
+  s_9df6e7758c993c::t_c8ffb958fac1cf 14,28-57
+libchain-fun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_886ad5c31f8d3f 1-2
+libchain-fun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_34a43d5501814a 4,6-8
+lmax-disruptor-fun/.classpath
+  s_9df6e7758c993c::t_c7c5b45668b5b8 14,28-57
+lmax-disruptor-fun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_d205d6dcd7be62 1-2
+lmax-disruptor-fun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_edc145ad0bdced 4,6-8
+scala-2.10-spring-3.2-playground/.classpath
+  s_9df6e7758c993c::t_74cff93606bb58 3-8,19,24-30,42-58
+scala-2.10-spring-3.2-playground/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_7972426307a85f 1-2
+scala-2.10-spring-3.2-playground/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_55abd0bc6d6b21 4,6-8
+scala-pkge/.classpath
+  s_9df6e7758c993c::t_b01200580a6694 14,28-57
+scala-pkge/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_e859eb4c3e3738 1-2
+scala-pkge/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_c8fd2c8a86501a 4,6-8
+scalaz-code-for-terrans/.classpath
+  s_9df6e7758c993c::t_bcc81f8db43a73 7-59
+scalaz-code-for-terrans/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_cac35ef7e3a7f3 1-2
+scalaz-code-for-terrans/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_b77085d4fc30fc 3,5,10,13-16
+spring-boot-fun/.classpath
+  s_9df6e7758c993c::t_18e794175602a6 4-9,26,34-57
+spring-boot-fun/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_0de86e0be1695b 1-2
+spring-boot-fun/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_df626fc6e3fbc0 4,6-8
+swagger-playground/.classpath
+  s_9df6e7758c993c::t_458c74f74b2197 4,13-39
+swagger-playground/.settings/org.eclipse.jdt.apt.core.prefs
+  s_9df6e7758c993c::t_a81940e747dda5 1-2
+swagger-playground/.settings/org.eclipse.jdt.core.prefs
+  s_9df6e7758c993c::t_f546543f0fc1d5 6,9-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "ba9746cdb75a20da554a24ea6c9674e659bbc763",
+  "prompts": {},
+  "sessions": {
+    "s_9df6e7758c993c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6a10eb5b-800f-4013-9c19-994e9a16983f",
+        "model": "unknown"
+      },
+      "human_author": "diegopacheco <diego.pacheco.it@gmail.com>"
+    }
+  }
+}
